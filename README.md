@@ -3,8 +3,10 @@
 Galadriel.js is a versatile JavaScript library that empowers developers to effortlessly create elegantly styled and dynamically responsive user interfaces. With a focus on modularity and simplicity, it provides a seamless way to craft visually captivating web applications while optimizing performance. Unleash your creativity and let Galadriel.js illuminate your design process.
 
 
-** Folder Structure **
+*Folder Structure*
 
+```markdown
+```
 galadriel-js/
 |-- dist/
 |   |-- galadriel.js         (Compiled and bundled library for distribution)
@@ -18,4 +20,6 @@ galadriel-js/
 |-- package.json
 |-- README.md
 |-- webpack.config.js       (Webpack configuration for bundling)
+```
+```
 
