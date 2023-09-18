@@ -6,7 +6,6 @@ Galadriel.js is a versatile JavaScript library that empowers developers to effor
 *Folder Structure*
 
 ```markdown
-```
 galadriel-js/
 |-- dist/
 |   |-- galadriel.js         (Compiled and bundled library for distribution)
@@ -20,6 +19,7 @@ galadriel-js/
 |-- package.json
 |-- README.md
 |-- webpack.config.js       (Webpack configuration for bundling)
+```
 ```
 ```
 
