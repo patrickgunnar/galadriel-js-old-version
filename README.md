@@ -22,3 +22,4 @@ galadriel-js/
 |-- webpack.config.js       (Webpack configuration for bundling)
 ```
 
+# galadrieljs
