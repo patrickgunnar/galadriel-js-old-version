@@ -1,0 +1,59 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build output
+/dist/
+
+# Ignore logs and other generated files
+*.log
+*.log.*
+*.*.log
+*.pid
+*.seed
+*.pid.lock
+*.log.lck
+*.lck
+
+# Ignore environment-specific files
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.staging
+.env.production
+.env.local
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore yarn integrity file
+.yarn-integrity
+
+# Ignore npm debug log
+npm-debug.log*
+
+# Ignore eslint cache
+.eslintcache
+
+# Ignore production build
+/build/
+
+# Ignore coverage directory
+/coverage/
+
+# Ignore Jest snapshot directory
+__snapshots__/
+
+# Ignore compiled typescript files
+*.tsbuildinfo
+
+# Ignore .vscode folder
+.vscode/
+
+# Ignore yarn.lock file
+yarn.lock
+
+# Ignore .idea folder
+.idea/

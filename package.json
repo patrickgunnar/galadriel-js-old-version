@@ -1,0 +1,40 @@
+{
+  "name": "galadriel-js",
+  "version": "0.1.0",
+  "description": "A versatile JavaScript library empowering developers to create elegant, dynamically responsive user interfaces. Focused on modularity and simplicity, enabling the crafting of captivating web applications with optimized performance. Unleash your creativity and let Galadriel.js illuminate your design process.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patrickgunnar/galadriel.js.git"
+  },
+  "keywords": [
+    "javascript",
+    "library",
+    "web",
+    "frontend",
+    "UI",
+    "user-interface",
+    "styling",
+    "modularity",
+    "performance",
+    "responsive",
+    "elegant",
+    "dynamic"
+  ],
+  "author": "Patrick Gunnar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/patrickgunnar/galadriel.js/issues"
+  },
+  "homepage": "https://github.com/patrickgunnar/galadriel.js#readme",
+  "devDependencies": {
+    "add": "^2.0.6",
+    "babel-loader": "^9.1.3",
+    "or": "^0.2.0",
+    "webpack": "^5.88.2",
+    "yarn": "^1.22.19"
+  }
+}
