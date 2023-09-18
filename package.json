@@ -1,5 +1,5 @@
 {
-  "name": "galadriel",
+  "name": "galadriel.js",
   "version": "0.1.0",
   "description": "A versatile JavaScript library empowering developers to create elegant, dynamically responsive user interfaces. Focused on modularity and simplicity, enabling the crafting of captivating web applications with optimized performance. Unleash your creativity and let Galadriel.js illuminate your design process.",
   "main": "src/index.js",
