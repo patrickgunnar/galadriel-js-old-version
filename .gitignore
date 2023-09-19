@@ -59,3 +59,4 @@ yarn.lock
 # Ignore .idea folder
 .idea/
 src/index.html
+src/index.ts
