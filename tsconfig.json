@@ -18,6 +18,6 @@
             "*": ["./types/*"]
         }
     },
-    "include": ["src/**/*.ts", "src/**/*.js", "types/**/*.ts"],
+    "include": ["src/**/*.ts", "src/**/*.js", "types/**/*.ts", "toolkit/**/*.ts"],
     "exclude": ["node_modules", "dist", "src/index.js"]
 }
