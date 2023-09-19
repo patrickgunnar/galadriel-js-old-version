@@ -3,7 +3,7 @@
         "allowJs": true,
         "checkJs": true,
         "rootDir": "./",
-        "outDir": "./builds",
+        "outDir": "./dist/builds",
         "target": "ES6",
         "module": "CommonJS",
         "strict": true,
@@ -15,7 +15,7 @@
         "isolatedModules": true,
         "declaration": true,
         "paths": {
-            "*": ["./types/*"]
+            "*": ["./src/*", "./toolkit/*", "./types/*"]
         }
     },
     "include": ["src/**/*.ts", "src/**/*.js", "types/**/*.ts", "toolkit/**/*.ts"],
