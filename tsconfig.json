@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "rootDir": "./",
+        "outDir": "./builds",
+        "target": "ES6",
+        "module": "CommonJS",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "declaration": true,
+        "paths": {
+            "*": ["./types/*"]
+        }
+    },
+    "include": ["src/**/*.ts", "src/**/*.js", "types/**/*.ts"],
+    "exclude": ["node_modules", "dist", "src/index.js"]
+}
