@@ -1,4 +1,4 @@
-import { ClassesObjectType, ExtractGaladrielCSSClassesType } from "coreTypes";
+import { ExtractGaladrielCSSClassesType } from "coreTypes";
 import { CreateClassesType } from "galadrielIntelliSense";
 import { coreStaticStyles } from "../../src/coreStaticStyles";
 
@@ -8,23 +8,27 @@ const extractGaladrielClasses: ExtractGaladrielCSSClassesType = (classes) =>
 const extractGaladrielStylesAndClassNames = (
     classesObject: CreateClassesType
 ) => {
-    const extractedStyles: ClassesObjectType = {};
+    const extractedStyles: string[] = [];
     const classNames: string[] = [];
 
-    for (const [key, value] of Object.entries(classesObject)) {
-        const currentKeyClass = `.${value}`;
+    for (const [key, selector] of Object.entries(classesObject)) {
+        const selectorCSS = `.${selector}`;
         const handleCurrentKey = coreStaticStyles[key] || {};
         const stylesForClass = handleCurrentKey({ extractGaladrielClasses });
-        const extractedStyleClass = stylesForClass[currentKeyClass];
+        const extractedStyleClass = stylesForClass[selectorCSS];
 
         // If the style for the current class is not found, skip to the next iteration
         if (!extractedStyleClass) continue;
 
-        extractedStyles[currentKeyClass] = extractedStyleClass;
-        classNames.push(value);
+        const [[objectKey, objectValue]] = Object.entries(extractedStyleClass);
+
+        classNames.push(selector);
+        extractedStyles.push(
+            `${selectorCSS} { ${objectKey}: ${objectValue}; }`
+        );
     }
 
-    return [extractedStyles, classNames.join(" ")];
+    return [extractedStyles.join(" "), classNames.join(" ")];
 };
 
 export { extractGaladrielStylesAndClassNames };
