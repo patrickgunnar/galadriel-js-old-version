@@ -5,7 +5,7 @@ export interface ExtractGaladrielClassesType {
 export interface CoreStaticStylesType {
     [key: string]: (options: {
         extractGaladrielClasses: ExtractGaladrielClassesType;
-    }) => string[];
+    }) => any;
 }
 
 export interface ClassesObjectType {
@@ -14,4 +14,8 @@ export interface ClassesObjectType {
 
 export interface GaladrielParamsType {
     [key: string]: string[];
+}
+
+export interface ExtractGaladrielCSSClassesType {
+    (classes: Record<string, Record<string, any>>): any;
 }
