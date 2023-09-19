@@ -60,3 +60,4 @@ yarn.lock
 .idea/
 src/index.html
 src/index.ts
+toolkit/utils/genTemporaryFile.ts
