@@ -38,7 +38,7 @@ module.exports = {
         hot: true, // Enable hot module replacement
     },
     watchOptions: {
-        ignored: ["node_modules", "build", "dist/**"],
+        ignored: ["node_modules", "builds", "dist/**"],
     },
     plugins: [
         // Copy everything from src to dist, including HTML files
