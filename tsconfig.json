@@ -14,10 +14,8 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "declaration": true,
-        "paths": {
-            "*": ["./src/*", "./toolkit/*", "./types/*"]
-        }
+        "types": ["node"]
     },
-    "include": ["src/**/*.ts", "src/**/*.js", "types/**/*.ts", "toolkit/**/*.ts"],
-    "exclude": ["node_modules", "dist", "src/index.js"]
+    "include": ["tools/**/*", "types/**/*", "toolkit/**/*", "index.ts"],
+    "exclude": ["node_modules", "dist", "tools/index.js"]
 }

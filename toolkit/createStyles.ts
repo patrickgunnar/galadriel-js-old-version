@@ -1,5 +1,5 @@
-import { genClassNames } from "../toolkit/utils/genClassNames";
 import { CreateClassesType } from "../types/galadrielIntelliSense";
+import { genClassNames } from "./utils/genClassNames";
 
 interface CallbackType {
     (): CreateClassesType;
@@ -14,7 +14,7 @@ const createStyles: CreateStylesType = (callback): string => {
 
     if (!classesObject) return "";
 
-    return genClassNames(classesObject)
+    return genClassNames(classesObject);
 };
 
 export { createStyles };

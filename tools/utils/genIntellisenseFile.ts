@@ -2,6 +2,7 @@ import { writeFileSync } from "fs";
 import { dynamicStylesObject } from "./dynamicStylesObject";
 import { genGaladrielTypes } from "./genGaladrielTypes";
 
+
 const staticStyles = dynamicStylesObject();
 const objectsMerges = { ...staticStyles };
 const intelliSenseStr = genGaladrielTypes(objectsMerges);

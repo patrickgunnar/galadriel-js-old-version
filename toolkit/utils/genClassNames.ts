@@ -1,6 +1,6 @@
-import { coreStaticStyles } from "../../src/coreStaticStyles";
-import { ExtractGaladrielCSSClassesType } from "coreTypes";
-import { CreateClassesType } from "galadrielIntelliSense";
+import { coreStaticStyles } from "../../tools/coreStaticStyles";
+import { ExtractGaladrielCSSClassesType } from "../../types/coreTypes";
+import { CreateClassesType } from "../../types/galadrielIntelliSense";
 
 const extractGaladrielClasses: ExtractGaladrielCSSClassesType = (classes) =>
     classes;

@@ -2,7 +2,7 @@ const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-    entry: "./src/index.ts", // Entry point of your library
+    entry: "./index.ts", // Entry point of your library
     output: {
         filename: "index.js", // Output file name
         path: path.resolve(__dirname, "dist"), // Output directory
@@ -56,14 +56,30 @@ module.exports = {
         hot: true, // Enable hot module replacement
     },
     watchOptions: {
-        ignored: ["node_modules", "builds", "dist/**"],
+        ignored: ["node_modules", "builds/**", "dist/**"],
     },
     plugins: [
-        // Copy everything from src to dist, including HTML files
+        // Copy everything to dist, including HTML files
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: "src",
+                    from: "tools",
+                    to: "tools",
+                },
+                {
+                    from: "toolkit",
+                    to: "toolkit",
+                },
+                {
+                    from: "types",
+                    to: "types",
+                },
+                {
+                    from: "index.ts",
+                    to: "",
+                },
+                {
+                    from: "index.html",
                     to: "",
                 },
             ],

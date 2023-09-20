@@ -1,5 +1,5 @@
-import { coreStaticStyles } from "../coreStaticStyles";
 import { ExtractGaladrielCSSClassesType } from "../../types/coreTypes";
+import { coreStaticStyles } from "../coreStaticStyles";
 
 interface ObjectEntry {
     [key: string]: string;
@@ -26,4 +26,4 @@ const genStaticClasses = () => {
         .join(" ");
 };
 
-export { genStaticClasses }
+export { genStaticClasses };
