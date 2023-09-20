@@ -63,3 +63,4 @@ src/index.ts
 toolkit/utils/genTemporaryFile.ts
 index.html
 index.ts
+types/coreTypes.js
