@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "webpack": "npx webpack --watch",
-    "start": "tsc && node ./dist/builds/tools/utils/genIntellisenseFile.js && node ./dist/builds/tools/utils/genStaticCSS.js && npx webpack --watch",
+    "transcend": "node compileToJavaScript.js && node intellisenseTypes.js",
+    "start": "npx webpack --watch",
     "dev": "npx webpack serve --config webpack.config.js"
   },
   "type": "commonjs",
