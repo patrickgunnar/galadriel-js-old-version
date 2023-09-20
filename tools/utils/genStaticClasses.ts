@@ -19,7 +19,9 @@ const genStaticClasses = () => {
                     ([selector, properties]) =>
                         `${selector} { ${Object.entries(
                             properties as ObjectEntry
-                        ).map(([prop, value]) => `${prop}: ${value}`)}; }`
+                        )
+                            .map(([prop, value]) => `${prop}: ${value};`)
+                            .join(" ")} }`
                 )
                 .join(" ")
         )
