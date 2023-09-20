@@ -1,7 +1,14 @@
+const staticStylesPlugin = require("./plugin/staticStylesPlugin");
+
+const postcssAutoprefixer = require("autoprefixer");
+const postcssCssnano = require("cssnano");
+const postcssPresetEnv = require("postcss-preset-env");
+
 module.exports = {
-    plugins: {
-        autoprefixer: {},
-        cssnano: {},
-        "postcss-preset-env": {},
-    },
+    plugins: [
+        staticStylesPlugin(),
+        postcssAutoprefixer(),
+        postcssCssnano(),
+        postcssPresetEnv(),
+    ],
 };
