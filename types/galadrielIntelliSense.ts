@@ -137,16 +137,94 @@
  type transitionProperty = 'transition-state-all' | 'transition-state-none';
 
  /**
- * Options to alignItems:
- * adjust-center
+ * Options to transitionTimingFunction:
+ * passage-timing-ease, passage-timing-linear, passage-timing-ease-in, passage-timing-ease-out, passage-timing-ease-in-out, passage-timing-step-start, passage-timing-step-end
  */
- type alignItems = 'adjust-center';
+ type transitionTimingFunction = 'passage-timing-ease' | 'passage-timing-linear' | 'passage-timing-ease-in' | 'passage-timing-ease-out' | 'passage-timing-ease-in-out' | 'passage-timing-step-start' | 'passage-timing-step-end';
+
+ /**
+ * Options to flexDirection:
+ * flex-orientation-row, flex-orientation-row-reverse, flex-orientation-column, flex-orientation-column-reverse
+ */
+ type flexDirection = 'flex-orientation-row' | 'flex-orientation-row-reverse' | 'flex-orientation-column' | 'flex-orientation-column-reverse';
+
+ /**
+ * Options to flexWrap:
+ * flex-enclose-nowrap, flex-enclose-wrap, flex-enclose-wrap-reverse
+ */
+ type flexWrap = 'flex-enclose-nowrap' | 'flex-enclose-wrap' | 'flex-enclose-wrap-reverse';
 
  /**
  * Options to justifyContent:
- * organize-center
+ * organize-center, organize-flex-start, organize-flex-end, organize-space-between, organize-space-around, organize-space-evenly, organize-normal, organize-start, organize-end, organize-stretch, organize-left, organize-right
  */
- type justifyContent = 'organize-center';
+ type justifyContent = 'organize-center' | 'organize-flex-start' | 'organize-flex-end' | 'organize-space-between' | 'organize-space-around' | 'organize-space-evenly' | 'organize-normal' | 'organize-start' | 'organize-end' | 'organize-stretch' | 'organize-left' | 'organize-right';
+
+ /**
+ * Options to alignItems:
+ * adjust-center, adjust-flex-start, adjust-flex-end, adjust-stretch, adjust-baseline, adjust-normal, adjust-start, adjust-end, adjust-self-start, adjust-self-end
+ */
+ type alignItems = 'adjust-center' | 'adjust-flex-start' | 'adjust-flex-end' | 'adjust-stretch' | 'adjust-baseline' | 'adjust-normal' | 'adjust-start' | 'adjust-end' | 'adjust-self-start' | 'adjust-self-end';
+
+ /**
+ * Options to alignSelf:
+ * place-self-auto, place-self-flex-start, place-self-flex-end, place-self-center, place-self-baseline, place-self-stretch, place-self-normal, place-self-start, place-self-end, place-self-self-start, place-self-self-end
+ */
+ type alignSelf = 'place-self-auto' | 'place-self-flex-start' | 'place-self-flex-end' | 'place-self-center' | 'place-self-baseline' | 'place-self-stretch' | 'place-self-normal' | 'place-self-start' | 'place-self-end' | 'place-self-self-start' | 'place-self-self-end';
+
+ /**
+ * Options to alignContent:
+ * match-content-stretch, match-content-flex-start, match-content-flex-end, match-content-center, match-content-space-between, match-content-space-around, match-content-space-evenly, match-content-start, match-content-end, match-content-normal, match-content-baseline
+ */
+ type alignContent = 'match-content-stretch' | 'match-content-flex-start' | 'match-content-flex-end' | 'match-content-center' | 'match-content-space-between' | 'match-content-space-around' | 'match-content-space-evenly' | 'match-content-start' | 'match-content-end' | 'match-content-normal' | 'match-content-baseline';
+
+ /**
+ * Options to textJustify:
+ * text-balance-none, text-balance-auto, text-balance-inter-word, text-balance-inter-character, text-balance-distribute
+ */
+ type textJustify = 'text-balance-none' | 'text-balance-auto' | 'text-balance-inter-word' | 'text-balance-inter-character' | 'text-balance-distribute';
+
+ /**
+ * Options to textOverflow:
+ * text-exceed-ellipsis, text-exceed-clip
+ */
+ type textOverflow = 'text-exceed-ellipsis' | 'text-exceed-clip';
+
+ /**
+ * Options to boxDecorationBreak:
+ * box-ornament-break-slice, box-ornament-break-clone
+ */
+ type boxDecorationBreak = 'box-ornament-break-slice' | 'box-ornament-break-clone';
+
+ /**
+ * Options to tableLayout:
+ * table-scheme-auto, table-scheme-fixed
+ */
+ type tableLayout = 'table-scheme-auto' | 'table-scheme-fixed';
+
+ /**
+ * Options to captionSide:
+ * caption-facet-top, caption-facet-bottom, caption-facet-block-start, caption-facet-block-end, caption-facet-inline-start, caption-facet-inline-end
+ */
+ type captionSide = 'caption-facet-top' | 'caption-facet-bottom' | 'caption-facet-block-start' | 'caption-facet-block-end' | 'caption-facet-inline-start' | 'caption-facet-inline-end';
+
+ /**
+ * Options to quote:
+ * quotation-auto, quotation-none, quotation-french-marks, quotation-french-marks-guillemet-marks
+ */
+ type quote = 'quotation-auto' | 'quotation-none' | 'quotation-french-marks' | 'quotation-french-marks-guillemet-marks';
+
+ /**
+ * Options to columnCount:
+ * tower-count-auto
+ */
+ type columnCount = 'tower-count-auto';
+
+ /**
+ * Options to columnGap:
+ * pedestal-gap-normal
+ */
+ type columnGap = 'pedestal-gap-normal';
 
  /**
  * Options to width:
@@ -172,4 +250,4 @@
  */
  type backgroundColor = 'background-blue';
 
- export interface CreateClassesType { display?: display;  position?: position;  float?: float;  visibility?: visibility;  clear?: clear;  overflow?: overflow;  overflowY?: overflowY;  overflowX?: overflowX;  overflowWrap?: overflowWrap;  whiteSpace?: whiteSpace;  listStyleType?: listStyleType;  textAlign?: textAlign;  verticalAlign?: verticalAlign;  wordBreak?: wordBreak;  fontWeight?: fontWeight;  textDecoration?: textDecoration;  boxSizing?: boxSizing;  cursor?: cursor;  pointerEvents?: pointerEvents;  outlineStyle?: outlineStyle;  boxShadow?: boxShadow;  textTransform?: textTransform;  transitionProperty?: transitionProperty;  alignItems?: alignItems;  justifyContent?: justifyContent;  width?: width;  height?: height;  aspectRatio?: aspectRatio;  backgroundColor?: backgroundColor;  }
+ export interface CreateClassesType { display?: display;  position?: position;  float?: float;  visibility?: visibility;  clear?: clear;  overflow?: overflow;  overflowY?: overflowY;  overflowX?: overflowX;  overflowWrap?: overflowWrap;  whiteSpace?: whiteSpace;  listStyleType?: listStyleType;  textAlign?: textAlign;  verticalAlign?: verticalAlign;  wordBreak?: wordBreak;  fontWeight?: fontWeight;  textDecoration?: textDecoration;  boxSizing?: boxSizing;  cursor?: cursor;  pointerEvents?: pointerEvents;  outlineStyle?: outlineStyle;  boxShadow?: boxShadow;  textTransform?: textTransform;  transitionProperty?: transitionProperty;  transitionTimingFunction?: transitionTimingFunction;  flexDirection?: flexDirection;  flexWrap?: flexWrap;  justifyContent?: justifyContent;  alignItems?: alignItems;  alignSelf?: alignSelf;  alignContent?: alignContent;  textJustify?: textJustify;  textOverflow?: textOverflow;  boxDecorationBreak?: boxDecorationBreak;  tableLayout?: tableLayout;  captionSide?: captionSide;  quote?: quote;  columnCount?: columnCount;  columnGap?: columnGap;  width?: width;  height?: height;  aspectRatio?: aspectRatio;  backgroundColor?: backgroundColor;  }

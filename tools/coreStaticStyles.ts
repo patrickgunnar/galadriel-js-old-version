@@ -1,6 +1,9 @@
 import { CoreStaticStylesType } from "../types/coreTypes";
 
 export const coreStaticStyles: CoreStaticStylesType = {
+    /*
+        STATIC CLASSES
+    */
     display: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({
             ".panel-hidden": { display: "none" },
@@ -136,7 +139,9 @@ export const coreStaticStyles: CoreStaticStylesType = {
             ".text-dressing-none": { "text-decoration": "none" },
             ".text-dressing-underline": { "text-decoration": "underline" },
             ".text-dressing-overline": { "text-decoration": "overline" },
-            ".text-dressing-line-through": { "text-decoration": "line-through" },
+            ".text-dressing-line-through": {
+                "text-decoration": "line-through",
+            },
         }),
     boxSizing: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({
@@ -195,14 +200,157 @@ export const coreStaticStyles: CoreStaticStylesType = {
             ".transition-state-all": { "transition-property": "all" },
             ".transition-state-none": { "transition-property": "none" },
         }),
-    alignItems: ({ extractGaladrielClasses }) =>
+    transitionTimingFunction: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({
-            ".adjust-center": { "align-items": "center" },
+            ".passage-timing-ease": { "transition-timing-function": "ease" },
+            ".passage-timing-linear": {
+                "transition-timing-function": "linear",
+            },
+            ".passage-timing-ease-in": {
+                "transition-timing-function": "ease-in",
+            },
+            ".passage-timing-ease-out": {
+                "transition-timing-function": "ease-out",
+            },
+            ".passage-timing-ease-in-out": {
+                "transition-timing-function": "ease-in-out",
+            },
+            ".passage-timing-step-start": {
+                "transition-timing-function": "step-start",
+            },
+            ".passage-timing-step-end": {
+                "transition-timing-function": "step-end",
+            },
+        }),
+    flexDirection: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".flex-orientation-row": { "flex-direction": "row" },
+            ".flex-orientation-row-reverse": {
+                "flex-direction": "row-reverse",
+            },
+            ".flex-orientation-column": { "flex-direction": "column" },
+            ".flex-orientation-column-reverse": {
+                "flex-direction": "column-reverse",
+            },
+        }),
+    flexWrap: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".flex-enclose-nowrap": { "flex-wrap": "nowrap" },
+            ".flex-enclose-wrap": { "flex-wrap": "wrap" },
+            ".flex-enclose-wrap-reverse": { "flex-wrap": "wrap-reverse" },
         }),
     justifyContent: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({
             ".organize-center": { "justify-content": "center" },
+            ".organize-flex-start": { "justify-content": "flex-start" },
+            ".organize-flex-end": { "justify-content": "flex-end" },
+            ".organize-space-between": { "justify-content": "space-between" },
+            ".organize-space-around": { "justify-content": "space-around" },
+            ".organize-space-evenly": { "justify-content": "space-evenly" },
+            ".organize-normal": { "justify-content": "normal" },
+            ".organize-start": { "justify-content": "start" },
+            ".organize-end": { "justify-content": "end" },
+            ".organize-stretch": { "justify-content": "stretch" },
+            ".organize-left": { "justify-content": "left" },
+            ".organize-right": { "justify-content": "right" },
         }),
+    alignItems: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".adjust-center": { "align-items": "center" },
+            ".adjust-flex-start": { "align-items": "flex-start" },
+            ".adjust-flex-end": { "align-items": "flex-end" },
+            ".adjust-stretch": { "align-items": "stretch" },
+            ".adjust-baseline": { "align-items": "baseline" },
+            ".adjust-normal": { "align-items": "normal" },
+            ".adjust-start": { "align-items": "start" },
+            ".adjust-end": { "align-items": "end" },
+            ".adjust-self-start": { "align-items": "self-start" },
+            ".adjust-self-end": { "align-items": "self-end" },
+        }),
+    alignSelf: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".place-self-auto": { "align-self": "auto" },
+            ".place-self-flex-start": { "align-self": "flex-start" },
+            ".place-self-flex-end": { "align-self": "flex-end" },
+            ".place-self-center": { "align-self": "center" },
+            ".place-self-baseline": { "align-self": "baseline" },
+            ".place-self-stretch": { "align-self": "stretch" },
+            ".place-self-normal": { "align-self": "normal" },
+            ".place-self-start": { "align-self": "start" },
+            ".place-self-end": { "align-self": "end" },
+            ".place-self-self-start": { "align-self": "self-start" },
+            ".place-self-self-end": { "align-self": "self-end" },
+        }),
+    alignContent: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".match-content-stretch": { "align-content": "stretch" },
+            ".match-content-flex-start": { "align-content": "flex-start" },
+            ".match-content-flex-end": { "align-content": "flex-end" },
+            ".match-content-center": { "align-content": "center" },
+            ".match-content-space-between": {
+                "align-content": "space-between",
+            },
+            ".match-content-space-around": { "align-content": "space-around" },
+            ".match-content-space-evenly": { "align-content": "space-evenly" },
+            ".match-content-start": { "align-content": "start" },
+            ".match-content-end": { "align-content": "end" },
+            ".match-content-normal": { "align-content": "normal" },
+            ".match-content-baseline": { "align-content": "baseline" },
+        }),
+    textJustify: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".text-balance-none": { "text-justify": "none" },
+            ".text-balance-auto": { "text-justify": "auto" },
+            ".text-balance-inter-word": { "text-justify": "inter-word" },
+            ".text-balance-inter-character": {
+                "text-justify": "inter-character",
+            },
+            ".text-balance-distribute": { "text-justify": "distribute" },
+        }),
+    textOverflow: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".text-exceed-ellipsis": { "text-overflow": "ellipsis" },
+            ".text-exceed-clip": { "text-overflow": "clip" },
+        }),
+    boxDecorationBreak: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".box-ornament-break-slice": { "box-decoration-break": "slice" },
+            ".box-ornament-break-clone": { "box-decoration-break": "clone" },
+        }),
+    tableLayout: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".table-scheme-auto": { "table-layout": "auto" },
+            ".table-scheme-fixed": { "table-layout": "fixed" },
+        }),
+    captionSide: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".caption-facet-top": { "caption-side": "top" },
+            ".caption-facet-bottom": { "caption-side": "bottom" },
+            ".caption-facet-block-start": { "caption-side": "block-start" },
+            ".caption-facet-block-end": { "caption-side": "block-end" },
+            ".caption-facet-inline-start": { "caption-side": "inline-start" },
+            ".caption-facet-inline-end": { "caption-side": "inline-end" },
+        }),
+    quote: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".quotation-auto": { quotes: "auto" },
+            ".quotation-none": { quotes: "none" },
+            ".quotation-french-marks": { quotes: "'«' '»'" },
+            ".quotation-french-marks-guillemet-marks": {
+                quotes: "'«' '»' '‹' '›'",
+            },
+        }),
+    columnCount: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".tower-count-auto": { "column-count": "auto" },
+        }),
+    columnGap: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".pedestal-gap-normal": { "column-gap": "normal" },
+        }),
+    /*
+        CUSTOM CLASSES FOR ELEMENTS
+    */
     width: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({
             ".extend-full-viewport": { width: "100vw" },
