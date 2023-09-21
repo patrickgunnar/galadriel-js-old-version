@@ -70,3 +70,5 @@ scripts/builds/scripts/genStaticClasses.js
 scripts/builds/scripts/genGaladrielTypes.js
 scripts/builds/scripts/extractGaladrielClasses.js
 scripts/builds/scripts/dynamicStylesObject.js
+des.html
+des.js
