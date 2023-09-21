@@ -72,3 +72,5 @@ scripts/builds/scripts/extractGaladrielClasses.js
 scripts/builds/scripts/dynamicStylesObject.js
 des.html
 des.js
+types/galadrielIntelliSense.js
+toolkit/createStyles.js
