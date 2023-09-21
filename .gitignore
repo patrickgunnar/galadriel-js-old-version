@@ -64,3 +64,9 @@ toolkit/utils/genTemporaryFile.ts
 index.html
 index.ts
 types/coreTypes.js
+scripts/builds/types/coreTypes.js
+scripts/builds/tools/coreStaticStyles.js
+scripts/builds/scripts/genStaticClasses.js
+scripts/builds/scripts/genGaladrielTypes.js
+scripts/builds/scripts/extractGaladrielClasses.js
+scripts/builds/scripts/dynamicStylesObject.js
