@@ -367,7 +367,6 @@ exports.coreStaticStyles = {
             ".text-balance-inter-character": {
                 "text-justify": "inter-character",
             },
-            ".text-balance-distribute": { "text-justify": "distribute" },
         });
     },
     textOverflow: function (_a) {

@@ -305,7 +305,6 @@ export const coreStaticStyles: CoreStaticStylesType = {
             ".text-balance-inter-character": {
                 "text-justify": "inter-character",
             },
-            ".text-balance-distribute": { "text-justify": "distribute" },
         }),
     textOverflow: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({

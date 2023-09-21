@@ -180,9 +180,9 @@
 
  /**
  * Options to textJustify:
- * text-balance-none, text-balance-auto, text-balance-inter-word, text-balance-inter-character, text-balance-distribute
+ * text-balance-none, text-balance-auto, text-balance-inter-word, text-balance-inter-character
  */
- type textJustify = 'text-balance-none' | 'text-balance-auto' | 'text-balance-inter-word' | 'text-balance-inter-character' | 'text-balance-distribute';
+ type textJustify = 'text-balance-none' | 'text-balance-auto' | 'text-balance-inter-word' | 'text-balance-inter-character';
 
  /**
  * Options to textOverflow:
