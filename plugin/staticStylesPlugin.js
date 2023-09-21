@@ -1,4 +1,4 @@
-const { genStaticClasses } = require("../tools/utils/genStaticClasses");
+const { genStaticClasses } = require("../scripts/builds/scripts/genStaticClasses");
 
 const postcss = require("postcss");
 const path = require("path");
