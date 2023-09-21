@@ -1,4 +1,4 @@
-const staticStylesPlugin = require("./plugin/staticStylesPlugin");
+const staticStylesPlugin = require("./plugins/staticStylesPlugin");
 
 const postcssAutoprefixer = require("autoprefixer");
 const postcssCssnano = require("cssnano");
