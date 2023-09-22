@@ -1,26 +1,51 @@
+const { extractClasses } = require("./extractClasses");
+const { extractNestedObjectClasses } = require("./extractNestedObjectClasses");
 const { getAllFiles } = require("./getAllFiles");
 const { getConfigSettings } = require("./getConfigSettings");
 const { parseFile } = require("./parseFile");
 
-const galadrielConfig = getConfigSettings();
-const toExclude = galadrielConfig?.exclude || [];
 const __dir = ".";
 const __types = [".js", ".jsx", ".ts", ".tsx", ".html"];
-const files = getAllFiles(__dir, __types, toExclude);
 
-const processObjects = (files) => {
-    for (const file of files) {
-        const parsedContent = parseFile(file);
+const processObjects = () => {
+    const __galadrielConfig = getConfigSettings();
+    const __toExclude = __galadrielConfig?.exclude || [];
+    const __files = getAllFiles(__dir, __types, __toExclude);
+    const __staticStyles = [];
+
+    for (const __file of __files) {
+        const parsedContent = parseFile(__file);
 
         if (parsedContent) {
-            for (const obj of parsedContent) {
-                console.log(`${file} `, obj)
-            }
+            parsedContent.forEach((obj) => {
+                Object.entries(obj).forEach(([key, value]) => {
+                    if (Array.isArray(value)) {
+                        value.forEach((nestedValue) => {
+                            Object.entries(nestedValue).forEach(
+                                ([nestedObjKey, nestedObjValue]) => {
+                                    extractNestedObjectClasses(
+                                        key,
+                                        nestedObjKey,
+                                        nestedObjValue
+                                    );
+                                }
+                            );
+                        });
+                    } else {
+                        const strStyle = extractClasses(key, value);
 
-            //console.log(parsedContent)
+                        if (strStyle && !__staticStyles.includes(strStyle)) {
+                            __staticStyles.push(strStyle);
+                        }
+                    }
+                });
+            });
         }
     }
+
+    const staticStyles = __staticStyles.join(" ")
+
+    return { staticStyles };
 };
 
-processObjects(files);
-//module.exports = { processObjects };
+module.exports = { processObjects };
