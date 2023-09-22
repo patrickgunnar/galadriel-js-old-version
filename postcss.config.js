@@ -6,9 +6,9 @@ const postcssPresetEnv = require("postcss-preset-env");
 
 module.exports = {
     plugins: [
-        genStylesPlugin(),
         postcssAutoprefixer(),
         postcssCssnano(),
         postcssPresetEnv(),
+        genStylesPlugin(),
     ],
 };
