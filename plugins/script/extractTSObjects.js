@@ -9,9 +9,14 @@ function extractTSObjects(node) {
         for (const property of node.properties) {
             if (property.kind === SyntaxKind.PropertyAssignment) {
                 const key = property.name.text;
-                const value = property.initializer.text;
+                const valueNode = property.initializer;
 
-                obj[key] = value;
+                // If the value is another object, recursively extract its properties
+                if (valueNode.kind === SyntaxKind.ObjectLiteralExpression) {
+                    obj[key] = extractTSObjects(valueNode);
+                } else {
+                    obj[key] = valueNode.text;
+                }
             }
         }
 
