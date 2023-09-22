@@ -16,6 +16,6 @@
         "declaration": true,
         "types": ["node"]
     },
-    "include": ["tools/**/*", "types/**/*", "toolkit/**/*", "index.ts"],
-    "exclude": ["node_modules", "dist", "tools/index.js"]
+    "include": ["types/**/*", "toolkit/**/*", "index.ts", "scripts"],
+    "exclude": ["node_modules", "dist", "core"]
 }
