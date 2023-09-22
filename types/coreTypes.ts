@@ -19,3 +19,11 @@ export interface GaladrielParamsType {
 export interface ExtractGaladrielCSSClassesType {
     (classes: Record<string, Record<string, any>>): any;
 }
+
+export interface ButtonColorProps {
+    bgColor: string;
+    borderColor: string;
+    bsColorOne: string;
+    bsColorTwo: string;
+    filterColor: string;
+}
