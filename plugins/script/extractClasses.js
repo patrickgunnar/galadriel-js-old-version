@@ -1,4 +1,4 @@
-const { coreStaticStyles } = require("../builds/core/coreStaticStyles");
+const { coreStaticStyles } = require("../builds/sourceCore/coreStaticStyles");
 
 const extractGaladrielClasses = (classes) => {
     return classes;
@@ -16,11 +16,24 @@ const extractStaticStyle = (key, value) => {
         const staticProperties = staticPropertiesHandler[selector];
 
         if (staticProperties) {
+            const pseudoStyleHandler = [];
             const staticStyleString = Object.entries(staticProperties)
-                .map(([property, value]) => `${property}: ${value};`)
+                .map(([property, value]) => {
+                    if (property.includes("&")) {
+                        pseudoStyleHandler.push(
+                            `${property.replace("&", selector)} ${value}`
+                        );
+
+                        return;
+                    }
+
+                    return `${property}: ${value};`;
+                })
                 .join(" ");
 
-            return `${selector} { ${staticStyleString} }`;
+            return `${selector} { ${staticStyleString} } ${pseudoStyleHandler.join(
+                " "
+            )}`;
         }
     }
 
