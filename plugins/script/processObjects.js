@@ -13,7 +13,11 @@ const processObjects = (files) => {
         const parsedContent = parseFile(file);
 
         if (parsedContent) {
-            console.log(parsedContent);
+            for (const obj of parsedContent) {
+                console.log(`${file} `, obj)
+            }
+
+            //console.log(parsedContent)
         }
     }
 };
