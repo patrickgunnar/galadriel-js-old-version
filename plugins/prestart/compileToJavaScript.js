@@ -1,6 +1,6 @@
 const { exec } = require("child_process");
 
-exec("tsc core/* --outDir plugins/builds", (error, stdout, stderr) => {
+exec("tsc sourceCore/* --outDir plugins/builds", (error, stdout, stderr) => {
     if (error) {
         console.error("Error compiling core files.");
     } else {
