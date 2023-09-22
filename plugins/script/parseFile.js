@@ -30,7 +30,7 @@ const parseFile = (filePath) => {
         });
 
         // Call the extractJSObjects
-        return extractJSObjects(ast); //extractTSObjects(sourceFile);
+        return extractJSObjects(ast);
     } else if (extension === "html") {
         // Extract objects from HTML
         const extractedJs = extractJSFromHTML(fileContent);
