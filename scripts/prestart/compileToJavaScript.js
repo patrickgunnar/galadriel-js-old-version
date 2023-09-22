@@ -1,6 +1,7 @@
 const { exec } = require("child_process");
 
 const compileToJavaScript = [
+    "sourceCore/coreStaticStyles.ts",
     "scripts/prestart/intellisenseTypes.ts",
     "scripts/dynamicStylesObject.ts",
     "scripts/genGaladrielTypes.ts",
