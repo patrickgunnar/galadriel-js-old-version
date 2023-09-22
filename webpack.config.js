@@ -16,6 +16,13 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader", // Use Babel for transpiling
+                },
+            },
+            {
                 test: /\.ts$/,
                 exclude: /node_modules/,
                 use: {
@@ -56,15 +63,19 @@ module.exports = {
         hot: true, // Enable hot module replacement
     },
     watchOptions: {
-        ignored: ["node_modules", "builds/**", "dist/**"],
+        ignored: ["node_modules", "builds/**", "dist/**", "core/**"],
     },
     plugins: [
         // Copy everything to dist, including HTML files
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: "core",
-                    to: "core",
+                    from: "sourceCore",
+                    to: "sourceCore",
+                },
+                {
+                    from: "plugins",
+                    to: "plugins",
                 },
                 {
                     from: "toolkit",
