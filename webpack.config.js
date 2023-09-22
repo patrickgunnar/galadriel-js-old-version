@@ -63,8 +63,8 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: "tools",
-                    to: "tools",
+                    from: "core",
+                    to: "core",
                 },
                 {
                     from: "toolkit",
