@@ -1,4 +1,4 @@
-const staticStylesPlugin = require("./plugins/staticStylesPlugin");
+const genStylesPlugin = require("./plugins/genStylesPlugin");
 
 const postcssAutoprefixer = require("autoprefixer");
 const postcssCssnano = require("cssnano");
@@ -6,7 +6,7 @@ const postcssPresetEnv = require("postcss-preset-env");
 
 module.exports = {
     plugins: [
-        staticStylesPlugin(),
+        genStylesPlugin(),
         postcssAutoprefixer(),
         postcssCssnano(),
         postcssPresetEnv(),
