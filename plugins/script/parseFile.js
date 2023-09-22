@@ -1,10 +1,9 @@
 const fs = require("fs");
 const acorn = require("acorn");
-const { ScriptTarget, createSourceFile } = require("typescript");
 
 const { extractJSObjects } = require("./extractJSObjects");
-const { extractTSObjects } = require("./extractTSObjects");
 const { extractJSFromHTML } = require("./extractJSFromHTML");
+const { compileTsToJs } = require("./compileTsToJs");
 
 const parseFile = (filePath) => {
     const fileContent = fs.readFileSync(filePath, "utf-8");
@@ -23,14 +22,15 @@ const parseFile = (filePath) => {
         return extractJSObjects(ast);
     } else if (extension === "ts" || extension === "tsx") {
         // Parse TypeScript/TSX
-        const sourceFile = createSourceFile(
-            filePath,
-            fileContent,
-            ScriptTarget.Latest
-        );
+        const compiledJS = compileTsToJs(fileContent);
+        // Parse JavaScript/JSX
+        const ast = acorn.parse(compiledJS, {
+            ecmaVersion: "latest",
+            sourceType: "module",
+        });
 
-        // Call the extractTSObjects
-        return extractTSObjects(sourceFile);
+        // Call the extractJSObjects
+        return extractJSObjects(ast); //extractTSObjects(sourceFile);
     } else if (extension === "html") {
         // Extract objects from HTML
         const extractedJs = extractJSFromHTML(fileContent);
