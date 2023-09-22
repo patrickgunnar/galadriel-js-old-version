@@ -43,7 +43,7 @@ const processObjects = () => {
         }
     }
 
-    const staticStyles = __staticStyles.join(" ")
+    const staticStyles = __staticStyles.join(" ");
 
     return { staticStyles };
 };
