@@ -227,22 +227,16 @@
  type columnGap = 'pedestal-gap-normal';
 
  /**
- * Options to width:
- * extend-full-viewport, extend-mid-viewport, extend-full-percent, extend-mid-percent, extend-auto
- */
- type width = 'extend-full-viewport' | 'extend-mid-viewport' | 'extend-full-percent' | 'extend-mid-percent' | 'extend-auto';
-
- /**
- * Options to height:
- * ascend-full-viewport, ascend-mid-viewport, ascend-full-percent, ascend-mid-percent, ascend-auto
- */
- type height = 'ascend-full-viewport' | 'ascend-mid-viewport' | 'ascend-full-percent' | 'ascend-mid-percent' | 'ascend-auto';
-
- /**
  * Options to aspectRatio:
  * proportion-square, proportion-auto, proportion-landscape, proportion-portrait, proportion-traditional-photo
  */
  type aspectRatio = 'proportion-square' | 'proportion-auto' | 'proportion-landscape' | 'proportion-portrait' | 'proportion-traditional-photo';
+
+ /**
+ * Options to button:
+ * element-button-light-gray, element-button-light-blue, element-button-pink, element-button-dark-coral-pink, element-button-light-olive-green, element-button-olive-green, element-button-dark-olive-green, element-button-deep-olive-green, element-button-deep-indigo, element-button-indigo, element-button-light-indigo, element-button-silver, element-button-deep-teal, element-button-deep-ruby, element-button-dark-ruby, element-button-ruby, element-button-light-ruby, element-button-light-orchid, element-button--orchid, element-button-dark-orchid, element-button-deep--orchid
+ */
+ type button = 'element-button-light-gray' | 'element-button-light-blue' | 'element-button-pink' | 'element-button-dark-coral-pink' | 'element-button-light-olive-green' | 'element-button-olive-green' | 'element-button-dark-olive-green' | 'element-button-deep-olive-green' | 'element-button-deep-indigo' | 'element-button-indigo' | 'element-button-light-indigo' | 'element-button-silver' | 'element-button-deep-teal' | 'element-button-deep-ruby' | 'element-button-dark-ruby' | 'element-button-ruby' | 'element-button-light-ruby' | 'element-button-light-orchid' | 'element-button--orchid' | 'element-button-dark-orchid' | 'element-button-deep--orchid';
 
  /**
  * Options to backgroundColor:
@@ -250,4 +244,4 @@
  */
  type backgroundColor = 'background-blue';
 
- export interface CreateClassesType { display?: display;  position?: position;  float?: float;  visibility?: visibility;  clear?: clear;  overflow?: overflow;  overflowY?: overflowY;  overflowX?: overflowX;  overflowWrap?: overflowWrap;  whiteSpace?: whiteSpace;  listStyleType?: listStyleType;  textAlign?: textAlign;  verticalAlign?: verticalAlign;  wordBreak?: wordBreak;  fontWeight?: fontWeight;  textDecoration?: textDecoration;  boxSizing?: boxSizing;  cursor?: cursor;  pointerEvents?: pointerEvents;  outlineStyle?: outlineStyle;  boxShadow?: boxShadow;  textTransform?: textTransform;  transitionProperty?: transitionProperty;  transitionTimingFunction?: transitionTimingFunction;  flexDirection?: flexDirection;  flexWrap?: flexWrap;  justifyContent?: justifyContent;  alignItems?: alignItems;  alignSelf?: alignSelf;  alignContent?: alignContent;  textJustify?: textJustify;  textOverflow?: textOverflow;  boxDecorationBreak?: boxDecorationBreak;  tableLayout?: tableLayout;  captionSide?: captionSide;  quote?: quote;  columnCount?: columnCount;  columnGap?: columnGap;  width?: width;  height?: height;  aspectRatio?: aspectRatio;  backgroundColor?: backgroundColor;  }
+ export interface CreateClassesType { display?: display;  position?: position;  float?: float;  visibility?: visibility;  clear?: clear;  overflow?: overflow;  overflowY?: overflowY;  overflowX?: overflowX;  overflowWrap?: overflowWrap;  whiteSpace?: whiteSpace;  listStyleType?: listStyleType;  textAlign?: textAlign;  verticalAlign?: verticalAlign;  wordBreak?: wordBreak;  fontWeight?: fontWeight;  textDecoration?: textDecoration;  boxSizing?: boxSizing;  cursor?: cursor;  pointerEvents?: pointerEvents;  outlineStyle?: outlineStyle;  boxShadow?: boxShadow;  textTransform?: textTransform;  transitionProperty?: transitionProperty;  transitionTimingFunction?: transitionTimingFunction;  flexDirection?: flexDirection;  flexWrap?: flexWrap;  justifyContent?: justifyContent;  alignItems?: alignItems;  alignSelf?: alignSelf;  alignContent?: alignContent;  textJustify?: textJustify;  textOverflow?: textOverflow;  boxDecorationBreak?: boxDecorationBreak;  tableLayout?: tableLayout;  captionSide?: captionSide;  quote?: quote;  columnCount?: columnCount;  columnGap?: columnGap;  aspectRatio?: aspectRatio;  button?: button;  backgroundColor?: backgroundColor;  }
