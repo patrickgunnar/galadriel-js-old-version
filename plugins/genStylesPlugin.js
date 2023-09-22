@@ -1,12 +1,11 @@
-const { genStaticClasses } = require("../scripts/builds/scripts/genStaticClasses");
-
-const postcss = require("postcss");
 const path = require("path");
 const fs = require("fs");
 
-const staticStylesPlugin = () => {
+const { processObjects } = require("./script/processObjects");
+
+const genStylesPlugin = () => {
     return {
-        postcssPlugin: "static-styles-plugin",
+        postcssPlugin: "generates-styles-plugin",
         Once(root, { result }) {
             try {
                 const staticCSSFilePath = path.join(
@@ -16,7 +15,7 @@ const staticStylesPlugin = () => {
                 );
 
                 if (fs.existsSync(staticCSSFilePath)) {
-                    const staticStyles = genStaticClasses();
+                    const { staticStyles } = processObjects();
                     // generates dynamic styles
                     // generates config styles
 
@@ -55,6 +54,6 @@ const staticStylesPlugin = () => {
     };
 };
 
-staticStylesPlugin.postcss = true;
+genStylesPlugin.postcss = true;
 
-module.exports = staticStylesPlugin;
+module.exports = genStylesPlugin;
