@@ -1,4 +1,4 @@
-import { coreStaticStyles } from "../tools/coreStaticStyles";
+import { coreStaticStyles } from "../core/coreStaticStyles";
 import { extractGaladrielClasses } from "./extractGaladrielClasses";
 
 export const dynamicStylesObject = () => {
