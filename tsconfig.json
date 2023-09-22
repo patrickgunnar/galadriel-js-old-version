@@ -17,5 +17,5 @@
         "types": ["node"]
     },
     "include": ["types/**/*", "toolkit/**/*", "index.ts", "scripts"],
-    "exclude": ["node_modules", "dist", "core"]
+    "exclude": ["node_modules", "dist", "core", "sourceCore"]
 }
