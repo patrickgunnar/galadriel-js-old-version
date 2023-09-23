@@ -1,4 +1,4 @@
-import { coreStaticStyles } from "../../../EssentiaHub/coreStaticStyles";
+import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
 import { ExtractGaladrielCSSClassesType } from "../../../types/coreTypes";
 
 const generateUtilityClasses: ExtractGaladrielCSSClassesType = (classes) =>

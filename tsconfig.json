@@ -17,7 +17,7 @@
         "types": ["node"]
     },
     "include": [
-        "EssentiaHub/**/*",
+        "PatterniaHub/**/*",
         "plugins/**/*",
         "StyleCrafters/**/*",
         "types/**/*",
