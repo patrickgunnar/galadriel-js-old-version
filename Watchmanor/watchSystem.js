@@ -1,6 +1,7 @@
 const chokidar = require("chokidar");
 const { exec } = require("child_process");
 const killPort = require("kill-port");
+const { copyFiles } = require("./copyFiles");
 
 let serverProcess;
 const sourceDir = ".";
@@ -74,5 +75,6 @@ const watchSystem = () => {
     });
 };
 
+copyFiles();
 compileTypeScript();
 watchSystem();
