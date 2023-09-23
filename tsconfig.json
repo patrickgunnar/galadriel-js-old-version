@@ -3,7 +3,7 @@
         "allowJs": true,
         "checkJs": true,
         "rootDir": "./",
-        "outDir": "./dist/builds",
+        "outDir": "./dist",
         "target": "ES6",
         "module": "CommonJS",
         "strict": true,
@@ -16,6 +16,12 @@
         "declaration": true,
         "types": ["node"]
     },
-    "include": ["types/**/*", "toolkit/**/*", "index.ts", "scripts"],
-    "exclude": ["node_modules", "dist", "core", "sourceCore"]
+    "include": [
+        "EssentiaHub/**/*",
+        "plugins/**/*",
+        "StyleCrafters/**/*",
+        "types/**/*",
+        "Watchmanor/**/*"
+    ],
+    "exclude": ["node_modules", "dist", "index.ts"]
 }

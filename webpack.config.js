@@ -11,7 +11,7 @@ module.exports = {
         umdNamedDefine: true,
     },
     resolve: {
-        extensions: [".ts", ".js"],
+        extensions: [".js"],
     },
     module: {
         rules: [
@@ -26,7 +26,7 @@ module.exports = {
                 test: /\.ts$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader", // Use Babel for transpiling
+                    loader: "babel-loader",
                     options: {
                         presets: ["@babel/preset-env"],
                     },
@@ -63,37 +63,22 @@ module.exports = {
         hot: true, // Enable hot module replacement
     },
     watchOptions: {
-        ignored: ["node_modules", "builds/**", "dist/**", "core/**"],
+        ignored: /(?<!\/dist.*)$/,
     },
     plugins: [
-        // Copy everything to dist, including HTML files
         new CopyWebpackPlugin({
             patterns: [
-                {
-                    from: "sourceCore",
-                    to: "sourceCore",
-                },
-                {
-                    from: "plugins",
-                    to: "plugins",
-                },
-                {
-                    from: "toolkit",
-                    to: "toolkit",
-                },
-                {
-                    from: "types",
-                    to: "types",
-                },
-                {
-                    from: "index.ts",
-                    to: "",
-                },
                 {
                     from: "index.html",
                     to: "",
                 },
             ],
+            options: {
+                ignore: [
+                    "**/*", // Ignore everything
+                    "!index.html", // Except index.html
+                ],
+            },
         }),
     ],
 };
