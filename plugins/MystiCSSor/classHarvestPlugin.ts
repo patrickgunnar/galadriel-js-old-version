@@ -33,7 +33,7 @@ const classHarvestPlugin = () => {
                         __dirname,
                         "..",
                         "..",
-                        "dist"
+                        "styles"
                     );
 
                     if (!fs.existsSync(__destinyPath)) {
