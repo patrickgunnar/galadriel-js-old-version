@@ -69,16 +69,14 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: "index.html",
+                    from: "./index.html",
+                    to: "",
+                },
+                {
+                    from: "./galadriel.css",
                     to: "",
                 },
             ],
-            options: {
-                ignore: [
-                    "**/*", // Ignore everything
-                    "!index.html", // Except index.html
-                ],
-            },
         }),
     ],
 };
