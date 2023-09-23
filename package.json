@@ -5,10 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "prestart": "node scripts/prestart/compileToJavaScript.js && node builds/scripts/prestart/intellisenseTypes.js && node plugins/prestart/compileToJavaScript.js",
     "start": "npx webpack --watch",
     "dev": "npx webpack serve --config webpack.config.js",
-    "build": "node scripts/prestart/compileToJavaScript.js && node builds/scripts/prestart/intellisenseTypes.js && node plugins/prestart/compileToJavaScript.js"
+    "build": "tsc --watch"
   },
   "type": "commonjs",
   "repository": {
