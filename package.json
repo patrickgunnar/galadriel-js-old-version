@@ -39,7 +39,6 @@
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.22.15",
     "@types/kill-port": "^2.0.1",
-    "@types/node": "^20.6.2",
     "add": "^2.0.6",
     "autoprefixer": "^10.4.15",
     "babel-loader": "^9.1.3",
