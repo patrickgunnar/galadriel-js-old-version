@@ -1,4 +1,4 @@
-import { CreateClassesType } from "../types/galadrielIntelliSense";
+import { CreateClassesType } from "../types/typeManifest";
 
 interface CallbackType {
     (): CreateClassesType;
