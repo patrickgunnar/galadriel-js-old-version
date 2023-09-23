@@ -1,4 +1,4 @@
-const classHarvestPlugin = require("./dist/plugins/MystiCSSor/classHarvestPlugin");
+const { classHarvestPlugin } = require("./dist/plugins/MystiCSSor/classHarvestPlugin");
 
 const postcssAutoprefixer = require("autoprefixer");
 const postcssCssnano = require("cssnano");

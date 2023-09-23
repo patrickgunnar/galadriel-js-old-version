@@ -23,5 +23,5 @@
         "types/**/*",
         "Watchmanor/**/*"
     ],
-    "exclude": ["node_modules", "dist", "index.ts"]
+    "exclude": ["node_modules", "dist"]
 }
