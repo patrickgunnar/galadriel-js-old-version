@@ -42,6 +42,8 @@ const signalWebpackDevServer = () => {
 };
 
 const classHarvestPlugin = () => {
+    console.log("Executing classHarvestPlugin...");
+
     exec(
         "node dist/plugins/MystiCSSor/classHarvestPlugin.js",
         (error, stdout, stderr) => {
