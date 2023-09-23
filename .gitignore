@@ -76,3 +76,5 @@ des.js
 types/galadrielIntelliSense.js
 toolkit/createStyles.js
 sourceCore/coreStaticStyles.js
+StyleCrafters/createStyles.js
+types/typeManifest.js
