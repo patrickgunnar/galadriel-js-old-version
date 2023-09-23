@@ -11,26 +11,14 @@ module.exports = {
         umdNamedDefine: true,
     },
     resolve: {
-        extensions: [".js"],
+        extensions: [".ts", ".js"],
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader", // Use Babel for transpiling
-                },
-            },
-            {
                 test: /\.ts$/,
+                use: "ts-loader",
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: ["@babel/preset-env"],
-                    },
-                },
             },
             {
                 test: /\.css$/,
@@ -63,7 +51,7 @@ module.exports = {
         hot: true, // Enable hot module replacement
     },
     watchOptions: {
-        ignored: /(?<!\/dist.*)$/,
+        ignored: ["node_modules", "dist"],
     },
     plugins: [
         new CopyWebpackPlugin({
