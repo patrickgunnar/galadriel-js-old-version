@@ -21,7 +21,8 @@
         "plugins/**/*",
         "StyleCrafters/**/*",
         "types/**/*",
-        "Watchmanor/**/*"
+        "Watchmanor/**/*",
+        "index.ts"
     ],
     "exclude": ["node_modules", "dist"]
 }
