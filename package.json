@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "concurrently \"node Watchmanor/watchSystem.js\" \"npx webpack serve --config webpack.config.js\"",
     "dev": "npx webpack serve --config webpack.config.js",
-    "build": "tsc --watch"
+    "build": "node Watchmanor/watchSystem.js"
   },
   "type": "commonjs",
   "repository": {
