@@ -26,4 +26,5 @@ export interface ButtonColorProps {
     bsColorOne: string;
     bsColorTwo: string;
     filterColor: string;
+    textColor: string;
 }
