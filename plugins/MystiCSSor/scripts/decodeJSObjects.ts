@@ -14,7 +14,7 @@ const decodeJSObjects = (__node: any, __processedObj = new Set()) => {
 
     if (__node.type === "ObjectExpression") {
         try {
-            const __obj = {};
+            const __obj: any = {};
 
             for (const __property of __node.properties) {
                 const __key = __property.key.name || __property.key.value;
