@@ -26,24 +26,24 @@ const combinedObject = (__nodeList: any[]) => {
 };
 
 const traverse = (__ast: any) => {
-    const __result: Set<any> = new Set();
+    const __result: any[] = [];
 
     const extractObjects = (__node: any) => {
         if (__node.type === "ObjectExpression") {
-            const __objsArray: Set<any> = new Set();
+            const __objsArray: any[] = [];
 
             for (const __prop of __node.properties) {
                 if (__prop.type === "SpreadElement") {
                     continue;
                 }
 
-                if (!__objsArray.has(__prop)) {
-                    __objsArray.add(__prop);
+                if (!__objsArray.includes(__prop)) {
+                    __objsArray.push(__prop);
                 }
             }
 
-            if (!__result.has(__objsArray)) {
-                __result.add([...__objsArray]);
+            if (!__result.includes(__objsArray)) {
+                __result.push(__objsArray);
             }
         } else if (__node.body && Array.isArray(__node.body)) {
             for (const __statement of __node.body) {
@@ -71,11 +71,10 @@ const traverse = (__ast: any) => {
 
         for (const __key in __node) {
             if (__node[__key] && typeof __node[__key] === "object") {
-                if (
-                    __node.type === "ObjectExpression" &&
-                    Array.isArray(__node[__key])
-                ) {
-                    continue;
+                if (__node.type === "ObjectExpression") {
+                    if (Array.isArray(__node[__key])) {
+                        continue;
+                    }
                 }
 
                 extractObjects(__node[__key]);
@@ -85,7 +84,7 @@ const traverse = (__ast: any) => {
 
     extractObjects(__ast);
 
-    return combinedObject([...__result]);
+    return combinedObject(__result);
 };
 
 export { traverse, combinedObject };

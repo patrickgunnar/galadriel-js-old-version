@@ -23,6 +23,7 @@ const computeObjectStyles = (): ComputeObjectType => {
     for (const __file of __systemFiles) {
         try {
             const __parsedContent = parseFileContent(__file);
+            console.log(__parsedContent)
 
             if (__parsedContent) {
                 __parsedContent.forEach((__obj) => {
