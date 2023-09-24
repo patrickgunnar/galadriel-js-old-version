@@ -1,4 +1,4 @@
-import { CreateClassesType } from "../types/typeManifest";
+import { CreateClassesType } from "../dist/types/typeManifest";
 
 interface CallbackType {
     (): CreateClassesType;
