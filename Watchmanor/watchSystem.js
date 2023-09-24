@@ -41,6 +41,24 @@ const signalWebpackDevServer = () => {
     }
 };
 
+const typeForgePlugin = () => {
+    console.log("Executing typeForgePlugin...");
+
+    exec(
+        "node dist/plugins/TypeWeaver/typeForgePlugin.js",
+        (error, stdout, stderr) => {
+            if (error) {
+                console.log(error);
+                console.error(
+                    `Captured an error during the type generation process: ${stderr}.`
+                );
+            } else {
+                console.log("Type successfully generated.");
+            }
+        }
+    );
+};
+
 const classHarvestPlugin = () => {
     console.log("Executing classHarvestPlugin...");
 
@@ -75,6 +93,8 @@ const compileTypeScript = () => {
 
             // call harvest classes plugin
             classHarvestPlugin();
+            // call type forge plugin
+            typeForgePlugin();
         }
     });
 };
