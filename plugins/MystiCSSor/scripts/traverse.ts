@@ -13,13 +13,17 @@ const extractKeyValue = (__node: any) => {
 const combinedObject = (__nodeList: any[]) => {
     return __nodeList.map((__nodes: any[]) => {
         return __nodes.reduce((__acc: any, __property: any) => {
-            const __propertyName = __property.key?.name;
+            try {
+                const __propertyName = __property.key?.name;
 
-            if (__propertyName) {
-                const __value = extractKeyValue(__property.value);
-                __acc[__propertyName] = __value;
+                if (__propertyName) {
+                    const __value = extractKeyValue(__property.value);
+                    __acc[__propertyName] = __value;
 
-                return __acc;
+                    return __acc;
+                }
+            } catch (error: any) {
+                console.error("An error occurred:", error);
             }
         }, {});
     });
@@ -37,12 +41,17 @@ const traverse = (__ast: any) => {
                     continue;
                 }
 
-                if (!__objsArray.includes(__prop)) {
-                    __objsArray.push(__prop);
-                }
+                __objsArray.push(__prop);
             }
 
-            if (!__result.includes(__objsArray)) {
+            const __stringifiedArray = JSON.stringify(__objsArray);
+
+            if (
+                !__result.some(
+                    (__objArray) =>
+                        JSON.stringify(__objArray) === __stringifiedArray
+                )
+            ) {
                 __result.push(__objsArray);
             }
         } else if (__node.body && Array.isArray(__node.body)) {
