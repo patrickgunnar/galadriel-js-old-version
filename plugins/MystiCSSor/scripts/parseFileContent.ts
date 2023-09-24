@@ -1,8 +1,8 @@
 import { parse } from "acorn";
 import fs from "fs";
-import { decodeJSObjects } from "./decodeJSObjects";
 import { transpileTypeScriptCode } from "./transpileTypeScriptCode";
 import { extractJavaScriptFromHTML } from "./extractJavaScriptFromHTML";
+import { traverse } from "./traverse";
 
 const parseFileContent = (__path: string): Array<{}> | null => {
     const __fileContent = fs.readFileSync(__path, "utf-8");
@@ -18,7 +18,7 @@ const parseFileContent = (__path: string): Array<{}> | null => {
                 sourceType: "module",
             });
 
-            return decodeJSObjects(__ast);
+            return traverse(__ast);
         } catch (error: any) {
             console.error("An error occurred:", error);
         }
@@ -28,11 +28,11 @@ const parseFileContent = (__path: string): Array<{}> | null => {
             const __compiledTS = transpileTypeScriptCode(__fileContent);
             // Parse JavaScript/JSX using acorn parse
             const __ast = parse(__compiledTS, {
-                ecmaVersion: "latest",
+                ecmaVersion: 2020,
                 sourceType: "module",
             });
 
-            return decodeJSObjects(__ast);
+            return traverse(__ast);
         } catch (error: any) {
             console.error("An error occurred:", error);
         }
@@ -46,7 +46,7 @@ const parseFileContent = (__path: string): Array<{}> | null => {
                 sourceType: "module",
             });
 
-            return decodeJSObjects(__ast);
+            return traverse(__ast);
         } catch (error: any) {
             console.error("An error occurred:", error);
         }
