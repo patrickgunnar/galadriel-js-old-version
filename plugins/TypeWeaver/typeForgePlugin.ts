@@ -9,7 +9,7 @@ const typeForgePlugin = () => {
 
     try {
         fs.writeFileSync(
-            path.join(__dirname, "dist", "typeManifest.ts"),
+            path.join(__dirname, "..", "..", "types", "typeManifest.d.ts"),
             __typesString
         );
     } catch (error: any) {
@@ -17,4 +17,4 @@ const typeForgePlugin = () => {
     }
 };
 
-export { typeForgePlugin };
+typeForgePlugin();
