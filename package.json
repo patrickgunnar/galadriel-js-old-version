@@ -67,7 +67,9 @@
     "test": "test"
   },
   "dependencies": {
+    "@types/acorn": "^6.0.0",
     "acorn": "^8.10.0",
+    "acorn-walk": "^8.2.0",
     "chokidar": "^3.5.3",
     "terser": "^5.19.4",
     "terser-webpack-plugin": "^5.3.9",
