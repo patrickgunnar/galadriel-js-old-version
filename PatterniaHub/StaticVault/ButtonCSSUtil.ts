@@ -23,6 +23,8 @@ const ButtonCSSUtil: CoreStaticStylesType = {
             "text-align": "center",
             "text-decoration": "none",
             padding: "15px 30px",
+            margin: "15px",
+            "user-select": "none",
             height: "auto",
             width: "auto",
             cursor: "pointer",
