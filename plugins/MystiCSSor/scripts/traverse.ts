@@ -1,8 +1,10 @@
-const extractKeyValue = (__node: any) => {
+type GenericRecord = Record<string, any>;
+
+const extractKeyValue = (__node: GenericRecord) => {
     if (__node.type === "Literal") {
         return __node.value;
     } else if (__node.type === "ObjectExpression") {
-        const __nestedKeyValues = __node.properties.map((__property: any) => ({
+        const __nestedKeyValues = __node.properties.map((__property: GenericRecord) => ({
             [__property.key.name]: extractKeyValue(__property.value),
         }));
 
@@ -10,8 +12,8 @@ const extractKeyValue = (__node: any) => {
     }
 };
 
-const combinedObject = (__nodeList: any[]) => {
-    return __nodeList.map((__nodes: any[]) => {
+const combinedObject = (__nodeList: GenericRecord[][]): GenericRecord[][] => {
+    return __nodeList.map((__nodes: GenericRecord[]) => {
         return __nodes.reduce((__acc: any, __property: any) => {
             try {
                 const __propertyName = __property.key?.name;
@@ -29,12 +31,12 @@ const combinedObject = (__nodeList: any[]) => {
     });
 };
 
-const traverse = (__ast: any) => {
-    const __result: any[] = [];
+const traverse = (__ast: GenericRecord): GenericRecord[][] => {
+    const __result: GenericRecord[][] = [];
 
-    const extractObjects = (__node: any) => {
+    const extractObjects = (__node: GenericRecord) => {
         if (__node.type === "ObjectExpression") {
-            const __objsArray: any[] = [];
+            const __objsArray: GenericRecord[] = [];
 
             for (const __prop of __node.properties) {
                 if (__prop.type === "SpreadElement") {
