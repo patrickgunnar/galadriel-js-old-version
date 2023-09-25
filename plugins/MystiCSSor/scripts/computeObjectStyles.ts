@@ -16,7 +16,8 @@ const __types = [".js", ".jsx", ".ts", ".tsx", ".html"];
 const computeObjectStyles = (): ComputeObjectType => {
     const __galadrielConfig = parseConfig();
     const __toExclude = __galadrielConfig?.exclude || [];
-    const __systemFiles = fileSystemWalker(__dir, __types, __toExclude);
+    const __toTest = __galadrielConfig?.tests || null;
+    const __systemFiles = __toTest?.test ? [...__toTest.testPath] : fileSystemWalker(__dir, __types, __toExclude);
 
     const __staticStyles: string[] = [];
 
