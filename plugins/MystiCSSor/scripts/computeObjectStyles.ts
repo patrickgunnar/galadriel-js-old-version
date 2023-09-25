@@ -28,17 +28,15 @@ const computeObjectStyles = (): ComputeObjectType => {
                 __parsedContent.forEach((__obj) => {
                     Object.entries(__obj).forEach(([__key, __value]) => {
                         if (__value && typeof __value === "object") {
-                            Object.entries(__value).forEach((__nestedValue) => {
-                                Object.entries(__nestedValue).forEach(
-                                    ([__nestedObjKey, __nestedObjValue]) => {
-                                        parseNestedObjClasses(
-                                            __key,
-                                            __nestedObjKey,
-                                            __nestedObjValue
-                                        );
-                                    }
-                                );
-                            });
+                            Object.entries(__value).forEach(
+                                ([__nestedKey, __nestedValue]) => {
+                                    parseNestedObjClasses(
+                                        __key,
+                                        __nestedKey,
+                                        __nestedValue
+                                    );
+                                }
+                            );
                         } else {
                             const __cssClassString = computeCSSFromObject(
                                 __key,
