@@ -27,8 +27,8 @@ const computeObjectStyles = (): ComputeObjectType => {
             if (__parsedContent) {
                 __parsedContent.forEach((__obj) => {
                     Object.entries(__obj).forEach(([__key, __value]) => {
-                        if (Array.isArray(__value)) {
-                            __value.forEach((__nestedValue) => {
+                        if (__value && typeof __value === "object") {
+                            Object.entries(__value).forEach((__nestedValue) => {
                                 Object.entries(__nestedValue).forEach(
                                     ([__nestedObjKey, __nestedObjValue]) => {
                                         parseNestedObjClasses(
