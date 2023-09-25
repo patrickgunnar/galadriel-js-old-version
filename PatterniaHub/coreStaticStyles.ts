@@ -1,8 +1,8 @@
 import { CoreStaticStylesType } from "../types/coreTypes";
 import { CSSUtil } from "./StaticVault/CSSUtil";
-import { ElementCSSUtil } from "./StaticVault/ElementCSSUtil";
+import { ButtonCSSUtil } from "./StaticVault/ButtonCSSUtil";
 
 export const coreStaticStyles: CoreStaticStylesType = {
     ...CSSUtil,
-    ...ElementCSSUtil,
+    ...ButtonCSSUtil,
 };
