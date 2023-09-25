@@ -4,9 +4,11 @@ const extractKeyValue = (__node: GenericRecord) => {
     if (__node.type === "Literal") {
         return __node.value;
     } else if (__node.type === "ObjectExpression") {
-        const __nestedKeyValues = __node.properties.map((__property: GenericRecord) => ({
-            [__property.key.name]: extractKeyValue(__property.value),
-        }));
+        const __nestedKeyValues = __node.properties.map(
+            (__property: GenericRecord) => ({
+                [__property.key.name]: extractKeyValue(__property.value),
+            })
+        );
 
         return Object.assign({}, ...__nestedKeyValues);
     }
@@ -55,25 +57,6 @@ const traverse = (__ast: GenericRecord): GenericRecord[][] => {
                 )
             ) {
                 __result.push(__objsArray);
-            }
-        } else if (__node.body && Array.isArray(__node.body)) {
-            for (const __statement of __node.body) {
-                if (
-                    __statement.type === "ExpressionStatement" &&
-                    __statement.expression.type === "CallExpression" &&
-                    __statement.expression.callee.name === "createStyles"
-                ) {
-                    if (
-                        __statement.expression.arguments.length > 0 &&
-                        __statement.expression.arguments[0].type.includes(
-                            "FunctionExpression"
-                        )
-                    ) {
-                        extractObjects(
-                            __statement.expression.arguments[0].body
-                        );
-                    }
-                }
             }
         } else if (__node.consequent && __node.alternate) {
             extractObjects(__node.consequent);
