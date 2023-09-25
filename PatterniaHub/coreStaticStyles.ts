@@ -613,6 +613,15 @@ export const coreStaticStyles: CoreStaticStylesType = {
                 "background-color": "blue",
                 "border-radius": "10px",
                 border: "1px solid #fff555",
+                height: "100vh"
+            },
+            ".background-black": {
+                "background-color": "black",
+                "border-radius": "10px",
+                border: "1px solid #ffffff",
+                height: "100vh",
+                padding: 0,
+                margin: 0,
             },
         }),
 };
