@@ -1,7 +1,7 @@
 import { computeCSSFromObject } from "./computeCSSFromObject";
 import { fileSystemWalker } from "./fileSystemWalker";
 import { parseConfig } from "./parseConfig";
-import { parseFileContent } from "./parseFileContent";
+import { parseFiles } from "./parseFiles";
 import { parseNestedObjClasses } from "./parseNestedObjClasses";
 
 interface ComputeObjectType {
@@ -27,7 +27,7 @@ const computeObjectStyles = async (): Promise<ComputeObjectType> => {
 
     const processFilesPromises = systemFiles.map(async (file: string) => {
         try {
-            return await parseFileContent(file);
+            return await parseFiles(file);
         } catch (error: any) {
             console.error("An error occurred:", error);
         }
