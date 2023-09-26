@@ -1,8 +1,7 @@
 import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
 import { ExtractGaladrielCSSClassesType } from "../../../types/coreTypes";
 
-const generateUtilityClasses: ExtractGaladrielCSSClassesType = (classes) =>
-    classes;
+const getClasses: ExtractGaladrielCSSClassesType = (classes) => classes;
 
 const getStaticStyles = (key: string, value: any): string | null => {
     const staticHandler = coreStaticStyles[key];
@@ -10,7 +9,7 @@ const getStaticStyles = (key: string, value: any): string | null => {
     if (staticHandler) {
         try {
             const propertiesHandler = staticHandler({
-                extractGaladrielClasses: generateUtilityClasses,
+                extractGaladrielClasses: getClasses,
             });
 
             const selector = `.${value}`;
