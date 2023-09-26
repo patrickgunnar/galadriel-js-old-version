@@ -3,7 +3,7 @@ import path from "path";
 import { computeObjectStyles } from "./scripts/computeObjectStyles";
 
 const classHarvestPlugin = async () => {
-    console.log("Harvesting the CSS classes...")
+    console.log("Harvesting the CSS classes...");
     console.time("pluginExecutionTime");
 
     try {
@@ -47,7 +47,7 @@ const classHarvestPlugin = async () => {
         console.error("An error occurred:", error);
     }
 
-    console.log("The harvest has finished! Time of execution: ")
+    console.log("The harvest has finished! Time of execution: ");
     console.timeEnd("pluginExecutionTime");
 };
 
