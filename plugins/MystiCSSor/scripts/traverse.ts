@@ -1,84 +1,84 @@
-type GenericRecord = Record<string, any>;
+type Property = Record<string, any>;
 
-const extractKeyValue = (__node: GenericRecord) => {
-    if (__node.type === "Literal") {
-        return __node.value;
-    } else if (__node.type === "ObjectExpression") {
-        const __nestedKeyValues = __node.properties.map(
-            (__property: GenericRecord) => ({
-                [__property.key.name]: extractKeyValue(__property.value),
-            })
-        );
+const extractKeyValue = (node: Property): any => {
+    if (node.type === "Literal") {
+        return node.value;
+    } else if (node.type === "ObjectExpression") {
+        const nestedKeyValues = node.properties.map((property: Property) => ({
+            [property.key.name]: extractKeyValue(property.value),
+        }));
 
-        return Object.assign({}, ...__nestedKeyValues);
+        return Object.assign({}, ...nestedKeyValues);
     }
+
+    return null; // Handle unknown node types
 };
 
-const combinedObject = (__nodeList: GenericRecord[][]): GenericRecord[][] => {
-    return __nodeList.map((__nodes: GenericRecord[]) => {
-        return __nodes.reduce((__acc: any, __property: any) => {
+const combineObjects = (nodesList: Property[][]): Property[] => {
+    return nodesList.map((nodes) => {
+        return nodes.reduce((acc: any, property: any) => {
             try {
-                const __propertyName = __property.key?.name;
+                const propertyName = property.key?.name;
 
-                if (__propertyName) {
-                    const __value = extractKeyValue(__property.value);
-                    __acc[__propertyName] = __value;
+                if (propertyName) {
+                    const value = extractKeyValue(property.value);
 
-                    return __acc;
+                    acc[propertyName] = value;
                 }
             } catch (error: any) {
                 console.error("An error occurred:", error);
             }
+
+            return acc;
         }, {});
     });
 };
 
-const traverse = (__ast: GenericRecord): GenericRecord[][] => {
-    const __result: GenericRecord[][] = [];
+const traverse = (ast: Property): Property[] => {
+    const result: Property[][] = [];
 
-    const extractObjects = (__node: GenericRecord) => {
-        if (__node.type === "ObjectExpression") {
-            const __objsArray: GenericRecord[] = [];
+    const extractObjects = (node: Property) => {
+        if (node.type === "ObjectExpression") {
+            const objectsArray: Property[] = [];
 
-            for (const __prop of __node.properties) {
-                if (__prop.type === "SpreadElement") {
+            for (const prop of node.properties) {
+                if (prop.type === "SpreadElement") {
                     continue;
                 }
 
-                __objsArray.push(__prop);
+                objectsArray.push(prop);
             }
 
-            const __stringifiedArray = JSON.stringify(__objsArray);
+            const stringifiedArray = JSON.stringify(objectsArray);
 
             if (
-                !__result.some(
-                    (__objArray) =>
-                        JSON.stringify(__objArray) === __stringifiedArray
+                !result.some(
+                    (objArray) => JSON.stringify(objArray) === stringifiedArray
                 )
             ) {
-                __result.push(__objsArray);
+                result.push(objectsArray);
             }
-        } else if (__node.consequent && __node.alternate) {
-            extractObjects(__node.consequent);
-            extractObjects(__node.alternate);
+        } else if (node.consequent && node.alternate) {
+            extractObjects(node.consequent);
+            extractObjects(node.alternate);
         }
 
-        for (const __key in __node) {
-            if (__node[__key] && typeof __node[__key] === "object") {
-                if (__node.type === "ObjectExpression") {
-                    if (Array.isArray(__node[__key])) {
+        for (const key in node) {
+            if (node[key] && typeof node[key] === "object") {
+                if (node.type === "ObjectExpression") {
+                    if (Array.isArray(node[key])) {
                         continue;
                     }
                 }
 
-                extractObjects(__node[__key]);
+                extractObjects(node[key]);
             }
         }
     };
 
-    extractObjects(__ast);
+    extractObjects(ast);
 
-    return combinedObject(__result);
+    return combineObjects(result);
 };
 
-export { traverse, combinedObject };
+export { traverse };
