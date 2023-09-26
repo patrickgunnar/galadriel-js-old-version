@@ -4,7 +4,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
     /*
         CUSTOM CLASSES FOR ELEMENTS
     */
-    button: ({ extractGaladrielClasses }) => {
+    graceController: ({ extractGaladrielClasses }) => {
         const genButton = ({
             bgColor,
             borderColor,
@@ -16,7 +16,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
             background: bgColor,
             border: `1px solid ${borderColor}`,
             "border-radius": "10px",
-            "box-shadow": `inset -12px 12px 23px ${bsColorOne}, inset 12px -12px 23px ${bsColorTwo}`,
+            "box-shadow": `inset -4px 4px 9px ${bsColorOne}, inset 4px -4px 9px ${bsColorTwo}`,
             display: "inline-block",
             "font-size": "16px",
             "font-weight": "bold",
@@ -34,6 +34,8 @@ const ButtonCSSUtil: CoreStaticStylesType = {
             "z-index": "1",
             filter: `drop-shadow(6px 4px 4px ${filterColor})`,
             "&:hover": "{ transform: scale(1.05); opacity: 0.8; }",
+            "&:disabled": "{ background: #708090; color: #b8b8b8; cursor: default; box-shadow: inset -4px 4px 9px #5f6d7a, inset 4px -4px 9px #8193a6; }",
+            "&:disabled:hover": "{ transform: scale(1); opacity:1; }"
         });
 
         return extractGaladrielClasses({
@@ -41,9 +43,9 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bgColor: "#e0e0e0",
                 borderColor: "#708090",
                 bsColorOne: "#b8b8b8",
-                bsColorTwo: "#ffffff",
+                bsColorTwo: "#FFFFF0",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-light-gold": genButton({
                 bgColor: "#FFD700",
@@ -51,7 +53,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#debb00",
                 bsColorTwo: "#fff300",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-gold": genButton({
                 bgColor: "#FFA500",
@@ -59,7 +61,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#de9000",
                 bsColorTwo: "#ffba00",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-dark-gold": genButton({
                 bgColor: "#B8860B",
@@ -67,7 +69,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#a0750a",
                 bsColorTwo: "#d0970c",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-old-gold": genButton({
                 bgColor: "#CFB53B",
@@ -75,7 +77,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#b49d33",
                 bsColorTwo: "#eacd43",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-light-blue": genButton({
                 bgColor: "#B3E5FC",
@@ -83,7 +85,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#93bccf",
                 bsColorTwo: "#d3ffff",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-sky-blue": genButton({
                 bgColor: "#80D8FF",
@@ -91,7 +93,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#6db8d9",
                 bsColorTwo: "#93f8ff",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-turquoise-blue": genButton({
                 bgColor: "#00BFFF",
@@ -99,7 +101,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#00a2d9",
                 bsColorTwo: "#00dcff",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-pink": genButton({
                 bgColor: "#FF69B4",
@@ -107,7 +109,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#d15694",
                 bsColorTwo: "#ff7cd4",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-dark-coral-pink": genButton({
                 bgColor: "#FF4040",
@@ -115,7 +117,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#d13434",
                 bsColorTwo: "#ff4c4c",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-light-olive-green": genButton({
                 bgColor: "#BCE954",
@@ -123,7 +125,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#9abf45",
                 bsColorTwo: "#deff63",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-olive-green": genButton({
                 bgColor: "#808000",
@@ -131,7 +133,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#696900",
                 bsColorTwo: "#979700",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#FFFFFF",
+                textColor: "#FFFFF0",
             }),
             ".element-button-dark-olive-green": genButton({
                 bgColor: "#556B2F",
@@ -139,7 +141,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#465827",
                 bsColorTwo: "#647e37",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#FFFFFF",
+                textColor: "#FFFFF0",
             }),
             ".element-button-deep-olive-green": genButton({
                 bgColor: "#3B5323",
@@ -147,7 +149,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#30441d",
                 bsColorTwo: "#466229",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#FFFFFF",
+                textColor: "#FFFFF0",
             }),
             ".element-button-deep-indigo": genButton({
                 bgColor: "#1F497D",
@@ -155,7 +157,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#193c67",
                 bsColorTwo: "#255694",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#FFFFFF",
+                textColor: "#FFFFF0",
             }),
             ".element-button-indigo": genButton({
                 bgColor: "#4B0082",
@@ -163,7 +165,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#3e006b",
                 bsColorTwo: "#590099",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#FFFFFF",
+                textColor: "#FFFFF0",
             }),
             ".element-button-light-indigo": genButton({
                 bgColor: "#5D8AA8",
@@ -171,7 +173,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#4c718a",
                 bsColorTwo: "#6ea3c6",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-silver": genButton({
                 bgColor: "#A9A9A9",
@@ -179,7 +181,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#8b8b8b",
                 bsColorTwo: "#c7c7c7",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-deep-teal": genButton({
                 bgColor: "#003333",
@@ -187,7 +189,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#002a2a",
                 bsColorTwo: "#003c3c",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#FFFFFF",
+                textColor: "#FFFFF0",
             }),
             ".element-button-deep-ruby": genButton({
                 bgColor: "#7A0008",
@@ -195,7 +197,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#640007",
                 bsColorTwo: "#900009",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#FFFFFF",
+                textColor: "#FFFFF0",
             }),
             ".element-button-dark-ruby": genButton({
                 bgColor: "#9F000F",
@@ -203,7 +205,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#82000c",
                 bsColorTwo: "#bc0012",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#FFFFFF",
+                textColor: "#FFFFF0",
             }),
             ".element-button-ruby": genButton({
                 bgColor: "#E41B17",
@@ -211,7 +213,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#bb1613",
                 bsColorTwo: "#ff201b",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-light-ruby": genButton({
                 bgColor: "#F62217",
@@ -219,7 +221,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#ca1c13",
                 bsColorTwo: "#ff281b",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-light-orchid": genButton({
                 bgColor: "#E6A8D7",
@@ -227,15 +229,15 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#bd8ab0",
                 bsColorTwo: "#ffc6fe",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
-            ".element-button--orchid": genButton({
+            ".element-button-orchid": genButton({
                 bgColor: "#DA70D6",
                 borderColor: "#708090",
                 bsColorOne: "#b35caf",
                 bsColorTwo: "#ff84fd",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#000000",
+                textColor: "#333333",
             }),
             ".element-button-dark-orchid": genButton({
                 bgColor: "#9932CC",
@@ -243,15 +245,55 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorOne: "#7d29a7",
                 bsColorTwo: "#b53bf1",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#FFFFFF",
+                textColor: "#FFFFF0",
             }),
-            ".element-button-deep--orchid": genButton({
+            ".element-button-deep-orchid": genButton({
                 bgColor: "#8B4789",
                 borderColor: "#708090",
                 bsColorOne: "#723a70",
                 bsColorTwo: "#a454a2",
                 filterColor: "rgba(112, 128, 144, 0.7)",
-                textColor: "#FFFFFF",
+                textColor: "#FFFFF0",
+            }),
+            ".element-button-electric-blue": genButton({
+                bgColor: "#3498db",
+                borderColor: "#708090",
+                bsColorOne: "#2c81ba",
+                bsColorTwo: "#3caffc",
+                filterColor: "rgba(112, 128, 144, 0.7)",
+                textColor: "#333333",
+            }),
+            ".element-button-emerald-green": genButton({
+                bgColor: "#2ecc71",
+                borderColor: "#708090",
+                bsColorOne: "#27ad60",
+                bsColorTwo: "#35eb82",
+                filterColor: "rgba(112, 128, 144, 0.7)",
+                textColor: "#333333",
+            }),
+            ".element-button-bright-green": genButton({
+                bgColor: "#27ae60",
+                borderColor: "#708090",
+                bsColorOne: "#219452",
+                bsColorTwo: "#2dc86e",
+                filterColor: "rgba(112, 128, 144, 0.7)",
+                textColor: "#333333",
+            }),
+            ".element-button-vivid-orange": genButton({
+                bgColor: "#e67e22",
+                borderColor: "#708090",
+                bsColorOne: "#c46b1d",
+                bsColorTwo: "#ff9127",
+                filterColor: "rgba(112, 128, 144, 0.7)",
+                textColor: "#333333",
+            }),
+            ".element-button-bold-red": genButton({
+                bgColor: "#e74c3c",
+                borderColor: "#708090",
+                bsColorOne: "#c44133",
+                bsColorTwo: "#ff5745",
+                filterColor: "rgba(112, 128, 144, 0.7)",
+                textColor: "#333333",
             }),
         });
     },
@@ -266,7 +308,7 @@ const ButtonCSSUtil: CoreStaticStylesType = {
             ".background-black": {
                 "background-color": "black",
                 "border-radius": "10px",
-                border: "1px solid #ffffff",
+                border: "1px solid #FFFFF0",
                 height: "100vh",
                 padding: 0,
                 margin: 0,
