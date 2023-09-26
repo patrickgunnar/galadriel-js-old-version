@@ -74,8 +74,6 @@ const computeObjectStyles = async (): Promise<ComputeObjectType> => {
         processParsedContents(content as Record<string, any>[]);
     });
 
-    console.log(staticStyles);
-
     return {
         staticStyles: staticStyles.join(" "),
         dynamicStyles: "",
