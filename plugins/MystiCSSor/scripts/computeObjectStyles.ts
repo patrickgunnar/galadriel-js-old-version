@@ -5,64 +5,81 @@ import { parseFileContent } from "./parseFileContent";
 import { parseNestedObjClasses } from "./parseNestedObjClasses";
 
 interface ComputeObjectType {
-    __staticStyles: string;
-    __dynamicStyles: string;
-    __configStyles: string;
+    staticStyles: string;
+    dynamicStyles: string;
+    configStyles: string;
 }
 
-const __dir = ".";
-const __types = [".js", ".jsx", ".ts", ".tsx", ".html"];
+const dir = ".";
+const types = [".js", ".jsx", ".ts", ".tsx", ".html"];
 
-const computeObjectStyles = (): ComputeObjectType => {
-    const __galadrielConfig = parseConfig();
-    const __toExclude = __galadrielConfig?.exclude || [];
-    const __toTest = __galadrielConfig?.tests || null;
-    const __systemFiles = __toTest?.test ? [...__toTest.testPath] : fileSystemWalker(__dir, __types, __toExclude);
+const computeObjectStyles = async (): Promise<ComputeObjectType> => {
+    const { exclude = [], tests = null } = parseConfig();
+    const toExclude = exclude || [];
+    const testPaths = tests?.test ? [...tests.testPath] : [];
+    const { flattenedFiles } = await fileSystemWalker(
+        dir,
+        types,
+        toExclude
+    );
+    const systemFiles = tests?.test ? testPaths : flattenedFiles;
+    const staticStyles: string[] = [];
 
-    const __staticStyles: string[] = [];
-
-    for (const __file of __systemFiles) {
+    const processFilesPromises = systemFiles.map(async (file: string) => {
         try {
-            const __parsedContent = parseFileContent(__file);
-
-            if (__parsedContent) {
-                __parsedContent.forEach((__obj) => {
-                    Object.entries(__obj).forEach(([__key, __value]) => {
-                        if (__value && typeof __value === "object") {
-                            Object.entries(__value).forEach(
-                                ([__nestedKey, __nestedValue]) => {
-                                    parseNestedObjClasses(
-                                        __key,
-                                        __nestedKey,
-                                        __nestedValue
-                                    );
-                                }
-                            );
-                        } else {
-                            const __cssClassString = computeCSSFromObject(
-                                __key,
-                                __value
-                            );
-
-                            if (
-                                __cssClassString &&
-                                !__staticStyles.includes(__cssClassString)
-                            ) {
-                                __staticStyles.push(__cssClassString);
-                            }
-                        }
-                    });
-                });
-            }
+            return await parseFileContent(file);
         } catch (error: any) {
             console.error("An error occurred:", error);
         }
-    }
+    });
+
+    const parsedContents = await Promise.all(processFilesPromises);
+
+    const processParsedContents = (
+        parsedContent: Record<string, any>[]
+    ) => {
+        if (parsedContent) {
+            for (const obj of parsedContent) {
+                for (const [key, value] of Object.entries(obj)) {
+                    if (value && typeof value === "object") {
+                        for (const [
+                            nestedKey,
+                            nestedValue,
+                        ] of Object.entries(value)) {
+                            parseNestedObjClasses(
+                                key,
+                                nestedKey,
+                                nestedValue
+                            );
+                        }
+                    } else {
+                        const cssClassString = computeCSSFromObject(
+                            key,
+                            value
+                        );
+
+                        if (
+                            cssClassString &&
+                            !staticStyles.includes(cssClassString)
+                        ) {
+                            staticStyles.push(cssClassString);
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    parsedContents.forEach((content) => {
+        processParsedContents(content as Record<string, any>[]);
+    });
+
+    console.log(staticStyles);
 
     return {
-        __staticStyles: __staticStyles.join(" "),
-        __dynamicStyles: "",
-        __configStyles: "",
+        staticStyles: staticStyles.join(" "),
+        dynamicStyles: "",
+        configStyles: "",
     };
 };
 

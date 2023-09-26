@@ -1,50 +1,55 @@
 import fs from "fs";
 import path from "path";
 
-const shouldExclude = (__name: string, __toExclude: Array<string>) => {
-    const __currentName = `${__name}`.toLocaleLowerCase();
+interface FileSystemWalkerReturnType {
+    flattenedFiles: string[];
+}
 
-    return __toExclude.some((__exclude) => {
-        const __currentExclude = `${__exclude}`.toLocaleLowerCase();
+const shouldExclude = (name: string, toExclude: Array<string>) => {
+    const currentName = `${name}`.toLocaleLowerCase();
+
+    return toExclude.some((exclude) => {
+        const currentExclude = `${exclude}`.toLocaleLowerCase();
 
         return (
-            __currentName.includes(__currentExclude) ||
-            __currentName.includes(".config") ||
-            __currentName.includes("config")
+            currentName.includes(currentExclude) ||
+            currentName.includes(".config") ||
+            currentName.includes("config")
         );
     });
 };
 
-const fileSystemWalker = (
-    __dir: string,
-    __fileTypes: Array<string>,
-    __toExclude: string[]
-): Array<string> => {
-    const __files: Array<string> = [];
-    const __dirents = fs.readdirSync(__dir, { withFileTypes: true });
-
-    for (const __dirent of __dirents) {
-        try {
-            const __direntName = __dirent.name;
-            const __fullPath = path.join(__dir, __direntName);
-            const __isExcluded = shouldExclude(__direntName, __toExclude);
-            const __extension = __fileTypes.some((__type) =>
-                __fullPath.endsWith(__type)
+const fileSystemWalker = async (
+    dir: string,
+    fileTypes: Array<string>,
+    toExclude: string[]
+): Promise<FileSystemWalkerReturnType> => {
+    const dirents = await fs.promises.readdir(dir, { withFileTypes: true });
+    const filesPromises = await Promise.all(
+        dirents.map(async (dirent) => {
+            const direntName = dirent.name;
+            const fullPath = path.join(dir, direntName);
+            const isExcluded = shouldExclude(direntName, toExclude);
+            const extension = fileTypes.some((type) =>
+                fullPath.endsWith(type)
             );
 
-            if (__dirent.isDirectory() && !__isExcluded) {
-                __files.push(
-                    ...fileSystemWalker(__fullPath, __fileTypes, __toExclude)
-                );
-            } else if (__dirent.isFile() && __extension && !__isExcluded) {
-                __files.push(__fullPath);
+            if (dirent.isDirectory() && !isExcluded) {
+                return fileSystemWalker(fullPath, fileTypes, toExclude);
+            } else if (dirent.isFile() && extension && !isExcluded) {
+                return fullPath;
             }
-        } catch (error) {
-            console.error("An error occurred:", error);
-        }
-    }
+        })
+    );
 
-    return __files;
+    const filesArray = await Promise.all(filesPromises);
+    const flattenedFiles = filesArray
+        .flat()
+        .filter((file) => typeof file === "string") as string[];
+
+    return {
+        flattenedFiles,
+    };
 };
 
 export { fileSystemWalker };

@@ -2,38 +2,41 @@ import fs from "fs";
 import path from "path";
 import { computeObjectStyles } from "./scripts/computeObjectStyles";
 
-const classHarvestPlugin = () => {
+const classHarvestPlugin = async () => {
     try {
-        const __galadrielPath = path.join(
+        const galadrielPath = path.join(
             __dirname,
             "..",
             "..",
             "galadriel.css"
         );
 
-        if (fs.existsSync(__galadrielPath)) {
-            const { __staticStyles } = computeObjectStyles();
+        if (fs.existsSync(galadrielPath)) {
+            const { staticStyles } = await computeObjectStyles();
             // generates dynamic styles
             // generates config styles
 
-            const __galadrielCSS = fs.readFileSync(__galadrielPath, "utf-8");
-            const __modifiedContent = __galadrielCSS.replace(
+            const galadrielCSS = await fs.promises.readFile(
+                galadrielPath,
+                "utf-8"
+            );
+            const modifiedContent = galadrielCSS.replace(
                 /@galadriel staticStyles;/g,
-                __staticStyles
+                staticStyles
             );
 
             // replace /@galadriel dynamicStyles;/g
             // replace /@galadriel configStyles;/g
 
-            const __destinyPath = path.join(__dirname, "..", "..", "styles");
+            const destinyPath = path.join(__dirname, "..", "..", "styles");
 
-            if (!fs.existsSync(__destinyPath)) {
-                fs.mkdirSync(__destinyPath, { recursive: true });
+            if (!fs.existsSync(destinyPath)) {
+                fs.mkdirSync(destinyPath, { recursive: true });
             }
 
-            fs.writeFileSync(
-                path.join(__destinyPath, "galadriel.css"),
-                __modifiedContent
+            await fs.promises.writeFile(
+                path.join(destinyPath, "galadriel.css"),
+                modifiedContent
             );
 
             console.log(
