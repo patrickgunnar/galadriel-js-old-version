@@ -3,13 +3,11 @@ import path from "path";
 import { computeObjectStyles } from "./scripts/computeObjectStyles";
 
 const classHarvestPlugin = async () => {
+    console.log("Harvesting the CSS classes...")
+    console.time("pluginExecutionTime");
+
     try {
-        const galadrielPath = path.join(
-            __dirname,
-            "..",
-            "..",
-            "galadriel.css"
-        );
+        const galadrielPath = path.join(__dirname, "..", "..", "galadriel.css");
 
         if (fs.existsSync(galadrielPath)) {
             const { staticStyles } = await computeObjectStyles();
@@ -48,6 +46,8 @@ const classHarvestPlugin = async () => {
     } catch (error: any) {
         console.error("An error occurred:", error);
     }
+
+    console.timeEnd("The harvester has finished! Time of execution: ");
 };
 
 classHarvestPlugin();
