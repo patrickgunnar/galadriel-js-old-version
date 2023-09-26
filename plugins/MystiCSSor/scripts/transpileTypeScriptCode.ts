@@ -1,15 +1,15 @@
 import { ModuleKind, ScriptTarget, transpileModule } from "typescript";
 
-const transpileTypeScriptCode = (__tsString: string): string => {
+const transpileTypeScriptCode = (tsString: string): string => {
     try {
-        const __result = transpileModule(__tsString, {
+        const result = transpileModule(tsString, {
             compilerOptions: {
                 target: ScriptTarget.ESNext,
                 module: ModuleKind.CommonJS,
             },
         });
 
-        return __result.outputText;
+        return result.outputText;
     } catch (error: any) {
         console.error("An error occurred:", error);
     }

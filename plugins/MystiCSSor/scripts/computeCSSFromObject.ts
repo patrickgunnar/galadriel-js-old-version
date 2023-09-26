@@ -4,39 +4,39 @@ import { ExtractGaladrielCSSClassesType } from "../../../types/coreTypes";
 const generateUtilityClasses: ExtractGaladrielCSSClassesType = (classes) =>
     classes;
 
-const getStaticStyles = (__key: string, __value: any): string | null => {
-    const __staticHandler = coreStaticStyles[__key];
+const getStaticStyles = (key: string, value: any): string | null => {
+    const staticHandler = coreStaticStyles[key];
 
-    if (__staticHandler) {
+    if (staticHandler) {
         try {
-            const __propertiesHandler = __staticHandler({
+            const propertiesHandler = staticHandler({
                 extractGaladrielClasses: generateUtilityClasses,
             });
 
-            const __selector = `.${__value}`;
-            const __propertiesValues = __propertiesHandler[__selector];
+            const selector = `.${value}`;
+            const propertiesValues = propertiesHandler[selector];
 
-            if (__propertiesValues) {
+            if (propertiesValues) {
                 try {
-                    const __pseudClasses: string[] = [];
-                    const __classesString = Object.entries(__propertiesValues)
-                        .map(([__property, __asset]) => {
-                            if (__property.includes("&")) {
-                                __pseudClasses.push(
-                                    `${__property.replace(
+                    const pseudClasses: string[] = [];
+                    const classesString = Object.entries(propertiesValues)
+                        .map(([property, asset]) => {
+                            if (property.includes("&")) {
+                                pseudClasses.push(
+                                    `${property.replace(
                                         "&",
-                                        __selector
-                                    )} ${__asset}`
+                                        selector
+                                    )} ${asset}`
                                 );
 
                                 return;
                             }
 
-                            return `${__property}: ${__asset};`;
+                            return `${property}: ${asset};`;
                         })
                         .join(" ");
 
-                    return `${__selector} { ${__classesString} } ${__pseudClasses.join(
+                    return `${selector} { ${classesString} } ${pseudClasses.join(
                         " "
                     )}`;
                 } catch (error: any) {
@@ -51,17 +51,17 @@ const getStaticStyles = (__key: string, __value: any): string | null => {
     return null;
 };
 
-const getDynamicStyles = (__key: string, __value: any): string | null => {
+const getDynamicStyles = (key: string, value: any): string | null => {
     return "";
 };
 
-const computeCSSFromObject = (__key: string, __value: any) => {
-    const __staticStyles = getStaticStyles(__key, __value);
+const computeCSSFromObject = (key: string, value: any) => {
+    const staticStyles = getStaticStyles(key, value);
 
-    if (!__staticStyles) {
-        return getDynamicStyles(__key, __value);
+    if (!staticStyles) {
+        return getDynamicStyles(key, value);
     } else {
-        return __staticStyles;
+        return staticStyles;
     }
 };
 
