@@ -18,7 +18,7 @@ module.exports = {
             {
                 test: /\.ts$/,
                 use: "ts-loader",
-                exclude: /node_modules/,
+                exclude: /(node_modules|test|watchmanor)/,
             },
             {
                 test: /\.css$/,
@@ -51,7 +51,7 @@ module.exports = {
         hot: true, // Enable hot module replacement
     },
     watchOptions: {
-        ignored: ["node_modules", "dist"],
+        ignored: ["node_modules", "dist", "test"],
     },
     plugins: [
         new CopyWebpackPlugin({
