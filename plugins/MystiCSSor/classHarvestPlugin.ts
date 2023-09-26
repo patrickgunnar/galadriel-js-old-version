@@ -47,7 +47,8 @@ const classHarvestPlugin = async () => {
         console.error("An error occurred:", error);
     }
 
-    console.timeEnd("The harvester has finished! Time of execution: ");
+    console.log("The harvest has finished! Time of execution: ")
+    console.timeEnd("pluginExecutionTime");
 };
 
 classHarvestPlugin();
