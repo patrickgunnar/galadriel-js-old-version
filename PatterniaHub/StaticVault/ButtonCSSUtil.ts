@@ -34,6 +34,8 @@ const ButtonCSSUtil: CoreStaticStylesType = {
             "z-index": "1",
             filter: `drop-shadow(6px 4px 4px ${filterColor})`,
             "&:hover": "{ transform: scale(1.05); opacity: 0.8; }",
+            "&:focus": `{ outline: none; box-shadow: 0 0 5px ${bsColorOne}, 0 0 5px ${bsColorTwo}; }`,
+            "&:active": "{ transform: scale(0.95); transition: transform 0.1s; }",
             "&:disabled": "{ background: #708090; color: #b8b8b8; cursor: default; box-shadow: inset -4px 4px 9px #5f6d7a, inset 4px -4px 9px #8193a6; }",
             "&:disabled:hover": "{ transform: scale(1); opacity:1; }"
         });
