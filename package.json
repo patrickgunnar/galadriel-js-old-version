@@ -9,16 +9,15 @@
             "@babel/preset-typescript"
         ],
         "plugins": [
-            "./dist/plugins/MystiCSSor/classHarvestBabel"
+            "./dist/plugins/MystiCSSor/galadrielHarvestPlugin"
         ]
     },
     "scripts": {
         "test": "jest",
         "test:watch": "jest --watch",
-        "start": "concurrently \"node Watchmanor/watchSystem.js\" \"npx webpack serve --config webpack.config.js\"",
+        "start": "npx webpack --watch",
         "dev": "npx webpack serve --config webpack.config.js",
-        "build": "node Watchmanor/watchSystem.js",
-        "manifest": "node dist/plugins/TypeWeaver/typeForgePlugin.js"
+        "manifest": "tsc && node dist/plugins/TypeWeaver/typeForgePlugin.js"
     },
     "type": "commonjs",
     "repository": {
