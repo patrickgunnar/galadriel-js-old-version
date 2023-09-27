@@ -28,6 +28,10 @@ module.exports = {
                     },
                 },
             },
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader", "postcss-loader"], // PostCSS after Babel
+            },
         ],
     },
     mode: "production", // or 'development' for non-minified output
