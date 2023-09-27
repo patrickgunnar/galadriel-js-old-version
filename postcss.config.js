@@ -1,7 +1,14 @@
 const postcssAutoprefixer = require("autoprefixer");
 const postcssCssnano = require("cssnano");
-//const postcssPresetEnv = require("postcss-preset-env");
+const postcssPresetEnv = require("postcss-preset-env");
+
+const galadrielInjectionPlugin = require("./dist/plugins/MystiCSSor/galadrielInjectionPlugin.js");
 
 module.exports = {
-    plugins: [postcssAutoprefixer(), postcssCssnano()],
+    plugins: [
+        galadrielInjectionPlugin(),
+        postcssPresetEnv(),
+        postcssCssnano(),
+        postcssAutoprefixer(),
+    ],
 };
