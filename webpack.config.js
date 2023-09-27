@@ -30,7 +30,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader", "postcss-loader"], // PostCSS after Babel
+                use: ["style-loader", "css-loader", "postcss-loader"],
             },
         ],
     },
@@ -52,10 +52,6 @@ module.exports = {
             patterns: [
                 {
                     from: "./index.html",
-                    to: "",
-                },
-                {
-                    from: "./galadriel.css",
                     to: "",
                 },
             ],
