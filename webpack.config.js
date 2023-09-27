@@ -2,7 +2,7 @@ const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-    entry: "./index.ts", // Entry point of your library
+    entry: "./index.ts", // Entry point of your application
     output: {
         filename: "index.js", // Output file name
         path: path.resolve(__dirname, "dist"), // Output directory
@@ -11,32 +11,22 @@ module.exports = {
         umdNamedDefine: true,
     },
     resolve: {
-        extensions: [".ts", ".js"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
     },
     module: {
         rules: [
             {
-                test: /\.ts$/,
-                use: "ts-loader",
-                exclude: /(node_modules|test|watchmanor)/,
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                    {
-                        loader: "postcss-loader",
-                        options: {
-                            postcssOptions: {
-                                config: path.resolve(
-                                    __dirname,
-                                    "postcss.config.js"
-                                ),
-                            },
-                        },
+                test: /\.(ts|tsx|js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            "@babel/preset-env", // for JavaScript
+                            "@babel/preset-typescript", // for TypeScript
+                        ],
                     },
-                ],
+                },
             },
         ],
     },
@@ -51,7 +41,7 @@ module.exports = {
         hot: true, // Enable hot module replacement
     },
     watchOptions: {
-        ignored: ["node_modules", "dist", "test"],
+        ignored: ["node_modules", "test"],
     },
     plugins: [
         new CopyWebpackPlugin({
