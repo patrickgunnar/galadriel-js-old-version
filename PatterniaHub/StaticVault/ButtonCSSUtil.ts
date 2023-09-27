@@ -315,6 +315,14 @@ const ButtonCSSUtil: CoreStaticStylesType = {
                 padding: 0,
                 margin: 0,
             },
+            ".background-turquoise-blue": {
+                "background-color": "#00FFF0",
+                "border-radius": "10px",
+                border: "1px solid black",
+                height: "100vh",
+                padding: 0,
+                margin: 0,
+            },
         }),
 };
 
