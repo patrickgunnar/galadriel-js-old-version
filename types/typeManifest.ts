@@ -1,8 +1,8 @@
 /**
  * Options to display:
- * panel-hidden, panel-block, panel-flex, panel-inline, panel-table, panel-grid, panel-inline-block, panel-inline-flex, panel-inline-table, panel-inline-grid, panel-flow-root, panel-contents, panel-list-item, panel-header-group, panel-footer-group, panel-column-group, panel-row-group, panel-table-row, panel-table-cell, panel-table-column, panel-table-caption
+ * panel-hidden, panel-block, panel-flex, panel-inline, panel-table, panel-grid, panel-inline-block, panel-inline-flex, panel-inline-table, panel-inline-grid, panel-flow-root, panel-contents, panel-list-item, panel-header-group, panel-footer-group, panel-column-group, panel-row-group, panel-table-row, panel-table-cell, panel-table-column, panel-table-caption, string
  */
-type display = 'panel-hidden' | 'panel-block' | 'panel-flex' | 'panel-inline' | 'panel-table' | 'panel-grid' | 'panel-inline-block' | 'panel-inline-flex' | 'panel-inline-table' | 'panel-inline-grid' | 'panel-flow-root' | 'panel-contents' | 'panel-list-item' | 'panel-header-group' | 'panel-footer-group' | 'panel-column-group' | 'panel-row-group' | 'panel-table-row' | 'panel-table-cell' | 'panel-table-column' | 'panel-table-caption';
+type display = 'panel-hidden' | 'panel-block' | 'panel-flex' | 'panel-inline' | 'panel-table' | 'panel-grid' | 'panel-inline-block' | 'panel-inline-flex' | 'panel-inline-table' | 'panel-inline-grid' | 'panel-flow-root' | 'panel-contents' | 'panel-list-item' | 'panel-header-group' | 'panel-footer-group' | 'panel-column-group' | 'panel-row-group' | 'panel-table-row' | 'panel-table-cell' | 'panel-table-column' | 'panel-table-caption' | string;
 
  /**
  * Options to position:
@@ -240,8 +240,20 @@ type graceController = 'element-button-light-gray' | 'element-button-light-gold'
 
  /**
  * Options to backgroundColor:
- * background-blue, background-black, background-turquoise-blue
+ * background-blue, background-black, background-turquoise-blue, string
  */
-type backgroundColor = 'background-blue' | 'background-black' | 'background-turquoise-blue';
+type backgroundColor = 'background-blue' | 'background-black' | 'background-turquoise-blue' | string;
 
- export interface CreateClassesType { display?: display;  position?: position;  float?: float;  visibility?: visibility;  clear?: clear;  overflow?: overflow;  overflowY?: overflowY;  overflowX?: overflowX;  overflowWrap?: overflowWrap;  whiteSpace?: whiteSpace;  listStyleType?: listStyleType;  textAlign?: textAlign;  verticalAlign?: verticalAlign;  wordBreak?: wordBreak;  fontWeight?: fontWeight;  textDecoration?: textDecoration;  boxSizing?: boxSizing;  cursor?: cursor;  pointerEvents?: pointerEvents;  outlineStyle?: outlineStyle;  boxShadow?: boxShadow;  textTransform?: textTransform;  transitionProperty?: transitionProperty;  transitionTimingFunction?: transitionTimingFunction;  flexDirection?: flexDirection;  flexWrap?: flexWrap;  justifyContent?: justifyContent;  alignItems?: alignItems;  alignSelf?: alignSelf;  alignContent?: alignContent;  textJustify?: textJustify;  textOverflow?: textOverflow;  boxDecorationBreak?: boxDecorationBreak;  tableLayout?: tableLayout;  captionSide?: captionSide;  quote?: quote;  columnCount?: columnCount;  columnGap?: columnGap;  aspectRatio?: aspectRatio;  graceController?: graceController;  backgroundColor?: backgroundColor;  }
+ /**
+ * Options to height:
+ * string
+ */
+type height = string;
+
+ /**
+ * Options to width:
+ * string
+ */
+type width = string;
+
+ export interface CreateClassesType { display?: display;  position?: position;  float?: float;  visibility?: visibility;  clear?: clear;  overflow?: overflow;  overflowY?: overflowY;  overflowX?: overflowX;  overflowWrap?: overflowWrap;  whiteSpace?: whiteSpace;  listStyleType?: listStyleType;  textAlign?: textAlign;  verticalAlign?: verticalAlign;  wordBreak?: wordBreak;  fontWeight?: fontWeight;  textDecoration?: textDecoration;  boxSizing?: boxSizing;  cursor?: cursor;  pointerEvents?: pointerEvents;  outlineStyle?: outlineStyle;  boxShadow?: boxShadow;  textTransform?: textTransform;  transitionProperty?: transitionProperty;  transitionTimingFunction?: transitionTimingFunction;  flexDirection?: flexDirection;  flexWrap?: flexWrap;  justifyContent?: justifyContent;  alignItems?: alignItems;  alignSelf?: alignSelf;  alignContent?: alignContent;  textJustify?: textJustify;  textOverflow?: textOverflow;  boxDecorationBreak?: boxDecorationBreak;  tableLayout?: tableLayout;  captionSide?: captionSide;  quote?: quote;  columnCount?: columnCount;  columnGap?: columnGap;  aspectRatio?: aspectRatio;  graceController?: graceController;  backgroundColor?: backgroundColor;  height?: height;  width?: width;  }
