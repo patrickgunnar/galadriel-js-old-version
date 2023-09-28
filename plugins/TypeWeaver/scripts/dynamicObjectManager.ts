@@ -1,21 +1,18 @@
 import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperties";
 import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
-import {
-    ExtractGaladrielClassesType,
-    GaladrielParamsType,
-} from "../../../types/coreTypes";
+import { ExtractGaladrielClassesType } from "../../../types/coreTypes";
 
 const extractor: ExtractGaladrielClassesType = (classes) => {
     return Object.keys(classes).map((key) => key.replace(".", ""));
 };
 
-const dynamicObjectManager = (): GaladrielParamsType => {
+const dynamicObjectManager = (): string => {
     try {
         const keys = new Set([
             ...Object.keys(coreStaticStyles),
             ...Object.keys(coreDynamicProperties),
         ]);
-        return Array.from(keys).reduce((acc, key) => {
+        const types = Array.from(keys).map((key) => {
             const valuesHandler = coreStaticStyles[key] ?? null;
             const options: string[] = [];
 
@@ -25,26 +22,25 @@ const dynamicObjectManager = (): GaladrielParamsType => {
                 });
 
                 if (values) {
-                    options.push(...values);
+                    options.push(...values.map((val: string) => `'${val}'`));
                 }
             }
 
-            const property = coreDynamicProperties[key] ?? null;
+            const recordFormat =
+                options.length > 0
+                    ? options.join(" | ") + "| string"
+                    : "string";
 
-            if (property) {
-                options.push("string");
-            }
+            return `${key}?: ${recordFormat};`;
+        });
 
-            return {
-                ...acc,
-                [key]: options,
-            };
-        }, {});
+        console.log(types.join(" "));
+        return types.join(" ");
     } catch (error) {
         console.error("An error occurred:", error);
     }
 
-    return {};
+    return "";
 };
 
 export { dynamicObjectManager };
