@@ -1,16 +1,16 @@
 import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
 import { ExtractGaladrielClassesType, GaladrielParamsType } from "../../../types/coreTypes";
 
-const extractGaladrielClasses: ExtractGaladrielClassesType = (__classes) => {
-    return Object.keys(__classes).map((__key) => __key.replace(".", ""));
+const extractGaladrielClasses: ExtractGaladrielClassesType = (classes) => {
+    return Object.keys(classes).map((key) => key.replace(".", ""));
 };
 
 const dynamicObjectManager = (): GaladrielParamsType => {
     try {
         return Object.keys(coreStaticStyles).reduce(
-            (__acc, __key) => ({
-                ...__acc,
-                [__key]: coreStaticStyles[__key]({ extractGaladrielClasses }),
+            (acc, key) => ({
+                ...acc,
+                [key]: coreStaticStyles[key]({ extractGaladrielClasses }),
             }),
             {}
         );

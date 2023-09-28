@@ -1,36 +1,36 @@
 import { GaladrielParamsType } from "../../../types/coreTypes";
 
-const typeCraftsman = (__params: GaladrielParamsType): string => {
-    const __typeDefinition: string[] = [];
-    const __interfacesDefinition: string[] = [
+const typeCraftsman = (params: GaladrielParamsType): string => {
+    const typeDefinition: string[] = [];
+    const interfacesDefinition: string[] = [
         "export interface CreateClassesType {",
     ];
 
-    for (const __key in __params) {
+    for (const key in params) {
         try {
-            const __def: string[] = [];
-            const __options = __params[__key]
-                .map((__opt) => `'${__opt}'`)
+            const def: string[] = [];
+            const options = params[key]
+                .map((opt) => `'${opt}'`)
                 .join(" | ");
 
-            __def.push(
-                `/**\n * Options to ${__key}:\n * ${__params[__key].join(
+            def.push(
+                `/**\n * Options to ${key}:\n * ${params[key].join(
                     ", "
                 )}\n */\n`
             );
 
-            __def.push(`type ${__key} = ${__options};\n\n`);
-            __interfacesDefinition.push(`${__key}?: ${__key}; `);
-            __typeDefinition.push(__def.join(""));
+            def.push(`type ${key} = ${options};\n\n`);
+            interfacesDefinition.push(`${key}?: ${key}; `);
+            typeDefinition.push(def.join(""));
         } catch (error: any) {
             console.error("An error occurred:", error);
         }
     }
 
-    __interfacesDefinition.push("}");
-    __typeDefinition.push(__interfacesDefinition.join(" "));
+    interfacesDefinition.push("}");
+    typeDefinition.push(interfacesDefinition.join(" "));
 
-    return __typeDefinition.join(" ");
+    return typeDefinition.join(" ");
 };
 
 export { typeCraftsman };

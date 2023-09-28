@@ -4,13 +4,13 @@ import { dynamicObjectManager } from "./scripts/dynamicObjectManager";
 import { typeCraftsman } from "./scripts/typeCraftsman";
 
 const typeForgePlugin = () => {
-    const __objectsData = dynamicObjectManager();
-    const __typesString = typeCraftsman(__objectsData);
+    const objectsData = dynamicObjectManager();
+    const typesString = typeCraftsman(objectsData);
 
     try {
         fs.writeFileSync(
             path.join(__dirname, "..", "..", "types", "typeManifest.d.ts"),
-            __typesString
+            typesString
         );
     } catch (error: any) {
         console.error("An error occurred:", error);
