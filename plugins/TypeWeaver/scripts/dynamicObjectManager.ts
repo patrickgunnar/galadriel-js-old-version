@@ -34,7 +34,6 @@ const dynamicObjectManager = (): string => {
             return `${key}?: ${recordFormat};`;
         });
 
-        console.log(types.join(" "));
         return types.join(" ");
     } catch (error) {
         console.error("An error occurred:", error);
