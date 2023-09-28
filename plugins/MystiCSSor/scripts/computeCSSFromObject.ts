@@ -1,3 +1,4 @@
+import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperties";
 import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
 import { ExtractGaladrielCSSClassesType } from "../../../types/coreTypes";
 
@@ -51,7 +52,20 @@ const getStaticStyles = (key: string, value: any): string | null => {
 };
 
 const getDynamicStyles = (key: string, value: any): string | null => {
-    return "";
+    try {
+        const property = coreDynamicProperties[key];
+
+        if (property && value && typeof value === "string") {
+            const sanitizedValue = value.replace(/[^a-zA-Z0-9]/g, "");
+            const cssRule = `.galadriel-${property}__${sanitizedValue} { ${property}: ${value}; }`;
+
+            return cssRule;
+        }
+    } catch (error: any) {
+        console.error("An error occurred:", error);
+    }
+
+    return null;
 };
 
 const computeCSSFromObject = (key: string, value: any) => {
