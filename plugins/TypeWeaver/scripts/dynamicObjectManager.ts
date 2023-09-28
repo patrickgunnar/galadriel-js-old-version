@@ -27,9 +27,7 @@ const dynamicObjectManager = (): string => {
             }
 
             const recordFormat =
-                options.length > 0
-                    ? options.join(" | ") + "| string"
-                    : "string";
+                options.length > 0 ? options.join(" | ") : "string";
 
             return `${key}?: ${recordFormat};`;
         });
