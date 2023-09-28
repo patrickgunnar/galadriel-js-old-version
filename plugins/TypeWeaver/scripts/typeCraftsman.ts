@@ -10,7 +10,7 @@ const typeCraftsman = (params: GaladrielParamsType): string => {
         try {
             const def: string[] = [];
             const options = params[key]
-                .map((opt) => `'${opt}'`)
+                .map((opt) => (opt === "string" ? `${opt}` : `'${opt}'`))
                 .join(" | ");
 
             def.push(
