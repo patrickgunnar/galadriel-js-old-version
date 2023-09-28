@@ -79,3 +79,4 @@ sourceCore/coreStaticStyles.js
 StyleCrafters/createStyles.js
 types/typeManifest.js
 typeManifest.d.ts
+types/typeManifest copy.ts
