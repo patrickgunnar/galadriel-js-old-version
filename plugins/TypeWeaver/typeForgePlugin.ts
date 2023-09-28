@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 import { dynamicObjectManager } from "./scripts/dynamicObjectManager";
 import { typeCraftsman } from "./scripts/typeCraftsman";
 
@@ -8,6 +8,11 @@ const typeForgePlugin = () => {
     const typesString = typeCraftsman(objectsData);
 
     try {
+        fs.writeFileSync(
+            path.join(__dirname, "..", "..", "..", "types", "typeManifest.ts"),
+            typesString
+        );
+
         fs.writeFileSync(
             path.join(__dirname, "..", "..", "types", "typeManifest.d.ts"),
             typesString

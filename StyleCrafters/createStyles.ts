@@ -1,4 +1,5 @@
-import { CreateClassesType } from "../dist/types/typeManifest";
+//@ts-ignore
+import { CreateClassesType } from "../types/typeManifest";
 
 interface CallbackType {
     (): CreateClassesType;
