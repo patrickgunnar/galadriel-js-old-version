@@ -11,8 +11,6 @@ export default function (): PluginObj {
     return {
         visitor: {
             ObjectExpression(path: NodePath) {
-                console.time("visitObjectExpression");
-
                 const node = path.node as Node;
                 const stringifiedNode = JSON.stringify(node);
                 const jointCompletedNode = completedNode.join(" ");
@@ -55,8 +53,6 @@ export default function (): PluginObj {
                         }
                     }
                 }
-
-                console.timeEnd("visitObjectExpression");
             },
         },
     };
