@@ -15,30 +15,36 @@ interface CreateStylesType {
 const getClasses: ExtractGaladrielCSSClassesType = (cls) => cls;
 
 const createStyles: CreateStylesType = (callback): string => {
-    return Object.entries(callback()).reduce((acc, [key, value]) => {
-        const staticUtilities = coreStaticStyles[key]?.({
-            extractGaladrielClasses: getClasses,
-        });
+    try {
+        return Object.entries(callback()).reduce((acc, [key, value]) => {
+            const staticUtilities = coreStaticStyles[key]?.({
+                extractGaladrielClasses: getClasses,
+            });
 
-        if (staticUtilities) {
-            const styles = staticUtilities[`.${value}`] ?? null;
+            if (staticUtilities) {
+                const styles = staticUtilities[`.${value}`] ?? null;
 
-            if (styles) {
-                return acc + (acc.length > 0 ? " " : "") + value;
+                if (styles) {
+                    return acc + (acc.length > 0 ? " " : "") + value;
+                }
+            } else {
+                const property = coreDynamicProperties[key] ?? null;
+
+                if (property && value && typeof value === "string") {
+                    const sanitizedValue = value.replace(/[^a-zA-Z0-9]/g, "");
+                    const cssRule = `galadriel-${property}__${sanitizedValue}`;
+
+                    return acc + (acc.length > 0 ? " " : "") + cssRule;
+                }
             }
-        } else {
-            const property = coreDynamicProperties[key] ?? null;
 
-            if (property && value && typeof value === "string") {
-                const sanitizedValue = value.replace(/[^a-zA-Z0-9]/g, "");
-                const cssRule = `galadriel-${property}__${sanitizedValue}`;
+            return acc;
+        }, "");
+    } catch (error: any) {
+        console.error("An error occurred:", error);
 
-                return acc + (acc.length > 0 ? " " : "") + cssRule;
-            }
-        }
-
-        return acc;
-    }, "");
+        return "";
+    }
 };
 
 export { createStyles };
