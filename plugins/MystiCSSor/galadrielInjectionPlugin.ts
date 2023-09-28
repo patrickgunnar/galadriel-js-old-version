@@ -5,10 +5,14 @@ module.exports = function () {
     return {
         postcssPlugin: "galadrielInjectionPlugin",
         Once(root: Root, { result }: { result: Result }) {
-            const styleRules = getDevelopmentStyleRules();
-            const parsedRules = postcss.parse(styleRules);
+            try {
+                const styleRules = getDevelopmentStyleRules();
+                const parsedRules = postcss.parse(styleRules);
 
-            root.append(parsedRules);
+                root.append(parsedRules);
+            } catch (error: any) {
+                console.error("An error occurred:", error);
+            }
         },
     };
 };
