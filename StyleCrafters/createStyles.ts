@@ -27,15 +27,15 @@ const createStyles: CreateStylesType = (callback): string => {
                 if (styles) {
                     return acc + (acc.length > 0 ? " " : "") + value;
                 }
-            } else {
-                const property = coreDynamicProperties[key] ?? null;
+            }
+            
+            const property = coreDynamicProperties[key] ?? null;
 
-                if (property && value && typeof value === "string") {
-                    const sanitizedValue = value.replace(/[^a-zA-Z0-9]/g, "");
-                    const cssRule = `galadriel-${property}__${sanitizedValue}`;
+            if (property && value && typeof value === "string") {
+                const sanitizedValue = value.replace(/[^a-zA-Z0-9]/g, "");
+                const cssRule = `galadriel-${property}__${sanitizedValue}`;
 
-                    return acc + (acc.length > 0 ? " " : "") + cssRule;
-                }
+                return acc + (acc.length > 0 ? " " : "") + cssRule;
             }
 
             return acc;
