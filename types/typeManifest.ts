@@ -20,70 +20,57 @@ export type CreateClassesType = {
         | "panel-table-row"
         | "panel-table-cell"
         | "panel-table-column"
-        | "panel-table-caption"
-        | string;
+        | "panel-table-caption";
     position?:
         | "set-relative"
         | "set-absolute"
         | "set-static"
         | "set-fixed"
-        | "set-sticky"
-        | string;
-    float?: "levitate-left" | "levitate-right" | "levitate-none" | string;
-    visibility?:
-        | "exposure-visible"
-        | "exposure-hidden"
-        | "exposure-collapse"
-        | string;
-    clear?: "plain-left" | "plain-right" | "plain-both" | "plain-none" | string;
+        | "set-sticky";
+    float?: "levitate-left" | "levitate-right" | "levitate-none";
+    visibility?: "exposure-visible" | "exposure-hidden" | "exposure-collapse";
+    clear?: "plain-left" | "plain-right" | "plain-both" | "plain-none";
     overflow?:
         | "excess-visible"
         | "excess-hidden"
         | "excess-scroll"
-        | "excess-auto"
-        | string;
+        | "excess-auto";
     overflowY?:
         | "excess-y-visible"
         | "excess-y-hidden"
         | "excess-y-scroll"
         | "excess-y-auto"
-        | "excess-y-clip"
-        | string;
+        | "excess-y-clip";
     overflowX?:
         | "excess-x-visible"
         | "excess-x-hidden"
         | "excess-x-scroll"
         | "excess-x-auto"
-        | "excess-x-clip"
-        | string;
-    overflowWrap?: "excess-wrap-normal" | "excess-wrap-break-word" | string;
+        | "excess-x-clip";
+    overflowWrap?: "excess-wrap-normal" | "excess-wrap-break-word";
     whiteSpace?:
         | "white-field-normal"
         | "white-field-nowrap"
         | "white-field-pre"
         | "white-field-break-spaces"
         | "white-field-pre-line"
-        | "white-field-pre-wrap"
-        | string;
+        | "white-field-pre-wrap";
     listStyleType?:
         | "series-style-none"
         | "series-style-disc"
         | "series-style-circle"
-        | "series-style-square"
-        | string;
+        | "series-style-square";
     textAlign?:
         | "arrange-text-left"
         | "arrange-text-right"
         | "arrange-text-center"
-        | "arrange-text-justify"
-        | string;
+        | "arrange-text-justify";
     verticalAlign?:
         | "set-vertical-baseline"
         | "set-vertical-top"
         | "set-vertical-middle"
-        | "set-vertical-bottom"
-        | string;
-    wordBreak?: "word-rupture-normal" | "word-rupture-break-all" | string;
+        | "set-vertical-bottom";
+    wordBreak?: "word-rupture-normal" | "word-rupture-break-all";
     fontWeight?:
         | "font-density-normal"
         | "font-density-bold"
@@ -97,21 +84,18 @@ export type CreateClassesType = {
         | "font-density-600"
         | "font-density-700"
         | "font-density-800"
-        | "font-density-900"
-        | string;
+        | "font-density-900";
     textDecoration?:
         | "text-dressing-none"
         | "text-dressing-underline"
         | "text-dressing-overline"
-        | "text-dressing-line-through"
-        | string;
+        | "text-dressing-line-through";
     boxSizing?:
         | "box-scale-content-box"
         | "box-scale-border-box"
         | "box-scale-inherit"
         | "box-scale-initial"
-        | "box-scale-unset"
-        | string;
+        | "box-scale-unset";
     cursor?:
         | "controller-default"
         | "controller-auto"
@@ -124,9 +108,8 @@ export type CreateClassesType = {
         | "controller-crosshair"
         | "controller-zoom-in"
         | "controller-zoom-out"
-        | "controller-grab"
-        | string;
-    pointerEvents?: "event-indicator-auto" | "event-indicator-none" | string;
+        | "controller-grab";
+    pointerEvents?: "event-indicator-auto" | "event-indicator-none";
     outlineStyle?:
         | "outline-mode-none"
         | "outline-mode-auto"
@@ -137,19 +120,14 @@ export type CreateClassesType = {
         | "outline-mode-groove"
         | "outline-mode-ridge"
         | "outline-mode-inset"
-        | "outline-mode-outset"
-        | string;
-    boxShadow?: "container-shadow-none" | string;
+        | "outline-mode-outset";
+    boxShadow?: "container-shadow-none";
     textTransform?:
         | "text-mutate-none"
         | "text-mutate-uppercase"
         | "text-mutate-lowercase"
-        | "text-mutate-capitalize"
-        | string;
-    transitionProperty?:
-        | "transition-state-all"
-        | "transition-state-none"
-        | string;
+        | "text-mutate-capitalize";
+    transitionProperty?: "transition-state-all" | "transition-state-none";
     transitionTimingFunction?:
         | "passage-timing-ease"
         | "passage-timing-linear"
@@ -157,19 +135,16 @@ export type CreateClassesType = {
         | "passage-timing-ease-out"
         | "passage-timing-ease-in-out"
         | "passage-timing-step-start"
-        | "passage-timing-step-end"
-        | string;
+        | "passage-timing-step-end";
     flexDirection?:
         | "flex-orientation-row"
         | "flex-orientation-row-reverse"
         | "flex-orientation-column"
-        | "flex-orientation-column-reverse"
-        | string;
+        | "flex-orientation-column-reverse";
     flexWrap?:
         | "flex-enclose-nowrap"
         | "flex-enclose-wrap"
-        | "flex-enclose-wrap-reverse"
-        | string;
+        | "flex-enclose-wrap-reverse";
     justifyContent?:
         | "organize-center"
         | "organize-flex-start"
@@ -182,8 +157,7 @@ export type CreateClassesType = {
         | "organize-end"
         | "organize-stretch"
         | "organize-left"
-        | "organize-right"
-        | string;
+        | "organize-right";
     alignItems?:
         | "adjust-center"
         | "adjust-flex-start"
@@ -194,8 +168,7 @@ export type CreateClassesType = {
         | "adjust-start"
         | "adjust-end"
         | "adjust-self-start"
-        | "adjust-self-end"
-        | string;
+        | "adjust-self-end";
     alignSelf?:
         | "place-self-auto"
         | "place-self-flex-start"
@@ -207,8 +180,7 @@ export type CreateClassesType = {
         | "place-self-start"
         | "place-self-end"
         | "place-self-self-start"
-        | "place-self-self-end"
-        | string;
+        | "place-self-self-end";
     alignContent?:
         | "match-content-stretch"
         | "match-content-flex-start"
@@ -220,43 +192,37 @@ export type CreateClassesType = {
         | "match-content-start"
         | "match-content-end"
         | "match-content-normal"
-        | "match-content-baseline"
-        | string;
+        | "match-content-baseline";
     textJustify?:
         | "text-balance-none"
         | "text-balance-auto"
         | "text-balance-inter-word"
-        | "text-balance-inter-character"
-        | string;
-    textOverflow?: "text-exceed-ellipsis" | "text-exceed-clip" | string;
+        | "text-balance-inter-character";
+    textOverflow?: "text-exceed-ellipsis" | "text-exceed-clip";
     boxDecorationBreak?:
         | "box-ornament-break-slice"
-        | "box-ornament-break-clone"
-        | string;
-    tableLayout?: "table-scheme-auto" | "table-scheme-fixed" | string;
+        | "box-ornament-break-clone";
+    tableLayout?: "table-scheme-auto" | "table-scheme-fixed";
     captionSide?:
         | "caption-facet-top"
         | "caption-facet-bottom"
         | "caption-facet-block-start"
         | "caption-facet-block-end"
         | "caption-facet-inline-start"
-        | "caption-facet-inline-end"
-        | string;
+        | "caption-facet-inline-end";
     quote?:
         | "quotation-auto"
         | "quotation-none"
         | "quotation-french-marks"
-        | "quotation-french-marks-guillemet-marks"
-        | string;
-    columnCount?: "tower-count-auto" | string;
-    columnGap?: "pedestal-gap-normal" | string;
+        | "quotation-french-marks-guillemet-marks";
+    columnCount?: "tower-count-auto";
+    columnGap?: "pedestal-gap-normal";
     aspectRatio?:
         | "proportion-square"
         | "proportion-auto"
         | "proportion-landscape"
         | "proportion-portrait"
-        | "proportion-traditional-photo"
-        | string;
+        | "proportion-traditional-photo";
     graceController?:
         | "element-button-light-gray"
         | "element-button-light-gold"
@@ -289,13 +255,11 @@ export type CreateClassesType = {
         | "element-button-emerald-green"
         | "element-button-bright-green"
         | "element-button-vivid-orange"
-        | "element-button-bold-red"
-        | string;
+        | "element-button-bold-red";
     backgroundColor?:
         | "background-blue"
         | "background-black"
-        | "background-turquoise-blue"
-        | string;
+        | "background-turquoise-blue";
     height?: string;
     width?: string;
 };
