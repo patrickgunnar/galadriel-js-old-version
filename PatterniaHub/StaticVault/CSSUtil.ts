@@ -241,18 +241,55 @@ const CSSUtil: CoreStaticStylesType = {
         }),
     justifyContent: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({
-            ".organize-center": { "justify-content": "center" },
-            ".organize-flex-start": { "justify-content": "flex-start" },
-            ".organize-flex-end": { "justify-content": "flex-end" },
-            ".organize-space-between": { "justify-content": "space-between" },
-            ".organize-space-around": { "justify-content": "space-around" },
-            ".organize-space-evenly": { "justify-content": "space-evenly" },
-            ".organize-normal": { "justify-content": "normal" },
-            ".organize-start": { "justify-content": "start" },
-            ".organize-end": { "justify-content": "end" },
-            ".organize-stretch": { "justify-content": "stretch" },
-            ".organize-left": { "justify-content": "left" },
-            ".organize-right": { "justify-content": "right" },
+            ".organize-content-center": { "justify-content": "center" },
+            ".organize-content-flex-start": { "justify-content": "flex-start" },
+            ".organize-content-flex-end": { "justify-content": "flex-end" },
+            ".organize-content-space-between": {
+                "justify-content": "space-between",
+            },
+            ".organize-content-space-around": {
+                "justify-content": "space-around",
+            },
+            ".organize-content-space-evenly": {
+                "justify-content": "space-evenly",
+            },
+            ".organize-content-normal": { "justify-content": "normal" },
+            ".organize-content-start": { "justify-content": "start" },
+            ".organize-content-end": { "justify-content": "end" },
+            ".organize-content-stretch": { "justify-content": "stretch" },
+            ".organize-content-left": { "justify-content": "left" },
+            ".organize-content-right": { "justify-content": "right" },
+        }),
+    justifySelf: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".organize-self-center": { "justify-self": "center" },
+            ".organize-self-flex-start": { "justify-self": "flex-start" },
+            ".organize-self-flex-end": { "justify-self": "flex-end" },
+            ".organize-self-self-start": { "justify-self": "self-start" },
+            ".organize-self-self-end": { "justify-self": "self-end" },
+            ".organize-self-normal": { "justify-self": "normal" },
+            ".organize-self-start": { "justify-self": "start" },
+            ".organize-self-end": { "justify-self": "end" },
+            ".organize-self-stretch": { "justify-self": "stretch" },
+            ".organize-self-left": { "justify-self": "left" },
+            ".organize-self-right": { "justify-self": "right" },
+            ".organize-self-auto": { "justify-self": "auto" },
+            ".organize-self-baseline": { "justify-self": "baseline" },
+        }),
+    justifyItems: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".organize-items-center": { "justify-items": "center" },
+            ".organize-items-flex-start": { "justify-items": "flex-start" },
+            ".organize-items-flex-end": { "justify-items": "flex-end" },
+            ".organize-items-self-start": { "justify-items": "self-start" },
+            ".organize-items-self-end": { "justify-items": "self-end" },
+            ".organize-items-normal": { "justify-items": "normal" },
+            ".organize-items-start": { "justify-items": "start" },
+            ".organize-items-end": { "justify-items": "end" },
+            ".organize-items-stretch": { "justify-items": "stretch" },
+            ".organize-items-left": { "justify-items": "left" },
+            ".organize-items-right": { "justify-items": "right" },
+            ".organize-items-baseline": { "justify-items": "baseline" },
         }),
     alignItems: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({
@@ -354,6 +391,22 @@ const CSSUtil: CoreStaticStylesType = {
             ".proportion-landscape": { "aspect-ratio": "16/9" },
             ".proportion-portrait": { "aspect-ratio": "4/3" },
             ".proportion-traditional-photo": { "aspect-ratio": "3/2" },
+        }),
+    objectPosition: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".object-spot-top": { "object-position": "top" },
+            ".object-spot-bottom": { "object-position": "bottom" },
+            ".object-spot-left": { "object-position": "left" },
+            ".object-spot-right": { "object-position": "right" },
+            ".object-spot-center": { "object-position": "center" },
+        }),
+    objectFit: ({ extractGaladrielClasses }) =>
+        extractGaladrielClasses({
+            ".object-blend-contain": { "object-fit": "contain" },
+            ".object-blend-cover": { "object-fit": "cover" },
+            ".object-blend-fill": { "object-fit": "fill" },
+            ".object-blend-none": { "object-fit": "none" },
+            ".object-blend-scale-down": { "object-fit": "scale-down" },
         }),
 };
 
