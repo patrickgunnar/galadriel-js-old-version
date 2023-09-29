@@ -1,15 +1,15 @@
 //@ts-ignore
-import { CreateClassesType } from "../types/typeManifest";
+import { CraftClassesType } from "../types/typeManifest";
 
 interface CallbackType {
-    (): CreateClassesType;
+    (): CraftClassesType;
 }
 
-interface CreateStylesType {
+interface CraftStylesType {
     (callback: CallbackType): string;
 }
 
-const createStyles: CreateStylesType = (callback): string => {
+const craftingStyles: CraftStylesType = (callback): string => {
     try {
         return Object.entries(callback()).reduce((acc, [key, value]) => {
             const regex = /^__\w+(-\w+)*$/;
@@ -36,4 +36,4 @@ const createStyles: CreateStylesType = (callback): string => {
     }
 };
 
-export { createStyles };
+export { craftingStyles };
