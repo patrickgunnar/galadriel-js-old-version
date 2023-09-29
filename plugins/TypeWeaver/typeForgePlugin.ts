@@ -8,12 +8,12 @@ const typeForgePlugin = () => {
     try {
         fs.writeFileSync(
             path.join(__dirname, "..", "..", "..", "types", "typeManifest.ts"),
-            `export type CreateClassesType = { ${objectsData} }`
+            `export type CraftClassesType = { ${objectsData} }`
         );
 
         fs.writeFileSync(
             path.join(__dirname, "..", "..", "types", "typeManifest.d.ts"),
-            `export type CreateClassesType = { ${objectsData} }`
+            `export type CraftClassesType = { ${objectsData} }`
         );
     } catch (error: any) {
         console.error("An error occurred:", error);
