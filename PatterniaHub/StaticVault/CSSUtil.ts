@@ -64,19 +64,19 @@ const CSSUtil: CoreStaticStylesType = {
         }),
     overflowY: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({
-            ".__excess-y-visible": { overflow: "visible" },
-            ".__excess-y-hidden": { overflow: "hidden" },
-            ".__excess-y-scroll": { overflow: "scroll" },
-            ".__excess-y-auto": { overflow: "auto" },
-            ".__excess-y-clip": { overflow: "clip" },
+            ".__excess-y-visible": { "overflow-y": "visible" },
+            ".__excess-y-hidden": { "overflow-y": "hidden" },
+            ".__excess-y-scroll": { "overflow-y": "scroll" },
+            ".__excess-y-auto": { "overflow-y": "auto" },
+            ".__excess-y-clip": { "overflow-y": "clip" },
         }),
     overflowX: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({
-            ".__excess-x-visible": { overflow: "visible" },
-            ".__excess-x-hidden": { overflow: "hidden" },
-            ".__excess-x-scroll": { overflow: "scroll" },
-            ".__excess-x-auto": { overflow: "auto" },
-            ".__excess-x-clip": { overflow: "clip" },
+            ".__excess-x-visible": { "overflow-x": "visible" },
+            ".__excess-x-hidden": { "overflow-x": "hidden" },
+            ".__excess-x-scroll": { "overflow-x": "scroll" },
+            ".__excess-x-auto": { "overflow-x": "auto" },
+            ".__excess-x-clip": { "overflow-x": "clip" },
         }),
     overflowWrap: ({ extractGaladrielClasses }) =>
         extractGaladrielClasses({
