@@ -246,4 +246,7 @@ export const coreDynamicProperties: Record<string, string> = {
     gridTemplateAreas: "grid-template-areas",
     gridTemplateColumns: "grid-template-columns",
     gridTemplateRows: "grid-template-rows",
+    scrollbarColor: "scrollbar-color",
+    scrollbarWidth: "scrollbar-width",
+    scrollbarGutter: "scrollbar-gutter",
 };
