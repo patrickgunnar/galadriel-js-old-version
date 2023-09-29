@@ -1,7 +1,4 @@
 //@ts-ignore
-import { coreDynamicProperties } from "../PatterniaHub/coreDynamicProperties";
-import { coreStaticStyles } from "../PatterniaHub/coreStaticStyles";
-import { ExtractGaladrielCSSClassesType } from "../types/coreTypes";
 import { CreateClassesType } from "../types/typeManifest";
 
 interface CallbackType {
@@ -12,33 +9,25 @@ interface CreateStylesType {
     (callback: CallbackType): string;
 }
 
-const getClasses: ExtractGaladrielCSSClassesType = (cls) => cls;
-
 const createStyles: CreateStylesType = (callback): string => {
     try {
         return Object.entries(callback()).reduce((acc, [key, value]) => {
-            const staticUtilities = coreStaticStyles[key]?.({
-                extractGaladrielClasses: getClasses,
-            });
+            const regex = /^__\w+(-\w+)*$/;
+            const isMatchingPattern = regex.test(value);
 
-            if (staticUtilities) {
-                const styles = staticUtilities[`.${value}`] ?? null;
+            if (isMatchingPattern) {
+                return acc + (acc.length > 0 ? " " : "") + value;
+            } else if (typeof value === "object") {
+                console.log(key, " --> ", value);
 
-                if (styles) {
-                    return acc + (acc.length > 0 ? " " : "") + value;
-                }
-            }
-            
-            const property = coreDynamicProperties[key] ?? null;
-
-            if (property && value && typeof value === "string") {
+                return "";
+            } else {
                 const sanitizedValue = value.replace(/[^a-zA-Z0-9]/g, "");
-                const cssRule = `galadriel-${property}__${sanitizedValue}`;
+                const sanitizedKey = key.replace(/([a-z])([A-Z])/g, "$1-$2");
+                const cssRule = `galadriel-${sanitizedKey.toLowerCase()}__${sanitizedValue}`;
 
                 return acc + (acc.length > 0 ? " " : "") + cssRule;
             }
-
-            return acc;
         }, "");
     } catch (error: any) {
         console.error("An error occurred:", error);
