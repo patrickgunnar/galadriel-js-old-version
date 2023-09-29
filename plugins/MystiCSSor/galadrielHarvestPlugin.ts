@@ -10,6 +10,7 @@ const completedObjs: string[] = [];
 const styleRules: string[] = [];
 
 export default function (): PluginObj {
+    styleRules.length = 0;
     const { exclude = [] } = parseConfig();
     const toExclude =
         exclude.map((__path: string) => path.resolve(__path)) || [];
