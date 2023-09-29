@@ -2,63 +2,82 @@ import { PluginObj, NodePath, Node } from "@babel/core";
 import { extractKeysValueFromObjectExpression } from "./scripts/extractKeysValueFromObjectExpression";
 import { computeCSSFromObject } from "./scripts/computeCSSFromObject";
 import { parseNestedObjClasses } from "./scripts/parseNestedObjClasses";
+import { parseConfig } from "./scripts/parseConfig";
+import path from "path";
 
 const completedNode: string[] = [];
 const completedObjs: string[] = [];
 const styleRules: string[] = [];
 
 export default function (): PluginObj {
+    const { exclude = [] } = parseConfig();
+    const toExclude =
+        exclude.map((__path: string) => path.resolve(__path)) || [];
+
     return {
         visitor: {
-            ObjectExpression(path: NodePath) {
-                try {
-                    const node = path.node as Node;
-                    const stringifiedNode = JSON.stringify(node);
-                    const jointCompletedNode = completedNode.join(" ");
+            ObjectExpression(path: NodePath, state) {
+                const currentPath = state.filename;
+                const shouldExclude = toExclude.some((excludePath: string) =>
+                    currentPath?.includes(excludePath)
+                );
 
-                    if (node && !jointCompletedNode.includes(stringifiedNode)) {
-                        completedNode.push(stringifiedNode);
+                if (!shouldExclude) {
+                    try {
+                        const node = path.node as Node;
+                        const stringifiedNode = JSON.stringify(node);
+                        const jointCompletedNode = completedNode.join(" ");
 
-                        const objects =
-                            extractKeysValueFromObjectExpression(node);
-                        const stringifiedObjs = JSON.stringify(objects);
-                        const jointObjs = completedObjs.join(" ");
+                        if (
+                            node &&
+                            !jointCompletedNode.includes(stringifiedNode)
+                        ) {
+                            completedNode.push(stringifiedNode);
 
-                        if (objects && !jointObjs.includes(stringifiedObjs)) {
-                            completedObjs.push(stringifiedObjs);
+                            const objects =
+                                extractKeysValueFromObjectExpression(node);
+                            const stringifiedObjs = JSON.stringify(objects);
+                            const jointObjs = completedObjs.join(" ");
 
-                            for (const [key, value] of Object.entries(
-                                objects
-                            )) {
-                                if (value && typeof value === "object") {
-                                    for (const [
-                                        nestedKey,
-                                        nestedValue,
-                                    ] of Object.entries(value)) {
-                                        parseNestedObjClasses(
-                                            key,
+                            if (
+                                objects &&
+                                !jointObjs.includes(stringifiedObjs)
+                            ) {
+                                completedObjs.push(stringifiedObjs);
+
+                                for (const [key, value] of Object.entries(
+                                    objects
+                                )) {
+                                    if (value && typeof value === "object") {
+                                        for (const [
                                             nestedKey,
-                                            nestedValue
+                                            nestedValue,
+                                        ] of Object.entries(value)) {
+                                            parseNestedObjClasses(
+                                                key,
+                                                nestedKey,
+                                                nestedValue
+                                            );
+                                        }
+                                    } else {
+                                        const ruleString = computeCSSFromObject(
+                                            key,
+                                            value
                                         );
-                                    }
-                                } else {
-                                    const ruleString = computeCSSFromObject(
-                                        key,
-                                        value
-                                    );
 
-                                    if (
-                                        ruleString &&
-                                        !styleRules.includes(ruleString)
-                                    ) {
-                                        styleRules.push(ruleString);
+                                        if (
+                                            ruleString &&
+                                            !styleRules.includes(ruleString)
+                                        ) {
+                                            styleRules.push(ruleString);
+                                        }
                                     }
                                 }
                             }
                         }
+                    } catch (error: any) {
+                        console.error("An error occurred:", error);
                     }
-                } catch (error: any) {
-                    console.error("An error occurred:", error);
                 }
             },
         },
