@@ -6,6 +6,28 @@ const extractor: ExtractGaladrielClassesType = (classes) => {
     return Object.keys(classes).map((key) => key.replace(".", ""));
 };
 
+const pseudoClasses = [
+    "hover",
+    "active",
+    "focus",
+    "firstChild",
+    "lastChild",
+    "firstOfType",
+    "lastOfType",
+    "visited",
+    "checked",
+    "minLargeDesktops",
+    "minStandardDesktops",
+    "minPortraitTablets",
+    "minLargeSmartphones",
+    "minStandardSmartphones",
+    "maxLargeDesktops",
+    "maxStandardDesktops",
+    "maxPortraitTablets",
+    "maxLargeSmartphones",
+    "maxStandardSmartphones",
+];
+
 const dynamicObjectManager = (): string => {
     try {
         const keys = new Set([
@@ -27,7 +49,11 @@ const dynamicObjectManager = (): string => {
             }
 
             const recordFormat =
-                options.length > 0 ? options.join(" | ") : "string";
+                options.length > 0
+                    ? options.join(" | ")
+                    : pseudoClasses.includes(key)
+                    ? "Record<string, string>"
+                    : "string";
 
             return `${key}?: ${recordFormat};`;
         });
