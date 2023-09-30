@@ -44,57 +44,71 @@ const parseNestedObjClasses = (objKey: string, objValue: any) => {
     const styleRules: Record<string, any>[] = [];
     const stylesValues: string[] = [];
 
-    for (const [nestedKey, nestedValue] of Object.entries(objValue)) {
-        const staticRules = getStaticStyles(nestedKey, nestedValue);
+    try {
+        for (const [nestedKey, nestedValue] of Object.entries(objValue)) {
+            const staticRules = getStaticStyles(nestedKey, nestedValue);
 
-        stylesValues.push(nestedKey);
-        stylesValues.push(nestedValue as string);
+            stylesValues.push(nestedKey);
+            stylesValues.push(nestedValue as string);
 
-        if (!staticRules) {
-            const dynamicRules = getDynamicStyles(nestedKey);
+            if (!staticRules) {
+                const dynamicRules = getDynamicStyles(nestedKey);
 
-            if (dynamicRules) {
-                styleRules.push({
-                    [dynamicRules]: nestedValue,
-                });
+                if (dynamicRules) {
+                    styleRules.push({
+                        [dynamicRules]: nestedValue,
+                    });
+                }
+            } else {
+                styleRules.push(staticRules);
             }
-        } else {
-            styleRules.push(staticRules);
         }
-    }
 
-    if (styleRules) {
-        const sanitizedSpecialChars = /[^a-zA-Z0-9]/g;
-        const sanitizedCamelCase = /([a-z])([A-Z])/g;
+        if (styleRules) {
+            const sanitizedSpecialChars = /[^a-zA-Z0-9]/g;
+            const sanitizedCamelCase = /([a-z])([A-Z])/g;
 
-        const styles = styleRules.reduce((acc, obj) => {
-            const [[key, value]] = Object.entries(obj);
+            const styles = styleRules.reduce((acc, obj) => {
+                const [[key, value]] = Object.entries(obj);
 
-            if (key && value) {
-                return (acc += `${key}: ${value}; `);
+                if (key && value) {
+                    return (acc += `${key}: ${value}; `);
+                }
+
+                return acc;
+            }, "");
+
+            const pseudoClass = getDynamicStyles(objKey);
+
+            if (pseudoClass) {
+                const valuesName = stylesValues
+                    .join("-")
+                    .replace(/[aeiou]/gi, "")
+                    .replace(sanitizedSpecialChars, "_")
+                    .replace(/_+/g, "_");
+
+                const className = `.${objKey.replace(
+                    sanitizedCamelCase,
+                    "$1-$2"
+                )}__${valuesName}`.toLowerCase();
+
+                if (pseudoClass.includes("$")) {
+                    const sanitizedMedia = pseudoClass.replace("$", "");
+                    const media = `@media (${sanitizedMedia}) { ${className} { ${styles} } }`;
+
+                    return media;
+                } else {
+                    const classNameWithPseudo = pseudoClass.replace(
+                        "&",
+                        className
+                    );
+
+                    return `${classNameWithPseudo} { ${styles} }`;
+                }
             }
-
-            return acc;
-        }, "");
-
-        const pseudoClass = getDynamicStyles(objKey);
-
-        if (pseudoClass) {
-            const valuesName = stylesValues
-                .join("-")
-                .replace(/[aeiou]/gi, "")
-                .replace(sanitizedSpecialChars, "_")
-                .replace(/_+/g, "_");
-
-            const className = `.${objKey.replace(
-                sanitizedCamelCase,
-                "$1-$2"
-            )}__${valuesName}`.toLowerCase();
-
-            const classNameWithPseudo = pseudoClass.replace("&", className);
-
-            return `${classNameWithPseudo} { ${styles} }`;
         }
+    } catch (error: any) {
+        console.error("An error occurred:", error);
     }
 
     return null;
