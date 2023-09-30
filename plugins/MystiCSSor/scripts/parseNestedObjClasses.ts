@@ -94,7 +94,7 @@ const parseNestedObjClasses = (objKey: string, objValue: any) => {
 
                 if (pseudoClass.includes("$")) {
                     const sanitizedMedia = pseudoClass.replace("$", "");
-                    const media = `@media (${sanitizedMedia}) { ${className} { ${styles} } }`;
+                    const media = `@media screen and (${sanitizedMedia}) { ${className} { ${styles} } }`;
 
                     return media;
                 } else {
