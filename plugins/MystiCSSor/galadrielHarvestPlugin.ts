@@ -50,15 +50,14 @@ export default function (): PluginObj {
                                     objects
                                 )) {
                                     if (value && typeof value === "object") {
-                                        for (const [
-                                            nestedKey,
-                                            nestedValue,
-                                        ] of Object.entries(value)) {
-                                            parseNestedObjClasses(
-                                                key,
-                                                nestedKey,
-                                                nestedValue
-                                            );
+                                        const dynamicRules =
+                                            parseNestedObjClasses(key, value);
+
+                                        if (
+                                            dynamicRules &&
+                                            !styleRules.includes(dynamicRules)
+                                        ) {
+                                            styleRules.push(dynamicRules);
                                         }
                                     } else {
                                         const ruleString = computeCSSFromObject(
