@@ -7,8 +7,8 @@ const galadrielInjectionPlugin = require("./dist/plugins/MystiCSSor/galadrielInj
 module.exports = {
     plugins: [
         galadrielInjectionPlugin(),
+        postcssAutoprefixer(),
         postcssPresetEnv(),
         postcssCssnano(),
-        postcssAutoprefixer(),
     ],
 };
