@@ -18,9 +18,21 @@ const craftingStyles: CraftStylesType = (callback): string => {
             if (isMatchingPattern) {
                 return acc + (acc.length > 0 ? " " : "") + value;
             } else if (typeof value === "object") {
-                console.log(key, " --> ", value);
+                const nestedClass = Object.values(value)
+                    .filter(
+                        (nestedValue) =>
+                            typeof nestedValue !== "object" &&
+                            nestedValue !== null &&
+                            nestedValue !== undefined
+                    )
+                    .join("")
+                    .replace(/[aeiou]/gi, "")
+                    .replace(/[^a-zA-Z0-9]/g, "_")
+                    .toLowerCase();
 
-                return "";
+                return (
+                    acc + (acc.length > 0 ? " " : "") + `${key}__${nestedClass}`
+                );
             } else {
                 const sanitizedValue = value.replace(/[^a-zA-Z0-9]/g, "");
                 const sanitizedKey = key.replace(/([a-z])([A-Z])/g, "$1-$2");
