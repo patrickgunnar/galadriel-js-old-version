@@ -7,15 +7,26 @@ const extractNestedObjs = (node: Node): ParsedValue => {
         if ((node as any).type.includes("Literal")) {
             return (node as any).value;
         } else if (node.type === "ObjectExpression" && node.properties) {
-            const nestedKeyValues: Record<string, any>[] = node.properties.map(
-                (property) => ({
-                    [(property as any).key.name]: extractNestedObjs(
-                        (property as any).value
-                    ),
-                })
-            );
+            const nestedValues: ParsedValue = {};
 
-            return Object.assign({}, ...nestedKeyValues);
+            node.properties.forEach((property) => {
+                if ((property as any).value.type.includes("Literal")) {
+                    nestedValues[(property as any).key.name] = (
+                        property as any
+                    ).value.value;
+                } else if (
+                    (property as any).value.type === "ObjectExpression"
+                ) {
+                    // Recursively handle nested object literals
+                    const nestedResult = extractNestedObjs(
+                        (property as any).value
+                    );
+
+                    Object.assign(nestedValues, nestedResult);
+                }
+            });
+
+            return nestedValues;
         }
     } catch (error: any) {
         console.error("An error occurred:", error);
