@@ -71,8 +71,6 @@ const parseNestedObjClasses = (objKey: string, objValue: any) => {
             const [[key, value]] = Object.entries(obj);
 
             if (key && value) {
-                console.log(key, " --> ", value);
-
                 return (acc += `${key}: ${value}; `);
             }
 
