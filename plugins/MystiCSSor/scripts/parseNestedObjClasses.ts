@@ -78,7 +78,13 @@ const parseNestedObjClasses = (objKey: string, objValue: any) => {
                             );
 
                             customRules.push(
-                                customClass.replace("&", pseudoInsertion)
+                                customClass.replace(
+                                    "&",
+                                    `_${pseudoInsertion.replace(
+                                        ":",
+                                        ""
+                                    )}${pseudoInsertion}`
+                                )
                             );
                         } else {
                             customRules.push(customClass.replace("&", ""));
@@ -119,7 +125,9 @@ const parseNestedObjClasses = (objKey: string, objValue: any) => {
 
                     if (pseudoClass.includes("$")) {
                         const sanitizedMedia = pseudoClass.replace("$", "");
-                        const media = `@media screen and (${sanitizedMedia}) { ${className} { ${styles} } ${customRules.join(" ")} }`;
+                        const media = `@media screen and (${sanitizedMedia}) { ${className} { ${styles} } ${customRules.join(
+                            " "
+                        )} }`;
 
                         return media;
                     } else {
@@ -128,7 +136,9 @@ const parseNestedObjClasses = (objKey: string, objValue: any) => {
                             className
                         );
 
-                        return `${classNameWithPseudo} { ${styles} } ${customRules.join(" ")}`;
+                        return `${classNameWithPseudo} { ${styles} } ${customRules.join(
+                            " "
+                        )}`;
                     }
                 }
             }
