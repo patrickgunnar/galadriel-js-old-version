@@ -1,6 +1,7 @@
 import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperties";
 import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
 import { ExtractGaladrielCSSClassesType } from "../../../types/coreTypes";
+import { computeConfigCSS } from "./computeConfigCSS";
 
 const getClasses: ExtractGaladrielCSSClassesType = (classes) => classes;
 
@@ -43,76 +44,97 @@ const getDynamicStyles = (key: string): string | null => {
 const parseNestedObjClasses = (objKey: string, objValue: any) => {
     const testRegex = /^__\w+(-\w+)*$/;
     const styleRules: Record<string, any>[] = [];
+    const customRules: string[] = [];
     const stylesValues: string[] = [];
+    const pseudoClass = getDynamicStyles(objKey);
 
-    try {
-        for (const [nestedKey, nestedValue] of Object.entries(objValue)) {
-            const staticRules = getStaticStyles(nestedKey, nestedValue);
+    if (pseudoClass) {
+        try {
+            for (const [nestedKey, nestedValue] of Object.entries(objValue)) {
+                const staticRules = getStaticStyles(nestedKey, nestedValue);
 
-            if (!staticRules) {
-                const dynamicRules = getDynamicStyles(nestedKey);
-                const isMatchingPattern = testRegex.test(nestedValue as string);
-
-                if (dynamicRules && !isMatchingPattern) {
-                    stylesValues.push(nestedKey);
-                    stylesValues.push(nestedValue as string);
-
-                    styleRules.push({
-                        [dynamicRules]: nestedValue,
-                    });
-                }
-            } else {
-                stylesValues.push(nestedKey);
-                stylesValues.push(nestedValue as string);
-                styleRules.push(staticRules);
-            }
-        }
-
-        if (styleRules) {
-            const sanitizedSpecialChars = /[^a-zA-Z0-9]/g;
-            const sanitizedCamelCase = /([a-z])([A-Z])/g;
-
-            const styles = styleRules.reduce((acc, obj) => {
-                const [[key, value]] = Object.entries(obj);
-
-                if (key && value) {
-                    return (acc += `${key}: ${value}; `);
-                }
-
-                return acc;
-            }, "");
-
-            const pseudoClass = getDynamicStyles(objKey);
-
-            if (pseudoClass) {
-                const valuesName = stylesValues
-                    .join("-")
-                    .replace(/[aeiou]/gi, "")
-                    .replace(sanitizedSpecialChars, "_")
-                    .replace(/_+/g, "_");
-
-                const className = `.${objKey.replace(
-                    sanitizedCamelCase,
-                    "$1-$2"
-                )}__${valuesName}`.toLowerCase();
-
-                if (pseudoClass.includes("$")) {
-                    const sanitizedMedia = pseudoClass.replace("$", "");
-                    const media = `@media screen and (${sanitizedMedia}) { ${className} { ${styles} } }`;
-
-                    return media;
-                } else {
-                    const classNameWithPseudo = pseudoClass.replace(
-                        "&",
-                        className
+                if (!staticRules) {
+                    const dynamicRules = getDynamicStyles(nestedKey);
+                    const isMatchingPattern = testRegex.test(
+                        nestedValue as string
                     );
 
-                    return `${classNameWithPseudo} { ${styles} }`;
+                    if (dynamicRules && !isMatchingPattern) {
+                        stylesValues.push(nestedKey);
+                        stylesValues.push(nestedValue as string);
+
+                        styleRules.push({
+                            [dynamicRules]: nestedValue,
+                        });
+                    } else {
+                        const customClass = computeConfigCSS(
+                            nestedValue as string
+                        );
+
+                        if (pseudoClass.includes("&")) {
+                            const pseudoInsertion = pseudoClass.replace(
+                                "&",
+                                ""
+                            );
+
+                            customRules.push(
+                                customClass.replace("&", pseudoInsertion)
+                            );
+                        } else {
+                            customRules.push(customClass.replace("&", ""));
+                        }
+                    }
+                } else {
+                    stylesValues.push(nestedKey);
+                    stylesValues.push(nestedValue as string);
+                    styleRules.push(staticRules);
                 }
             }
+
+            if (styleRules) {
+                const sanitizedSpecialChars = /[^a-zA-Z0-9]/g;
+                const sanitizedCamelCase = /([a-z])([A-Z])/g;
+
+                const styles = styleRules.reduce((acc, obj) => {
+                    const [[key, value]] = Object.entries(obj);
+
+                    if (key && value) {
+                        return (acc += `${key}: ${value}; `);
+                    }
+
+                    return acc;
+                }, "");
+
+                if (pseudoClass) {
+                    const valuesName = stylesValues
+                        .join("-")
+                        .replace(/[aeiou]/gi, "")
+                        .replace(sanitizedSpecialChars, "_")
+                        .replace(/_+/g, "_");
+
+                    const className = `.${objKey.replace(
+                        sanitizedCamelCase,
+                        "$1-$2"
+                    )}__${valuesName}`.toLowerCase();
+
+                    if (pseudoClass.includes("$")) {
+                        const sanitizedMedia = pseudoClass.replace("$", "");
+                        const media = `@media screen and (${sanitizedMedia}) { ${className} { ${styles} } ${customRules.join(" ")} }`;
+
+                        return media;
+                    } else {
+                        const classNameWithPseudo = pseudoClass.replace(
+                            "&",
+                            className
+                        );
+
+                        return `${classNameWithPseudo} { ${styles} } ${customRules.join(" ")}`;
+                    }
+                }
+            }
+        } catch (error: any) {
+            console.error("An error occurred:", error);
         }
-    } catch (error: any) {
-        console.error("An error occurred:", error);
     }
 
     return null;

@@ -1,6 +1,7 @@
 import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperties";
 import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
 import { ExtractGaladrielCSSClassesType } from "../../../types/coreTypes";
+import { computeConfigCSS } from "./computeConfigCSS";
 
 const getClasses: ExtractGaladrielCSSClassesType = (classes) => classes;
 
@@ -72,7 +73,11 @@ const computeCSSFromObject = (key: string, value: any) => {
     const staticStyles = getStaticStyles(key, value);
 
     if (!staticStyles) {
-        return getDynamicStyles(key, value);
+        if (typeof value === "string" && value.includes("__")) {
+            return computeConfigCSS(value).replace("&", "");
+        } else {
+            return getDynamicStyles(key, value);
+        }
     } else {
         return staticStyles;
     }
