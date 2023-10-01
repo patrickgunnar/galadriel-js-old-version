@@ -10,19 +10,18 @@ const completedObjs: string[] = [];
 const styleRules: string[] = [];
 
 export default function (): PluginObj {
-    const { exclude = [] } = parseConfig();
-    const toExclude =
-        exclude.map((__path: string) => path.resolve(__path)) || [];
+    const { include = [], exclude = [] } = parseConfig();
+    const toInclude = include.map((__path: string) => path.resolve(__path));
+    const toExclude = exclude.map((__path: string) => path.resolve(__path));
 
     return {
         visitor: {
             ObjectExpression(path: NodePath, state) {
-                const currentPath = state.filename;
-                const shouldExclude = toExclude.some((excludePath: string) =>
-                    currentPath?.includes(excludePath)
-                );
+                const filePath = state.filename;
+                const shouldExclude = toExclude.some((__path: string) => filePath?.includes(__path));
+                const shouldInclude = toInclude.some((__path: string) => filePath?.includes(__path));
 
-                if (!shouldExclude) {
+                if (!shouldExclude || shouldInclude) {
                     try {
                         const node = path.node as Node;
                         const stringifiedNode = JSON.stringify(node);
