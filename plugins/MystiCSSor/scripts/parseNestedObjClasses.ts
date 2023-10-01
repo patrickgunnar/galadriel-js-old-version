@@ -41,6 +41,7 @@ const getDynamicStyles = (key: string): string | null => {
 };
 
 const parseNestedObjClasses = (objKey: string, objValue: any) => {
+    const testRegex = /^__\w+(-\w+)*$/;
     const styleRules: Record<string, any>[] = [];
     const stylesValues: string[] = [];
 
@@ -48,18 +49,21 @@ const parseNestedObjClasses = (objKey: string, objValue: any) => {
         for (const [nestedKey, nestedValue] of Object.entries(objValue)) {
             const staticRules = getStaticStyles(nestedKey, nestedValue);
 
-            stylesValues.push(nestedKey);
-            stylesValues.push(nestedValue as string);
-
             if (!staticRules) {
                 const dynamicRules = getDynamicStyles(nestedKey);
+                const isMatchingPattern = testRegex.test(nestedValue as string);
 
-                if (dynamicRules) {
+                if (dynamicRules && !isMatchingPattern) {
+                    stylesValues.push(nestedKey);
+                    stylesValues.push(nestedValue as string);
+
                     styleRules.push({
                         [dynamicRules]: nestedValue,
                     });
                 }
             } else {
+                stylesValues.push(nestedKey);
+                stylesValues.push(nestedValue as string);
                 styleRules.push(staticRules);
             }
         }
