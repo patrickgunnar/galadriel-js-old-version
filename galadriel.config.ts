@@ -1,8 +1,29 @@
-module.exports = {
-    exclude: ["node_modules", "dist", "PatterniaHub", "plugins", "StyleCrafters", "test", "types", "Watchmanor"],
-    display: {
-        height: "10px",
-        width: "20px",
-        black: "#000000"
-    }
+//import { Config } from "./types/Config";
+
+const config = {
+    // content to exclude
+    exclude: [
+        "node_modules",
+        "dist",
+        "PatterniaHub",
+        "plugins",
+        "StyleCrafters",
+        "test",
+        "types",
+        "Watchmanor",
+    ],
+    // content to include
+    include: ["./index.ts"],
+    // new css rules
+    craftStyles: {
+        backgroundColor: {
+            "some-class-name": "#013598",
+            "some-class-name-2": "#013598",
+        },
+        display: {
+            "some-class-name-3": "flex",
+        },
+    },
 };
+
+module.exports = config;
