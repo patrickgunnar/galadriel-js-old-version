@@ -6,6 +6,7 @@ const parseConfig = () => {
     try {
         for (const __path of configPaths) {
             const fullPath = path.resolve(__path);
+            delete require.cache[require.resolve(fullPath)];
 
             return require(fullPath);
         }
