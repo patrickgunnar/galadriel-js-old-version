@@ -1,6 +1,6 @@
-import { Config } from "./types/config";
+//import { Config } from "./types/config";
 
-const config: Config = {
+const config = {
     // content to exclude
     exclude: [
         "node_modules",
