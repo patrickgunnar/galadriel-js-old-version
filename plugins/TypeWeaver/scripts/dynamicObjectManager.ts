@@ -30,13 +30,17 @@ const pseudoClasses = [
 
 const dynamicObjectManager = (): { types: string; config: string } | null => {
     try {
-        const config: string[] = []
+        const config: string[] = [
+            "exclude?: string[];",
+            "include?: string[];",
+            "craftStyles?: {",
+        ];
         const keys = new Set([
             ...Object.keys(coreStaticStyles),
             ...Object.keys(coreDynamicProperties),
         ]);
         const types = Array.from(keys).map((key) => {
-            config.push(`${key}?: Record<string, string>;`)
+            config.push(`${key}?: Record<string, string>;`);
 
             const valuesHandler = coreStaticStyles[key] ?? null;
             const options: string[] = [];
@@ -61,9 +65,11 @@ const dynamicObjectManager = (): { types: string; config: string } | null => {
             return `${key}?: ${recordFormat};`;
         });
 
+        config.push("}");
+
         return {
             types: types.join(" "),
-            config: config.join(" ")
+            config: config.join(" "),
         };
     } catch (error) {
         console.error("An error occurred:", error);
