@@ -55,7 +55,7 @@ export default function (): PluginObj {
                                             dynamicRules &&
                                             !styleRules.includes(dynamicRules)
                                         ) {
-                                            styleRules.push(dynamicRules);
+                                            styleRules.unshift(dynamicRules);
                                         }
                                     } else {
                                         const ruleString = computeCSSFromObject(
@@ -67,7 +67,7 @@ export default function (): PluginObj {
                                             ruleString &&
                                             !styleRules.includes(ruleString)
                                         ) {
-                                            styleRules.push(ruleString);
+                                            styleRules.unshift(ruleString);
                                         }
                                     }
                                 }
