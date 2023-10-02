@@ -23,6 +23,7 @@ const genParsedNestedRules = (
             const valueNames = stylesValues
                 .join("-")
                 .replace(/[aeiou]/gi, "")
+                .replace(sanitizedCamelCase, "$1-$2")
                 .replace(sanitizedSpecialChars, "_")
                 .replace(/_+/g, "_");
 
