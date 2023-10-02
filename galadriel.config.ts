@@ -18,7 +18,7 @@ const config = {
     craftStyles: {
         backgroundColor: {
             "some-class-name": "#013598",
-            "some-class-name-2": "#013598",
+            "some-class-name-2": "#964585",
         },
         display: {
             "some-class-name-3": "flex",
