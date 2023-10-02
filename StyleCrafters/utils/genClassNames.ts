@@ -1,3 +1,5 @@
+import { genObjClassName } from "./genObjClassName";
+
 const genClassNames = (rulesObj: Record<string, any>): string => {
     const testRegex = /^\$\w+(-\w+)*$/;
     const sanitizedSpecialChars = /[^a-zA-Z0-9]/g;
@@ -11,47 +13,7 @@ const genClassNames = (rulesObj: Record<string, any>): string => {
                 }
 
                 if (typeof value === "object") {
-                    const customClass: string[] = [];
-
-                    const nestedClass = Object.entries(value)
-                        .map(([nestedKey, nestedValue]) => {
-                            if (
-                                typeof nestedValue === "string" &&
-                                !nestedValue.includes("$")
-                            ) {
-                                return `${nestedKey}-${nestedValue}`;
-                            }
-
-                            if (nestedValue) {
-                                const sanitizedNestedValue = (
-                                    nestedValue as string
-                                ).replace("$", "");
-                                customClass.push(
-                                    `${sanitizedNestedValue}_${key}`
-                                );
-                            }
-
-                            return "";
-                        })
-                        .filter(Boolean)
-                        .join("-")
-                        .replace(/[aeiou]/gi, "")
-                        .replace(sanitizedSpecialChars, "_")
-                        .replace(/_+/g, "_");
-
-                    const customStr = customClass
-                        .filter(
-                            (str) => str.trim().replace(/\s/g, "").length > 0
-                        )
-                        .join(" ");
-
-                    return (
-                        acc +
-                        `${acc ? " " : ""}${key
-                            .replace(sanitizedCamelCase, "$1-$2")
-                            .toLowerCase()}__${nestedClass}` +
-                        (customStr ? ` ${customStr}` : "")
-                    );
+                    return acc + `${acc ? " " : ""}${genObjClassName(key, value)}`;
                 }
 
                 const sanitizedValue = value.replace(sanitizedSpecialChars, "");
