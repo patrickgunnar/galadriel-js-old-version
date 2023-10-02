@@ -1,7 +1,7 @@
 import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperties";
 import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
 import { ExtractGaladrielCSSClassesType } from "../../../types/coreTypes";
-import { computeConfigCSS } from "./computeConfigCSS";
+import { computeConfigOnNested } from "./computeConfigOnNested";
 import { genParsedNestedRules } from "./genParsedNestedRules";
 
 const getClasses: ExtractGaladrielCSSClassesType = (classes) => classes;
@@ -64,16 +64,19 @@ const parseNestedObjClasses = (objKey: string, objValue: any) => {
                         stylesValues.push(nestedValue.replace("$", ""));
                         styleRules.push(staticRules);
                     } else {
-                        const customClass = computeConfigCSS(nestedValue.replace("$", ""));
+                        const customClass = computeConfigOnNested(nestedValue.replace("$", ""));
 
-                        if (pseudoClass.includes("&")) {
-                            const pseudoInsertion = pseudoClass.replace("&", "");
+                        if(customClass) {
+                            const { customKey, customValue} = customClass;
 
-                            customRules.push(
-                                customClass.replace("&", `${pseudoInsertion.replace(":", "_")}${pseudoInsertion}`)
-                            );
-                        } else {
-                            customRules.push(customClass.replace("&", ""));
+                            if(customKey && customValue) {
+                                stylesValues.push(customKey);
+                                stylesValues.push(nestedValue.replace("$", ""));
+
+                                styleRules.push({
+                                    [customKey]: customValue,
+                                });
+                            }
                         }
                     }
                 } else {
