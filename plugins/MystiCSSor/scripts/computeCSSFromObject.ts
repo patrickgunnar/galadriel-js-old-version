@@ -26,7 +26,7 @@ const getStaticStyles = (key: string, value: any): string | null => {
                                 pseudClasses.push(
                                     `${property.replace(
                                         "&",
-                                        selector
+                                        selector.replace("$", "")
                                     )} ${asset}`
                                 );
 
@@ -37,9 +37,7 @@ const getStaticStyles = (key: string, value: any): string | null => {
                         })
                         .join(" ");
 
-                    return `${selector} { ${classesString} } ${pseudClasses.join(
-                        " "
-                    )}`;
+                    return `${selector.replace("$", "")} { ${classesString} } ${pseudClasses.join(" ")}`;
                 } catch (error: any) {
                     console.error("An error occurred:", error);
                 }
@@ -70,16 +68,18 @@ const getDynamicStyles = (key: string, value: any): string | null => {
 };
 
 const computeCSSFromObject = (key: string, value: any) => {
-    const staticStyles = getStaticStyles(key, value);
+    const testRegex = /^\$\w+(-\w+)*$/;
 
-    if (!staticStyles) {
-        if (typeof value === "string" && value.includes("__")) {
-            return computeConfigCSS(value).replace("&", "");
+    if (value && typeof value === "string" && testRegex.test(value)) {
+        const staticRule = getStaticStyles(key, value);
+
+        if (staticRule) {
+            return staticRule.replace("$", "");
         } else {
-            return getDynamicStyles(key, value);
+            return computeConfigCSS(value).replace("&", "").replace("$", "");
         }
     } else {
-        return staticStyles;
+        return getDynamicStyles(key, value);
     }
 };
 

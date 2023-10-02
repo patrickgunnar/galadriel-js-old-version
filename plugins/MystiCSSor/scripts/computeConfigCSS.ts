@@ -12,9 +12,8 @@ const computeConfigCSS = (clsName: string) => {
             for (const [key, value] of Object.entries(
                 configValue as Record<string, string>
             )) {
-                if (clsName === `__${key}`) {
-                    const className = `.__${key}`;
-                    const stylesClass = `${className}& { ${property}: ${value}; }`;
+                if (clsName === key) {
+                    const stylesClass = `.${key}& { ${property}: ${value}; }`;
 
                     customStyles.push(stylesClass);
                 }

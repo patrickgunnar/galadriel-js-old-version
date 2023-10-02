@@ -2,6 +2,7 @@ import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperti
 import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
 import { ExtractGaladrielCSSClassesType } from "../../../types/coreTypes";
 import { computeConfigCSS } from "./computeConfigCSS";
+import { genParsedNestedRules } from "./genParsedNestedRules";
 
 const getClasses: ExtractGaladrielCSSClassesType = (classes) => classes;
 
@@ -42,7 +43,7 @@ const getDynamicStyles = (key: string): string | null => {
 };
 
 const parseNestedObjClasses = (objKey: string, objValue: any) => {
-    const testRegex = /^__\w+(-\w+)*$/;
+    const testRegex = /^\$\w+(-\w+)*$/;
     const styleRules: Record<string, any>[] = [];
     const customRules: string[] = [];
     const stylesValues: string[] = [];
@@ -51,97 +52,45 @@ const parseNestedObjClasses = (objKey: string, objValue: any) => {
     if (pseudoClass) {
         try {
             for (const [nestedKey, nestedValue] of Object.entries(objValue)) {
-                const staticRules = getStaticStyles(nestedKey, nestedValue);
+                if (
+                    nestedValue &&
+                    typeof nestedValue === "string" &&
+                    testRegex.test(nestedValue)
+                ) {
+                    const staticRules = getStaticStyles(nestedKey, nestedValue);
 
-                if (!staticRules) {
-                    const dynamicRules = getDynamicStyles(nestedKey);
-                    const isMatchingPattern = testRegex.test(
-                        nestedValue as string
-                    );
-
-                    if (dynamicRules && !isMatchingPattern) {
+                    if (staticRules) {
                         stylesValues.push(nestedKey);
-                        stylesValues.push(nestedValue as string);
-
-                        styleRules.push({
-                            [dynamicRules]: nestedValue,
-                        });
+                        stylesValues.push(nestedValue.replace("$", ""));
+                        styleRules.push(staticRules);
                     } else {
-                        const customClass = computeConfigCSS(
-                            nestedValue as string
-                        );
+                        const customClass = computeConfigCSS(nestedValue.replace("$", ""));
 
                         if (pseudoClass.includes("&")) {
-                            const pseudoInsertion = pseudoClass.replace(
-                                "&",
-                                ""
-                            );
+                            const pseudoInsertion = pseudoClass.replace("&", "");
 
                             customRules.push(
-                                customClass.replace(
-                                    "&",
-                                    `_${pseudoInsertion.replace(
-                                        ":",
-                                        ""
-                                    )}${pseudoInsertion}`
-                                )
+                                customClass.replace("&", `${pseudoInsertion.replace(":", "_")}${pseudoInsertion}`)
                             );
                         } else {
                             customRules.push(customClass.replace("&", ""));
                         }
                     }
                 } else {
-                    stylesValues.push(nestedKey);
-                    stylesValues.push(nestedValue as string);
-                    styleRules.push(staticRules);
-                }
-            }
+                    const dynamicRules = getDynamicStyles(nestedKey);
 
-            if (styleRules) {
-                const sanitizedSpecialChars = /[^a-zA-Z0-9]/g;
-                const sanitizedCamelCase = /([a-z])([A-Z])/g;
+                    if (dynamicRules) {
+                        stylesValues.push(nestedKey);
+                        stylesValues.push((nestedValue as string).replace("$", ""));
 
-                const styles = styleRules.reduce((acc, obj) => {
-                    const [[key, value]] = Object.entries(obj);
-
-                    if (key && value) {
-                        return (acc += `${key}: ${value}; `);
-                    }
-
-                    return acc;
-                }, "");
-
-                if (pseudoClass) {
-                    const valuesName = stylesValues
-                        .join("-")
-                        .replace(/[aeiou]/gi, "")
-                        .replace(sanitizedSpecialChars, "_")
-                        .replace(/_+/g, "_");
-
-                    const className = `.${objKey.replace(
-                        sanitizedCamelCase,
-                        "$1-$2"
-                    )}__${valuesName}`.toLowerCase();
-
-                    if (pseudoClass.includes("$")) {
-                        const sanitizedMedia = pseudoClass.replace("$", "");
-                        const media = `@media screen and (${sanitizedMedia}) { ${className} { ${styles} } ${customRules.join(
-                            " "
-                        )} }`;
-
-                        return media;
-                    } else {
-                        const classNameWithPseudo = pseudoClass.replace(
-                            "&",
-                            className
-                        );
-
-                        return `${classNameWithPseudo} { ${styles} } ${customRules.join(
-                            " "
-                        )}`;
+                        styleRules.push({
+                            [dynamicRules]: nestedValue,
+                        });
                     }
                 }
             }
+
+            return genParsedNestedRules(styleRules, stylesValues, objKey, pseudoClass, customRules);
         } catch (error: any) {
             console.error("An error occurred:", error);
         }
