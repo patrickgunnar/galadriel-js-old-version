@@ -1,13 +1,10 @@
 import { PluginObj, NodePath, Node } from "@babel/core";
-import { extractKeysValueFromObjectExpression } from "./scripts/extractKeysValueFromObjectExpression";
-import { computeCSSFromObject } from "./scripts/computeCSSFromObject";
-import { parseNestedObjClasses } from "./scripts/parseNestedObjClasses";
+import { extractClasses } from "./scripts/extractClasses";
 import { parseConfig } from "./scripts/parseConfig";
 import path from "path";
 
-const completedNode: string[] = [];
-const completedObjs: string[] = [];
-const styleRules: string[] = [];
+const completedNodes: string[] = [];
+const styleClasses: string[] = [];
 
 export default function (): PluginObj {
     const { include = [], exclude = [] } = parseConfig();
@@ -25,52 +22,15 @@ export default function (): PluginObj {
                     try {
                         const node = path.node as Node;
                         const stringifiedNode = JSON.stringify(node);
-                        const jointCompletedNode = completedNode.join(" ");
+                        const hasCompletedNodes = completedNodes.join(" ");
 
-                        if (
-                            node &&
-                            !jointCompletedNode.includes(stringifiedNode)
-                        ) {
-                            completedNode.push(stringifiedNode);
+                        if (node && !hasCompletedNodes.includes(stringifiedNode)) {
+                            completedNodes.push(stringifiedNode);
 
-                            const objects =
-                                extractKeysValueFromObjectExpression(node);
-                            const stringifiedObjs = JSON.stringify(objects);
-                            const jointObjs = completedObjs.join(" ");
+                            const classes = extractClasses(node);
 
-                            if (
-                                objects &&
-                                !jointObjs.includes(stringifiedObjs)
-                            ) {
-                                completedObjs.push(stringifiedObjs);
-
-                                for (const [key, value] of Object.entries(
-                                    objects
-                                )) {
-                                    if (value && typeof value === "object") {
-                                        const dynamicRules =
-                                            parseNestedObjClasses(key, value);
-
-                                        if (
-                                            dynamicRules &&
-                                            !styleRules.includes(dynamicRules)
-                                        ) {
-                                            styleRules.unshift(dynamicRules);
-                                        }
-                                    } else {
-                                        const ruleString = computeCSSFromObject(
-                                            key,
-                                            value
-                                        );
-
-                                        if (
-                                            ruleString &&
-                                            !styleRules.includes(ruleString)
-                                        ) {
-                                            styleRules.unshift(ruleString);
-                                        }
-                                    }
-                                }
+                            if (classes && !styleClasses.includes(classes)) {
+                                styleClasses.push(classes);
                             }
                         }
                     } catch (error: any) {
@@ -82,6 +42,6 @@ export default function (): PluginObj {
     };
 }
 
-export const getDevelopmentStyleRules = () => {
-    return styleRules.join(" ");
+export const getStyleClasses = () => {
+    return styleClasses.join(" ");
 };
