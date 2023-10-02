@@ -5,18 +5,40 @@ import { dynamicObjectManager } from "./scripts/dynamicObjectManager";
 const typeForgePlugin = () => {
     const objectsData = dynamicObjectManager();
 
-    try {
-        fs.writeFileSync(
-            path.join(__dirname, "..", "..", "..", "types", "typeManifest.ts"),
-            `export type CraftClassesType = { ${objectsData} }`
-        );
+    if(objectsData) {
+        const { types, config } = objectsData;
 
-        fs.writeFileSync(
-            path.join(__dirname, "..", "..", "types", "typeManifest.d.ts"),
-            `export type CraftClassesType = { ${objectsData} }`
-        );
-    } catch (error: any) {
-        console.error("An error occurred:", error);
+        if(types) {
+            try {
+                fs.writeFileSync(
+                    path.join(__dirname, "..", "..", "..", "types", "typeManifest.ts"),
+                    `export type CraftClassesType = { ${types} }`
+                );
+        
+                fs.writeFileSync(
+                    path.join(__dirname, "..", "..", "types", "typeManifest.d.ts"),
+                    `export type CraftClassesType = { ${types} }`
+                );
+            } catch (error: any) {
+                console.error("An error occurred:", error);
+            }
+        }
+
+        if(config) {
+            try {
+                fs.writeFileSync(
+                    path.join(__dirname, "..", "..", "..", "types", "config.ts"),
+                    `export type Config = { ${config} }`
+                );
+        
+                fs.writeFileSync(
+                    path.join(__dirname, "..", "..", "types", "config.d.ts"),
+                    `export type Config = { ${config} }`
+                );
+            } catch (error: any) {
+                console.error("An error occurred:", error);
+            }
+        }
     }
 };
 
