@@ -28,13 +28,16 @@ const pseudoClasses = [
     "maxStandardSmartphones",
 ];
 
-const dynamicObjectManager = (): string => {
+const dynamicObjectManager = (): { types: string; config: string } | null => {
     try {
+        const config: string[] = []
         const keys = new Set([
             ...Object.keys(coreStaticStyles),
             ...Object.keys(coreDynamicProperties),
         ]);
         const types = Array.from(keys).map((key) => {
+            config.push(`${key}?: Record<string, string>;`)
+
             const valuesHandler = coreStaticStyles[key] ?? null;
             const options: string[] = [];
 
@@ -58,12 +61,15 @@ const dynamicObjectManager = (): string => {
             return `${key}?: ${recordFormat};`;
         });
 
-        return types.join(" ");
+        return {
+            types: types.join(" "),
+            config: config.join(" ")
+        };
     } catch (error) {
         console.error("An error occurred:", error);
     }
 
-    return "";
+    return null;
 };
 
 export { dynamicObjectManager };
