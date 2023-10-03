@@ -1,34 +1,19 @@
 import { Node } from "@babel/types";
-import { parseNestedObjClasses } from "./parseNestedObjClasses";
-import { computeCSSFromObject } from "./computeCSSFromObject";
+import { getStyleClasses } from "./getStyles";
+import { getNestedStyles } from "./getNestedStyles";
 
-type ParsedValue = string | Record<string, any> | null;
+type ParsedValue = string | null;
 
-const extractNestedObjs = (node: Node): ParsedValue => {
+const extractNestedObjs = (key: string, node: Node): ParsedValue => {
     try {
         if ((node as any).type.includes("Literal")) {
-            return (node as any).value;
+            const styles = getStyleClasses(key, node);
+
+            if(styles) return styles;
         } else if (node.type === "ObjectExpression" && node.properties) {
-            const nestedValues: ParsedValue = {};
+            const styles = getNestedStyles(key, node)
 
-            node.properties.forEach((property) => {
-                if ((property as any).value.type.includes("Literal")) {
-                    nestedValues[(property as any).key.name] = (
-                        property as any
-                    ).value.value;
-                } else if (
-                    (property as any).value.type === "ObjectExpression"
-                ) {
-                    // Recursively handle nested object literals
-                    const nestedResult = extractNestedObjs(
-                        (property as any).value
-                    );
-
-                    Object.assign(nestedValues, nestedResult);
-                }
-            });
-
-            return nestedValues;
+            if (styles) return styles;
         }
     } catch (error: any) {
         console.error("An error occurred:", error);
@@ -48,17 +33,9 @@ const extractClasses = (node: Node) => {
                     const key = (property.key as any).name;
 
                     if (key) {
-                        const value = extractNestedObjs(property.value);
+                        const classValues = extractNestedObjs(key, property.value);
 
-                        if (value && typeof value === "object") {
-                            const dynamicClass = parseNestedObjClasses(key, value);
-
-                            if(dynamicClass) styleClasses.push(dynamicClass);
-                        } else {
-                            const staticClass = computeCSSFromObject(key, value);
-
-                            if(staticClass) styleClasses.push(staticClass);
-                        }
+                        if(classValues) styleClasses.push(classValues);
                     }
                 }
             });
