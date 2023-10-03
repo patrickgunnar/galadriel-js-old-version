@@ -1,10 +1,5 @@
 import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperties";
 import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
-import { ExtractGaladrielClassesType } from "../../../types/coreTypes";
-
-const extractor: ExtractGaladrielClassesType = (classes) => {
-    return Object.keys(classes).map((key) => key.replace(".", ""));
-};
 
 const pseudoClasses = [
     "hover",
@@ -42,27 +37,11 @@ const dynamicObjectManager = (): { types: string; config: string } | null => {
         const types = Array.from(keys).map((key) => {
             config.push(`${key}?: Record<string, string>;`);
 
-            const valuesHandler = coreStaticStyles[key] ?? null;
-            const options: string[] = [];
-
-            if (valuesHandler) {
-                const values = valuesHandler({
-                    extractGaladrielClasses: extractor,
-                });
-
-                if (values) {
-                    options.push(...values.map((val: string) => `'${val}'`));
-                }
+            if (pseudoClasses.includes(key)) {
+                return `${key}?: Record<string, string>;`;
             }
 
-            const recordFormat =
-                options.length > 0
-                    ? options.join(" | ")
-                    : pseudoClasses.includes(key)
-                    ? "Record<string, string>"
-                    : "string";
-
-            return `${key}?: ${recordFormat};`;
+            return `${key}?: string;`;
         });
 
         config.push("}");
