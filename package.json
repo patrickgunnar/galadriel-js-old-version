@@ -17,7 +17,7 @@
         "test:watch": "jest --watch",
         "manifest": "tsc --outDir dist && node dist/plugins/TypeWeaver/typeForgePlugin.js",
         "dev": "npx webpack serve --config webpack.config.js",
-        "start": "npm run manifest && npx webpack --watch"
+        "start": "tsc && npx webpack --watch"
     },
     "type": "commonjs",
     "repository": {
