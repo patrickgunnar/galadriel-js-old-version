@@ -1,4 +1,4 @@
-import { Node } from "@babel/types";
+import { Node, stringLiteral, objectProperty, identifier } from "@babel/types";
 import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperties";
 import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
 import { ExtractGaladrielCSSClassesType } from "../../../types/coreTypes";
@@ -84,13 +84,19 @@ export const getNestedStyles = (pseudo: string, node: Node) => {
         const pseudoClass = coreDynamicProperties[pseudo];
 
         if (pseudoClass.includes("$")) {
+            const strLiteral = stringLiteral(`galadriel_${hashedHex}`);
+            const objProperty = objectProperty(identifier("className"), strLiteral);
+
             // replace the node value to the class name
-            (node as any).init = `galadriel_${hashedHex}`;
+            (node as any).properties = [objProperty]
 
             return `@media screen and (${pseudoClass.replace("$", "")}) { .galadriel_${hashedHex} { ${rules} } }`;
         } else {
+            const strLiteral = stringLiteral(`galadriel_${pseudoClass.replace("&", hashedHex)}`);
+            const objProperty = objectProperty(identifier("className"), strLiteral);
+
             // replace the node value to the class name
-            (node as any).init = `galadriel_${pseudoClass.replace("&", hashedHex)}`;
+            (node as any).properties = [objProperty]
 
             return `.galadriel_${pseudoClass.replace("&", hashedHex)} { ${rules} }`;
         }
