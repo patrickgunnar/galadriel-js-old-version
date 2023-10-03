@@ -82,19 +82,15 @@ export const getNestedStyles = (pseudo: string, node: Node) => {
         const hashedHex = hashHex(nestedClasses.join(" "));
         const rules = nestedClasses.join(";");
         const pseudoClass = coreDynamicProperties[pseudo];
+        const strLiteral = stringLiteral(`galadriel_${hashedHex}`);
+        const objProperty = objectProperty(identifier("className"), strLiteral);
 
         if (pseudoClass.includes("$")) {
-            const strLiteral = stringLiteral(`galadriel_${hashedHex}`);
-            const objProperty = objectProperty(identifier("className"), strLiteral);
-
             // replace the node value to the class name
             (node as any).properties = [objProperty]
 
             return `@media screen and (${pseudoClass.replace("$", "")}) { .galadriel_${hashedHex} { ${rules} } }`;
         } else {
-            const strLiteral = stringLiteral(`galadriel_${pseudoClass.replace("&", hashedHex)}`);
-            const objProperty = objectProperty(identifier("className"), strLiteral);
-
             // replace the node value to the class name
             (node as any).properties = [objProperty]
 
