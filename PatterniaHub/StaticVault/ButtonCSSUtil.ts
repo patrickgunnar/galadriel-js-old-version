@@ -1,6 +1,6 @@
 import { ButtonColorProps, CoreStaticStylesType } from "../../types/coreTypes";
 
-const ButtonCSSUtil: CoreStaticStylesType = {
+export const ButtonCSSUtil: CoreStaticStylesType = {
     /*
         CUSTOM CLASSES FOR ELEMENTS
     */
@@ -325,5 +325,3 @@ const ButtonCSSUtil: CoreStaticStylesType = {
             },
         }),
 };
-
-export { ButtonCSSUtil };
