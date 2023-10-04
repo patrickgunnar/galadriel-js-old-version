@@ -35,9 +35,11 @@ export const ButtonCSSUtil: CoreStaticStylesType = {
             filter: `drop-shadow(6px 4px 4px ${filterColor})`,
             "&:hover": "{ transform: scale(1.05); opacity: 0.8; }",
             "&:focus": `{ outline: none; box-shadow: 0 0 5px ${bsColorOne}, 0 0 5px ${bsColorTwo}; }`,
-            "&:active": "{ transform: scale(0.95); transition: transform 0.1s; }",
-            "&:disabled": "{ background: #708090; color: #b8b8b8; cursor: default; box-shadow: inset -4px 4px 9px #5f6d7a, inset 4px -4px 9px #8193a6; }",
-            "&:disabled:hover": "{ transform: scale(1); opacity:1; }"
+            "&:active":
+                "{ transform: scale(0.95); transition: transform 0.1s; }",
+            "&:disabled":
+                "{ background: #708090; color: #b8b8b8; cursor: default; box-shadow: inset -4px 4px 9px #5f6d7a, inset 4px -4px 9px #8193a6; }",
+            "&:disabled:hover": "{ transform: scale(1); opacity:1; }",
         });
 
         return extractGaladrielClasses({
@@ -299,29 +301,4 @@ export const ButtonCSSUtil: CoreStaticStylesType = {
             }),
         });
     },
-    backgroundColor: ({ extractGaladrielClasses }) =>
-        extractGaladrielClasses({
-            ".$background-blue": {
-                "background-color": "blue",
-                "border-radius": "10px",
-                border: "1px solid #fff555",
-                height: "100vh",
-            },
-            ".$background-black": {
-                "background-color": "black",
-                "border-radius": "10px",
-                border: "1px solid #FFFFF0",
-                height: "100vh",
-                padding: 0,
-                margin: 0,
-            },
-            ".$background-turquoise-blue": {
-                "background-color": "#00FFF0",
-                "border-radius": "10px",
-                border: "1px solid black",
-                height: "100vh",
-                padding: 0,
-                margin: 0,
-            },
-        }),
 };
