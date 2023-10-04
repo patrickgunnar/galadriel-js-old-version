@@ -9,7 +9,7 @@ export const NavbarCSSUtil: CoreStaticStylesType = {
             bgColorStart, bgColorEnd, textColor, 
             hoverColor, shadowColor
         }: NavbarColorProps) => ({
-            "&": `{ background: linear-gradient(to top, ${bgColorStart} 0%, ${bgColorEnd} 100%); box-sizing: border-box; box-shadow: 0 6px 10px ${shadowColor}; display: flex; align-items: center; justify-content: center; user-select: none; position: fixed; padding: 5px; height: 70px; width: 100%; z-index: 99; }`,
+            "&": `{ background: linear-gradient(to top, ${bgColorStart} 0%, ${bgColorEnd} 100%); box-sizing: border-box; box-shadow: 0 6px 10px ${shadowColor}; display: flex; align-items: center; justify-content: center; user-select: none; position: fixed; top: 0; padding: 5px; height: 70px; width: 100%; z-index: 99; }`,
             "& div":
                 "{ display: flex; align-items: center; justify-content: space-between; margin: auto; padding: 0px 60px; position: relative; height: 100%; width: 100%; max-width: 1300px; }",
             "& a": `{ color: ${textColor}; font-size: 30px; font-weight: 600; text-decoration: none; }`,
