@@ -29,6 +29,14 @@ export interface ButtonColorProps {
     textColor: string;
 }
 
+export interface NavbarColorProps {
+    bgColorStart: string;
+    bgColorEnd: string;
+    textColor: string;
+    hoverColor: string;
+    shadowColor: string;
+}
+
 export type HTMLElementTagName =
     | "a"
     | "abbr"
