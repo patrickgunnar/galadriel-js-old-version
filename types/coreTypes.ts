@@ -37,6 +37,14 @@ export interface NavbarColorProps {
     shadowColor: string;
 }
 
+export interface FooterColorProps {
+    bgColorStart: string;
+    bgColorEnd: string;
+    textColorOne: string;
+    textColorTwo: string;
+    shadowColor: string;
+}
+
 export type HTMLElementTagName =
     | "a"
     | "abbr"
