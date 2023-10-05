@@ -19,7 +19,7 @@ const retrieveStyleClasses = (key: string, node: Node) => {
             const customClassName = value.replace("$", "");
             const customStyle = computeConfigCSS(customClassName);
 
-            if (customStyle) {
+            if (customStyle && typeof customStyle === "string") {
                 /// replace the node value to the class name
                 (node as any).value = customClassName;
 
