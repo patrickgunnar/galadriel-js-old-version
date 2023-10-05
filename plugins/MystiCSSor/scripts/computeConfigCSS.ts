@@ -1,7 +1,7 @@
 import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperties";
 import { parseConfig } from "./parseConfig";
 
-const computeConfigCSS = (clsName: string) => {
+const computeConfigCSS = (clsName: string, isNested: boolean = false) => {
     const { craftStyles = {} } = parseConfig();
     const customStyles: string[] = [];
 
@@ -13,9 +13,13 @@ const computeConfigCSS = (clsName: string) => {
                 configValue as Record<string, string>
             )) {
                 if (clsName === key) {
-                    const stylesClass = `.${key}& { ${property}: ${value}; }`;
+                    if (isNested) {
+                        return { customKey: property, customValue: value};
+                    } else {
+                        const stylesClass = `.${key}& { ${property}: ${value}; }`;
 
-                    customStyles.push(stylesClass);
+                        customStyles.push(stylesClass);
+                    }
                 }
             }
         }
