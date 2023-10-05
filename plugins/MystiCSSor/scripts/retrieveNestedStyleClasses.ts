@@ -1,8 +1,8 @@
 import { Node } from "@babel/types";
-import { computeConfigOnNested } from "./computeConfigOnNested";
 import { getDynamicStyles } from "./getDynamicStyles";
 import { getStaticStyles } from "./getStaticStyles";
 import { composeCSSClassName } from "./composeCSSClassName";
+import { computeConfigCSS } from "./computeConfigCSS";
 
 const retrieveNestedStyleClasses = (pseudo: string, node: Node) => {
     const testRegex = /^\$\w+(-\w+)*$/;
@@ -23,9 +23,9 @@ const retrieveNestedStyleClasses = (pseudo: string, node: Node) => {
                         nestedClasses.push(`${objKey}:${objValue}`);
                     } else {
                         const customClassName = value.replace("$", "");
-                        const customStyle = computeConfigOnNested(customClassName);
+                        const customStyle = computeConfigCSS(customClassName, true);
 
-                        if (customStyle) {
+                        if (customStyle && typeof customStyle === "object") {
                             const { customKey, customValue } = customStyle;
 
                             nestedClasses.push(`${customKey}:${customValue}`);
