@@ -3,7 +3,7 @@ import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperti
 import { hashHex } from "./hashHex";
 
 const composeCSSClassName = (pseudo: string, nestedClasses: string[], node: Node) => {
-    if (nestedClasses) {
+    if (nestedClasses.length > 0) {
         const hashedHex = hashHex(nestedClasses.join(" "));
         const rules = nestedClasses.join(";");
         const pseudoClass = coreDynamicProperties[pseudo];
