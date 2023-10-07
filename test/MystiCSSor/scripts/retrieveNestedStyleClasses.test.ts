@@ -83,8 +83,8 @@ const babelNodeDynamic = {
                 name: "aspectRatio",
             },
             value: {
-                type: "1/1",
-                value: "$some-class-name-3",
+                type: "StringLiteral",
+                value: "1/1",
             },
             kind: "init",
         },
@@ -107,6 +107,6 @@ describe("Verify retrieveNestedStyleClasses function", () => {
 	test("Check if the dynamic CSS classes are being return ", () => {
 		const cls = retrieveNestedStyleClasses("hover", babelNodeDynamic as Node);
 
-		expect(cls).toBe(".galadriel_b29224cc:hover { height:100vh }");
+		expect(cls).toBe(".galadriel_d0e75ef4:hover { height:100vh;aspect-ratio:1/1 }");
 	});
 });
