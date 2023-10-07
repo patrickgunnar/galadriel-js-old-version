@@ -2,16 +2,16 @@ import { computeConfigCSS } from "../../../plugins/MystiCSSor/scripts/computeCon
 
 describe("Verify if computeConfigCSS function is collecting the styles", () => {
     test("Check if the return is a class string string", () => {
-        const clsName = "className";
-        const expectedStyles = ".className& { background-color: galadriel_7852b855; } .className& { display: galadriel_7852b855; }";
+        const clsName = "some-class-name-3";
+        const expectedStyles = ".some-class-name-3& { display: flex; }";
         const result = computeConfigCSS(clsName);
 
         expect(result).toBe(expectedStyles);
     });
 
     test("Check if the return is a object string", () => {
-        const clsName = "className";
-        const expectedStyles = { customKey: 'background-color', customValue: 'galadriel_7852b855' };
+        const clsName = "some-class-name";
+        const expectedStyles = { customKey: "background-color", customValue: "#013598" };
         const result = computeConfigCSS(clsName, true);
 
         expect(result).toEqual(expectedStyles);
