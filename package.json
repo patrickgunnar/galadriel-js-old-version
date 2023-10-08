@@ -18,9 +18,10 @@
     "scripts": {
         "test": "jest",
         "test:watch": "jest --watch",
-        "manifest": "tsc --outDir dist && node dist/plugins/TypeWeaver/typeForgePlugin.js",
         "dev": "npx webpack serve --config webpack.config.js",
-        "start": "tsc && npx webpack --watch"
+        "start": "tsc && npx webpack --watch",
+        "prebuild": "tsc --outDir dist && node dist/plugins/TypeWeaver/typeForgePlugin.js",
+        "build": "webpack --mode production"
     },
     "type": "commonjs",
     "repository": {
