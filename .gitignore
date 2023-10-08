@@ -3,8 +3,6 @@ node_modules/
 
 # Ignore build output
 /dist/
-/builds/
-/plugins/builds/
 
 # Ignore logs and other generated files
 *.log
@@ -39,9 +37,6 @@ npm-debug.log*
 # Ignore eslint cache
 .eslintcache
 
-# Ignore production build
-/build/
-
 # Ignore coverage directory
 /coverage/
 
@@ -65,12 +60,6 @@ toolkit/utils/genTemporaryFile.ts
 index.html
 index.ts
 types/coreTypes.js
-scripts/builds/types/coreTypes.js
-scripts/builds/tools/coreStaticStyles.js
-scripts/builds/scripts/genStaticClasses.js
-scripts/builds/scripts/genGaladrielTypes.js
-scripts/builds/scripts/extractGaladrielClasses.js
-scripts/builds/scripts/dynamicStylesObject.js
 des.html
 des.js
 types/galadrielIntelliSense.js
