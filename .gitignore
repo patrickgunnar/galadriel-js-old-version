@@ -69,3 +69,7 @@ StyleCrafters/createStyles.js
 types/typeManifest.js
 typeManifest.d.ts
 types/typeManifest copy.ts
+build/index.js
+build/index.js.map
+build/main.css
+build/main.css.map
