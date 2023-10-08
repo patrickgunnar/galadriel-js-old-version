@@ -1,4 +1,4 @@
-import { ButtonColorProps, CoreStaticStylesType } from "../../types/coreTypes";
+import { ButtonColorProps, CoreStaticStylesType, SimplifiedButtonProps, } from "../../types/coreTypes";
 
 export const ButtonCSSUtil: CoreStaticStylesType = {
     /*
@@ -298,6 +298,150 @@ export const ButtonCSSUtil: CoreStaticStylesType = {
                 bsColorTwo: "#ff5745",
                 filterColor: "rgba(112, 128, 144, 0.7)",
                 textColor: "#333333",
+            }),
+        });
+    },
+    simplifiedButton: ({ extractGaladrielClasses }) => {
+        const genButton = ({
+            bgColorStart,
+            bgColorEnd,
+            borderColor,
+            focusColor,
+            shadowColor,
+        }: SimplifiedButtonProps) => ({
+            background: `linear-gradient(to top, ${bgColorStart} 0%, ${bgColorEnd} 100%)`,
+            "box-sizing": "border-box",
+            "box-shadow": `6px 0 10px ${shadowColor}`,
+            border: `none`,
+            "border-radius": "5px",
+            cursor: "pointer",
+            display: "flex",
+            "align-items": "center",
+            "justify-content": "center",
+            "user-select": "none",
+            "font-size": "18px",
+            "font-weight": "600",
+            "text-align": "center",
+            "text-decoration": "none",
+            transition: "transform 0.3",
+            position: "relative",
+            "z-index": "1",
+            padding: "20px 40px",
+            margin: "10px 20px",
+            "&:hover": `{ background: linear-gradient(to top, ${bgColorEnd} 0%, ${bgColorEnd} 100%); opacity: 0.98; transform: scale(1.05); }`,
+            "&:focus": `{ outline: none; box-shadow: 0 0 5px ${focusColor}; border: 1px outset ${borderColor} }`,
+            "&:active":
+                "{ transform: scale(0.95); transition: transform 0.1s; }",
+            "&:disabled":
+                "{ background: #708090; color: #b8b8b8; cursor: default; box-shadow: inset -4px 4px 9px #5f6d7a, inset 4px -4px 9px #8193a6; }",
+            "&:disabled:hover": "{ transform: scale(1); opacity:1; }",
+        });
+
+        return extractGaladrielClasses({
+            ".$element-button-light": genButton({
+                bgColorStart: "#dfe9f3",
+                bgColorEnd: "white",
+                borderColor: "#333333",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-midnight-blue": genButton({
+                bgColorStart: "#020061",
+                bgColorEnd: "#6195db",
+                borderColor: "#dfe9f3",
+                focusColor: "#cccccc",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-dodger-blue": genButton({
+                bgColorStart: "#2c7ec4",
+                bgColorEnd: "#3494e6",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-pale-pink": genButton({
+                bgColorStart: "#c95e93",
+                bgColorEnd: "#ec6ead",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-turquoise-green": genButton({
+                bgColorStart: "#00ae92",
+                bgColorEnd: "#00cdac",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-byzantine-purple": genButton({
+                bgColorStart: "#5a0461",
+                bgColorEnd: "#6a0572",
+                borderColor: "#dfe9f3",
+                focusColor: "#cccccc",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-thistle": genButton({
+                bgColorStart: "#916f89",
+                bgColorEnd: "#ab83a1",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-coral-red": genButton({
+                bgColorStart: "#d25d54",
+                bgColorEnd: "#f76d63",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-sunglow": genButton({
+                bgColorStart: "#d9833a",
+                bgColorEnd: "#ff9a44",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-pale-red": genButton({
+                bgColorStart: "#d94b4b",
+                bgColorEnd: "#ff5858",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-golden-poppy": genButton({
+                bgColorStart: "#cc8115",
+                bgColorEnd: "#f09819",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-candy-apple": genButton({
+                bgColorStart: "#8b192d",
+                bgColorEnd: "#a31d35",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-scarlet": genButton({
+                bgColorStart: "#d93535",
+                bgColorEnd: "#ff3e3e",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-sunset-orange": genButton({
+                bgColorStart: "#d96341",
+                bgColorEnd: "#ff744d",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
+            }),
+            ".$element-button-light-apricot": genButton({
+                bgColorStart: "#d9895b",
+                bgColorEnd: "#ffa16b",
+                borderColor: "#dfe9f3",
+                focusColor: "#000000",
+                shadowColor: "rgba(0,0,0,0.4)",
             }),
         });
     },
