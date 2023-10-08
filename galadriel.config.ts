@@ -10,7 +10,7 @@ const config = {
         "StyleCrafters",
         "test",
         "types",
-        "Watchmanor",
+        "init-scripts",
     ],
     // content to include
     include: ["./index.ts"],
