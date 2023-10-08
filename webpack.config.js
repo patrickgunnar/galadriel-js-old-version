@@ -1,6 +1,6 @@
 const path = require("path");
+const fs = require("fs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-
 
 const galadrielInjectionPlugin = require("./dist/plugins/MystiCSSor/galadrielInjectionPlugin.js");
 const postcssAutoprefixer = require("autoprefixer");
@@ -80,7 +80,7 @@ module.exports = {
             ],
         }),
         new MiniCssExtractPlugin({
-            filename: "styles.css",
+            filename: "[name].css",
         }),
     ],
 };
