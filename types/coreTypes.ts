@@ -45,6 +45,14 @@ export interface FooterColorProps {
     shadowColor: string;
 }
 
+export interface SimplifiedButtonProps {
+    bgColorStart: string;
+    bgColorEnd: string;
+    borderColor: string;
+    focusColor: string;
+    shadowColor: string;
+}
+
 export type HTMLElementTagName =
     | "a"
     | "abbr"
