@@ -12,6 +12,9 @@
             "./dist/plugins/MystiCSSor/galadrielHarvestPlugin"
         ]
     },
+    "bin": {
+        "galadriel-init": "./dist/init-scripts/initConfig.js"
+    },
     "scripts": {
         "test": "jest",
         "test:watch": "jest --watch",
