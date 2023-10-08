@@ -1,7 +1,7 @@
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const galadrielInjectionPlugin = require("./dist/plugins/MystiCSSor/galadrielInjectionPlugin.js");
+const galadrielInjectionPlugin = require("./build/plugins/MystiCSSor/galadrielInjectionPlugin.js");
 const postcssAutoprefixer = require("autoprefixer");
 const postcssCssnano = require("cssnano");
 const postcssPresetEnv = require("postcss-preset-env");

@@ -4,7 +4,6 @@ const config = {
     // content to exclude
     exclude: [
         "node_modules",
-        "dist",
         "PatterniaHub",
         "plugins",
         "StyleCrafters",
