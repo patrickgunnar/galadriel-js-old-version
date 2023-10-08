@@ -1,6 +1,13 @@
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
+
+const galadrielInjectionPlugin = require("./dist/plugins/MystiCSSor/galadrielInjectionPlugin.js");
+const postcssAutoprefixer = require("autoprefixer");
+const postcssCssnano = require("cssnano");
+const postcssPresetEnv = require("postcss-preset-env");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 module.exports = {
     entry: "./index.ts", // Entry point of your application
     output: {
@@ -30,7 +37,23 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader", "postcss-loader"],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    galadrielInjectionPlugin(),
+                                    postcssAutoprefixer(),
+                                    postcssPresetEnv(),
+                                    postcssCssnano(),
+                                ],
+                            },
+                        },
+                    },
+                ],
             },
         ],
     },
@@ -55,6 +78,9 @@ module.exports = {
                     to: "",
                 },
             ],
+        }),
+        new MiniCssExtractPlugin({
+            filename: "styles.css",
         }),
     ],
 };
