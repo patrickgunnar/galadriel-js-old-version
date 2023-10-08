@@ -2,7 +2,7 @@
     "name": "galadrieljs",
     "version": "1.0.0-beta.1",
     "description": "A versatile JavaScript library empowering developers to create elegant, dynamically responsive user interfaces. Focused on modularity and simplicity, enabling the crafting of captivating web applications with optimized performance. Unleash your creativity and let Galadriel.js illuminate your design process.",
-    "main": "src/index.js",
+    "main": "./dist/main.js",
     "babel": {
         "presets": [
             "@babel/preset-env",
