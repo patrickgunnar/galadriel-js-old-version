@@ -16,7 +16,14 @@ const retrieveStyleClasses = (key: string, node: Node) => {
 
             return staticStyle;
         } else {
-            const customClassName = value.replace("$", "");
+            let customClassName: string;
+
+            if (key.includes(":")) {
+                customClassName = value.replace("$", "").split(":")[0];
+            } else {
+                customClassName = value.replace("$", "");
+            }
+
             const customStyle = computeConfigCSS(customClassName);
 
             if (customStyle && typeof customStyle === "string") {

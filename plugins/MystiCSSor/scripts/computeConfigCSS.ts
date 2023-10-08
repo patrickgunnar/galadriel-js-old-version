@@ -12,11 +12,17 @@ const computeConfigCSS = (clsName: string, isNested: boolean = false) => {
             for (const [key, value] of Object.entries(
                 configValue as Record<string, string>
             )) {
-                if (clsName === key) {
+                if (clsName === key || clsName === key.split(":")[0]) {
                     if (isNested) {
                         return { customKey: property, customValue: value};
                     } else {
-                        const stylesClass = `.${key}& { ${property}: ${value}; }`;
+                        let stylesClass: string;
+
+                        if (key.includes(":")) {
+                            stylesClass = `.${key} { ${property}: ${value}; }`;
+                        } else {
+                            stylesClass = `.${key}& { ${property}: ${value}; }`;
+                        }
 
                         customStyles.push(stylesClass);
                     }
