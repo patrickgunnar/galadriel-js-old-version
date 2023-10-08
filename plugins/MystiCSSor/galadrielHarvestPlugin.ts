@@ -23,7 +23,7 @@ export default function (): PluginObj {
                         if (node) {
                             const classes = extractClasses(node);
 
-                            if (classes && !styleClasses.includes(classes)) {
+                            if (classes) {
                                 styleClasses.push(classes);
                             }
                         }
