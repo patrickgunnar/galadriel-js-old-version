@@ -2,25 +2,25 @@
     "name": "galadrieljs",
     "version": "1.0.0-beta.1",
     "description": "A versatile JavaScript library empowering developers to create elegant, dynamically responsive user interfaces. Focused on modularity and simplicity, enabling the crafting of captivating web applications with optimized performance. Unleash your creativity and let Galadriel.js illuminate your design process.",
-    "main": "./dist/main.js",
+    "main": "./build/main.js",
     "babel": {
         "presets": [
             "@babel/preset-env",
             "@babel/preset-typescript"
         ],
         "plugins": [
-            "./dist/plugins/MystiCSSor/galadrielHarvestPlugin"
+            "./build/plugins/MystiCSSor/galadrielHarvestPlugin"
         ]
     },
     "bin": {
-        "galadriel-init": "./dist/init-scripts/initConfig.js"
+        "galadriel-init": "./build/init-scripts/initConfig.js"
     },
     "scripts": {
         "test": "jest",
         "test:watch": "jest --watch",
         "dev": "npx webpack serve --config webpack.config.js",
         "start": "tsc && npx webpack --watch",
-        "prebuild": "tsc --outDir dist && node dist/plugins/TypeWeaver/typeForgePlugin.js",
+        "prebuild": "tsc --outDir build && node build/plugins/TypeWeaver/typeForgePlugin.js",
         "build": "webpack --mode production"
     },
     "type": "commonjs",
