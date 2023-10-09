@@ -11,15 +11,17 @@ const composeCSSClassName = (pseudo, nestedClasses, node) => {
         const pseudoClass = coreDynamicProperties_1.coreDynamicProperties[pseudo];
         const strLiteral = (0, types_1.stringLiteral)(`galadriel_${hashedHex}`);
         const objProperty = (0, types_1.objectProperty)((0, types_1.identifier)("className"), strLiteral);
-        if (pseudoClass.includes("$")) {
+        if (pseudoClass && typeof pseudoClass === "string" && pseudoClass.includes("$")) {
             // replace the node value to the class name
             node.properties = [objProperty];
             return `@media screen and (${pseudoClass.replace("$", "")}) { .galadriel_${hashedHex} { ${rules} } }`;
         }
         else {
-            // replace the node value to the class name
-            node.properties = [objProperty];
-            return `.galadriel_${pseudoClass.replace("&", hashedHex)} { ${rules} }`;
+            if (pseudoClass && typeof pseudoClass === "string") {
+                // replace the node value to the class name
+                node.properties = [objProperty];
+                return `.galadriel_${pseudoClass.replace("&", hashedHex)} { ${rules} }`;
+            }
         }
     }
     return "";
