@@ -9,20 +9,14 @@ const babelConfig = `module.exports = {
 };
 `;
 
-const postCSSConfig = `const galadrielInjectionPlugin = require('./build/plugins/MystiCSSor/galadrielInjectionPlugin');
-const postcssAutoprefixer = require('autoprefixer');
-const postcssCssnano = require('cssnano');
-const postcssPresetEnv = require('postcss-preset-env');
-
-module.exports = {
-  plugins: [
-    galadrielInjectionPlugin(),
-    postcssAutoprefixer(),
-    postcssPresetEnv(),
-    postcssCssnano(),
-  ],
-};
-`;
+const postCSSConfig = `module.exports = {
+    plugins: {
+        "galadrieljs/build/plugins/MystiCSSor/galadrielInjectionPlugin": {},
+        autoprefixer: {},
+        "postcss-preset-env": {},
+        cssnano: {},
+    },
+};`;
 
 const galadrielConfig = `const config = {
     // content to exclude
