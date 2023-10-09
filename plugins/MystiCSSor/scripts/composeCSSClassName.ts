@@ -16,10 +16,12 @@ const composeCSSClassName = (pseudo: string, nestedClasses: string[], node: Node
 
             return `@media screen and (${pseudoClass.replace("$", "")}) { .galadriel_${hashedHex} { ${rules} } }`;
         } else {
-            // replace the node value to the class name
-            (node as any).properties = [objProperty]
+            if (pseudoClass && typeof pseudoClass === "string") {
+                // replace the node value to the class name
+                (node as any).properties = [objProperty]
 
-            return `.galadriel_${pseudoClass.replace("&", hashedHex)} { ${rules} }`;
+                return `.galadriel_${pseudoClass.replace("&", hashedHex)} { ${rules} }`;
+            }
         }
     }
 
