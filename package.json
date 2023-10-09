@@ -78,6 +78,5 @@
     "dependencies": {
         "@babel/preset-env": "^7.22.20",
         "@babel/preset-typescript": "^7.23.0",
-        "webpack-sources": "^3.2.3"
     }
 }
