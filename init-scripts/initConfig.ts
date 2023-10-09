@@ -9,6 +9,21 @@ const babelConfig = `module.exports = {
 };
 `;
 
+const postCSSConfig = `const galadrielInjectionPlugin = require('./build/plugins/MystiCSSor/galadrielInjectionPlugin');
+const postcssAutoprefixer = require('autoprefixer');
+const postcssCssnano = require('cssnano');
+const postcssPresetEnv = require('postcss-preset-env');
+
+module.exports = {
+  plugins: [
+    galadrielInjectionPlugin(),
+    postcssAutoprefixer(),
+    postcssPresetEnv(),
+    postcssCssnano(),
+  ],
+};
+`;
+
 const galadrielConfig = `const config = {
     // content to exclude
     exclude: ["node_modules",],
@@ -28,12 +43,14 @@ const isTypescriptProject = () => {
 const galadrielInit = () => {
     const rootPath = process.cwd();
     const babelConfigPath = path.join(rootPath, "babel.config.js");
+    const postCSSConfigPath = path.join(rootPath, "postcss.config.js");
     const galadrielConfigPath = path.join(
         rootPath,
         "galadriel.config" + (isTypescriptProject() ? ".ts" : ".js")
     );
 
     fs.writeFileSync(babelConfigPath, babelConfig);
+    fs.writeFileSync(postCSSConfigPath, postCSSConfig);
     fs.writeFileSync(galadrielConfigPath, galadrielConfig);
 
     console.log("Configurations generated successfully!");
