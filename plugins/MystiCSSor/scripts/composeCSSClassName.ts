@@ -10,7 +10,7 @@ const composeCSSClassName = (pseudo: string, nestedClasses: string[], node: Node
         const strLiteral = stringLiteral(`galadriel_${hashedHex}`);
         const objProperty = objectProperty(identifier("className"), strLiteral);
 
-        if (pseudoClass.includes("$")) {
+        if (pseudoClass && typeof pseudoClass ==="string" && pseudoClass.includes("$")) {
             // replace the node value to the class name
             (node as any).properties = [objProperty]
 
