@@ -29,7 +29,7 @@ const path = __importStar(require("path"));
 const webpackConfig = `const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const galadrielInjectionPlugin = require("./dist/plugins/MystiCSSor/galadrielInjectionPlugin.js");
+const galadrielInjectionPlugin = require("./build/plugins/MystiCSSor/galadrielInjectionPlugin.js");
 const postcssAutoprefixer = require("autoprefixer");
 const postcssCssnano = require("cssnano");
 const postcssPresetEnv = require("postcss-preset-env");
@@ -39,7 +39,7 @@ module.exports = {
     entry: "./index.ts", // Entry point of your application
     output: {
         filename: "index.js", // Output file name
-        path: path.resolve(__dirname, "dist"), // Output directory
+        path: path.resolve(__dirname, "build"), // Output directory
         library: "Galadriel", // Library name accessible in the browser
         libraryTarget: "umd", // Universal Module Definition (UMD)
         umdNamedDefine: true,
@@ -50,7 +50,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\\.(ts|tsx|js|jsx)$/,
+                test: /\.(ts|tsx|js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
@@ -63,7 +63,7 @@ module.exports = {
                 },
             },
             {
-                test: /\\.css$/,
+                test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     "css-loader",
@@ -88,7 +88,7 @@ module.exports = {
     devtool: "source-map", // Generate source maps
     devServer: {
         static: {
-            directory: path.join(__dirname, "dist"),
+            directory: path.join(__dirname, "build"),
         },
         compress: true, // Enable gzip compression
         port: 8080, // Port number
@@ -106,9 +106,7 @@ module.exports = {
                 },
             ],
         }),
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-        }),
+        new MiniCssExtractPlugin(),
     ],
 };
 `;
