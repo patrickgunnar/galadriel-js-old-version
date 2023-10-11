@@ -3,7 +3,6 @@ import { refineCSSClassesFromNode } from "./refineCSSClassesFromNode";
 
 const extractClasses = (node: Node, coreAST: Record<string, Record<string, string[]>>) => {
     if (node.type === "ObjectExpression" && node.properties) {
-        const styleClasses: string[] = []
         const properties = node.properties;
 
         try {
@@ -12,20 +11,14 @@ const extractClasses = (node: Node, coreAST: Record<string, Record<string, strin
                     const key = (property.key as any).name;
 
                     if (key) {
-                        const classValues = refineCSSClassesFromNode(key, property.value, coreAST);
-
-                        if(classValues) styleClasses.push(classValues);
+                        refineCSSClassesFromNode(key, property.value, coreAST);
                     }
                 }
             });
-
-            return styleClasses.join(" ");
         } catch (error: any) {
             console.error("An error occurred:", error);
         }
     }
-
-    return null;
 };
 
 export { extractClasses };
