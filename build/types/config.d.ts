@@ -68,6 +68,7 @@ export type Config = {
         paddingTop?: Record<string, string>;
         height?: Record<string, string>;
         width?: Record<string, string>;
+        filter?: Record<string, string>;
         maxHeight?: Record<string, string>;
         maxWidth?: Record<string, string>;
         minHeight?: Record<string, string>;

@@ -4,15 +4,20 @@ exports.retrieveStyleClasses = void 0;
 const computeConfigCSS_1 = require("./computeConfigCSS");
 const getStaticStyles_1 = require("./getStaticStyles");
 const getDynamicStyles_1 = require("./getDynamicStyles");
-const retrieveStyleClasses = (key, node) => {
+const retrieveStyleClasses = (key, node, coreNode) => {
     const testRegex = /^\$\w+(-\w+)*$/;
     const value = node.value;
     if (value && typeof value === "string" && testRegex.test(value)) {
         const staticStyle = (0, getStaticStyles_1.getStaticStyles)(key, value);
-        if (staticStyle) {
+        if (staticStyle && typeof staticStyle === "string") {
             // replace the node value to the class name
             node.value = value.replace("$", "");
-            return staticStyle;
+            if (coreNode[key]) {
+                coreNode[key].push(staticStyle);
+            }
+            else {
+                coreNode[key] = [staticStyle];
+            }
         }
         else {
             let customClassName;
@@ -26,7 +31,12 @@ const retrieveStyleClasses = (key, node) => {
             if (customStyle && typeof customStyle === "string") {
                 /// replace the node value to the class name
                 node.value = customClassName;
-                return customStyle.replace("&", "");
+                if (coreNode[key]) {
+                    coreNode[key].push(customStyle);
+                }
+                else {
+                    coreNode[key] = [customStyle];
+                }
             }
         }
     }
@@ -36,7 +46,14 @@ const retrieveStyleClasses = (key, node) => {
             const { className, classValue } = classContent;
             // replace the node value to the class name
             node.value = className;
-            return classValue;
+            if (typeof classValue === "string") {
+                if (coreNode[key]) {
+                    coreNode[key].push(classValue);
+                }
+                else {
+                    coreNode[key] = [classValue];
+                }
+            }
         }
     }
 };

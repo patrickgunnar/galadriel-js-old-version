@@ -1,3 +1,3 @@
 import { Node } from "@babel/types";
-declare const retrieveStyleClasses: (key: string, node: Node) => string | Record<string, string> | undefined;
+declare const retrieveStyleClasses: (key: string, node: Node, coreNode: Record<string, string[]>) => void;
 export { retrieveStyleClasses };

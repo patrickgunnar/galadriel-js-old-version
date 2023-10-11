@@ -1,4 +1,3 @@
 import { Node } from "@babel/core";
-type ParsedValue = string | null;
-declare const refineCSSClassesFromNode: (key: string, node: Node) => ParsedValue;
+declare const refineCSSClassesFromNode: (key: string, node: Node, coreAST: Record<string, Record<string, string[]>>) => void;
 export { refineCSSClassesFromNode };

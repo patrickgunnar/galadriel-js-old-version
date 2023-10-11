@@ -5,7 +5,7 @@ const getDynamicStyles_1 = require("./getDynamicStyles");
 const getStaticStyles_1 = require("./getStaticStyles");
 const composeCSSClassName_1 = require("./composeCSSClassName");
 const computeConfigCSS_1 = require("./computeConfigCSS");
-const retrieveNestedStyleClasses = (pseudo, node) => {
+const retrieveNestedStyleClasses = (pseudo, node, coreAST) => {
     const testRegex = /^\$\w+(-\w+)*$/;
     const nestedClasses = [];
     node.properties.forEach((property) => {
@@ -37,6 +37,19 @@ const retrieveNestedStyleClasses = (pseudo, node) => {
             }
         }
     });
-    return (0, composeCSSClassName_1.composeCSSClassName)(pseudo, nestedClasses, node);
+    const composedClass = (0, composeCSSClassName_1.composeCSSClassName)(pseudo, nestedClasses, node);
+    if (composedClass && typeof composedClass === "object") {
+        const { isMedia, classValue } = composedClass;
+        let coreNodeName = "pseudoSelectors";
+        if (isMedia) {
+            coreNodeName = "mediaQueryVariables";
+        }
+        if (coreAST[coreNodeName][pseudo]) {
+            coreAST[coreNodeName][pseudo].push(classValue);
+        }
+        else {
+            coreAST[coreNodeName][pseudo] = [classValue];
+        }
+    }
 };
 exports.retrieveNestedStyleClasses = retrieveNestedStyleClasses;
