@@ -2,13 +2,7 @@ import { Node } from "@babel/core";
 import { retrieveStyleClasses } from "./retrieveStyleClasses";
 import { retrieveNestedStyleClasses } from "./retrieveNestedStyleClasses";
 
-type ParsedValue = string | null;
-
-const refineCSSClassesFromNode = (
-    key: string,
-    node: Node,
-    coreAST: Record<string, Record<string, string[]>>
-): ParsedValue => {
+const refineCSSClassesFromNode = (key: string, node: Node, coreAST: Record<string, Record<string, string[]>>) => {
     try {
         if ((node as any).type.includes("Literal")) {
             let coreNodeName = "otherProperties";
@@ -29,8 +23,6 @@ const refineCSSClassesFromNode = (
     } catch (error: any) {
         console.error("An error occurred:", error);
     }
-
-    return null; // Handle unknown node types
 };
 
 export { refineCSSClassesFromNode };
