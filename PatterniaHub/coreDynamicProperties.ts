@@ -20,6 +20,7 @@ export const coreDynamicProperties: Record<string, string> = {
     paddingTop: "padding-top",
     height: "height",
     width: "width",
+    filter: "filter",
     maxHeight: "max-height",
     maxWidth: "max-width",
     minHeight: "min-height",
