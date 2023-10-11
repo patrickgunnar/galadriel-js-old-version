@@ -4,7 +4,11 @@ import { getStaticStyles } from "./getStaticStyles";
 import { composeCSSClassName } from "./composeCSSClassName";
 import { computeConfigCSS } from "./computeConfigCSS";
 
-const retrieveNestedStyleClasses = (pseudo: string, node: Node) => {
+const retrieveNestedStyleClasses = (
+    pseudo: string,
+    node: Node,
+    coreAST: Record<string, Record<string, string[]>>
+) => {
     const testRegex = /^\$\w+(-\w+)*$/;
     const nestedClasses: string[] = [];
 
@@ -14,16 +18,24 @@ const retrieveNestedStyleClasses = (pseudo: string, node: Node) => {
             const value = (property as any).value.value;
 
             if (key && typeof key === "string") {
-                if ( value && typeof value === "string" && testRegex.test(value)) {
+                if (
+                    value &&
+                    typeof value === "string" &&
+                    testRegex.test(value)
+                ) {
                     const staticStyle = getStaticStyles(key, value, true);
 
                     if (staticStyle) {
-                        const [[objKey, objValue]] = Object.entries(staticStyle);
+                        const [[objKey, objValue]] =
+                            Object.entries(staticStyle);
 
                         nestedClasses.push(`${objKey}:${objValue}`);
                     } else {
                         const customClassName = value.replace("$", "");
-                        const customStyle = computeConfigCSS(customClassName, true);
+                        const customStyle = computeConfigCSS(
+                            customClassName,
+                            true
+                        );
 
                         if (customStyle && typeof customStyle === "object") {
                             const { customKey, customValue } = customStyle;
@@ -42,7 +54,24 @@ const retrieveNestedStyleClasses = (pseudo: string, node: Node) => {
         }
     });
 
-    return composeCSSClassName(pseudo, nestedClasses, node);
+    const composedClass = composeCSSClassName(pseudo, nestedClasses, node);
+
+    if (composedClass && typeof composedClass === "string") {
+        let coreNodeName = "pseudoSelectors";
+
+        if(composedClass.includes("@media")) {
+            coreNodeName = "mediaQueryVariables";
+        }
+
+        if(coreAST[coreNodeName][pseudo]) {
+            coreAST[coreNodeName][pseudo].push(composedClass);
+        } else {
+            coreAST[coreNodeName][pseudo] = [composedClass];
+        }
+        
+    }
+
+    return composedClass;
 };
 
 export { retrieveNestedStyleClasses };

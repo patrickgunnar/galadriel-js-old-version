@@ -2,6 +2,7 @@ import { PluginObj, NodePath, Node } from "@babel/core";
 import { extractClasses } from "./scripts/extractClasses";
 import { parseConfig } from "./scripts/parseConfig";
 import path from "path";
+import { coreAST } from "./AST/coreAST";
 
 const styleClasses: string[] = [];
 
@@ -21,7 +22,7 @@ export default function (): PluginObj {
                     try {
                         const node = path.node as Node;
                         if (node) {
-                            const classes = extractClasses(node);
+                            const classes = extractClasses(node, coreAST);
 
                             if (classes) {
                                 styleClasses.push(classes);
@@ -37,5 +38,6 @@ export default function (): PluginObj {
 }
 
 export const getStyleClasses = () => {
+    console.log(coreAST)
     return styleClasses.join(" ");
 };

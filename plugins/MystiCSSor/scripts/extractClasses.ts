@@ -1,7 +1,7 @@
 import { Node } from "@babel/types";
 import { refineCSSClassesFromNode } from "./refineCSSClassesFromNode";
 
-const extractClasses = (node: Node) => {
+const extractClasses = (node: Node, coreAST: Record<string, Record<string, string[]>>) => {
     if (node.type === "ObjectExpression" && node.properties) {
         const styleClasses: string[] = []
         const properties = node.properties;
@@ -12,7 +12,7 @@ const extractClasses = (node: Node) => {
                     const key = (property.key as any).name;
 
                     if (key) {
-                        const classValues = refineCSSClassesFromNode(key, property.value);
+                        const classValues = refineCSSClassesFromNode(key, property.value, coreAST);
 
                         if(classValues) styleClasses.push(classValues);
                     }
