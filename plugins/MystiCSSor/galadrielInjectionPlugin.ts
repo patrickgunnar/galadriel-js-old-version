@@ -1,13 +1,13 @@
 import postcss, { Result, Root } from "postcss";
-import { getStyleClasses } from "./galadrielHarvestPlugin";
+import { uniteGaladrielAST } from "./AST/uniteGaladrielAST";
 
 module.exports = function () {
     return {
         postcssPlugin: "galadrielInjectionPlugin",
         Once(root: Root, { result }: { result: Result }) {
             try {
-                const styleRules = getStyleClasses();
-                const parsedRules = postcss.parse(styleRules);
+                const strFromAST = uniteGaladrielAST();
+                const parsedRules = postcss.parse(strFromAST);
 
                 root.append(parsedRules);
             } catch (error: any) {
