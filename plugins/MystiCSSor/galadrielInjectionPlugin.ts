@@ -7,9 +7,14 @@ module.exports = function () {
         Once(root: Root, { result }: { result: Result }) {
             try {
                 const strFromAST = uniteGaladrielAST();
-                const parsedRules = postcss.parse(strFromAST);
 
-                root.append(parsedRules);
+                if (strFromAST) {
+                    const parsedRules = postcss.parse(strFromAST);
+
+                    if (parsedRules) {
+                        root.append(parsedRules);
+                    }
+                }
             } catch (error: any) {
                 console.error("An error occurred:", error);
             }
