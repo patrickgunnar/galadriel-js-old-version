@@ -22,13 +22,9 @@ const refineCSSClassesFromNode = (
                 }
             }
         
-            const styles = retrieveStyleClasses(key, node, coreAST[coreNodeName]);
-
-            if (styles && typeof styles === "string") return styles;
+            retrieveStyleClasses(key, node, coreAST[coreNodeName]);
         } else if (node.type === "ObjectExpression" && node.properties) {
-            const styles = retrieveNestedStyleClasses(key, node, coreAST);
-
-            if (styles) return styles;
+            retrieveNestedStyleClasses(key, node, coreAST);
         }
     } catch (error: any) {
         console.error("An error occurred:", error);

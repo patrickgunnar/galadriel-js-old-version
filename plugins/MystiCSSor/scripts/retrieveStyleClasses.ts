@@ -23,8 +23,6 @@ const retrieveStyleClasses = (
             } else {
                 coreNode[key] = [staticStyle];
             }
-
-            return staticStyle;
         } else {
             let customClassName: string;
 
@@ -45,8 +43,6 @@ const retrieveStyleClasses = (
                 } else {
                     coreNode[key] = [customStyle];
                 }
-
-                return customStyle.replace("&", "");
             }
         }
     } else if (value && typeof value === "string") {
@@ -65,8 +61,6 @@ const retrieveStyleClasses = (
                     coreNode[key] = [classValue];
                 }
             }
-
-            return classValue;
         }
     }
 };
