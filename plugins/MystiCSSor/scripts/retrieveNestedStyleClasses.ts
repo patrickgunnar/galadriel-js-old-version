@@ -56,22 +56,20 @@ const retrieveNestedStyleClasses = (
 
     const composedClass = composeCSSClassName(pseudo, nestedClasses, node);
 
-    if (composedClass && typeof composedClass === "string") {
+    if (composedClass && typeof composedClass === "object") {
+        const { isMedia, classValue } = composedClass;
         let coreNodeName = "pseudoSelectors";
 
-        if(composedClass.includes("@media")) {
+        if(isMedia) {
             coreNodeName = "mediaQueryVariables";
         }
 
         if(coreAST[coreNodeName][pseudo]) {
-            coreAST[coreNodeName][pseudo].push(composedClass);
+            coreAST[coreNodeName][pseudo].push(classValue);
         } else {
-            coreAST[coreNodeName][pseudo] = [composedClass];
+            coreAST[coreNodeName][pseudo] = [classValue];
         }
-        
     }
-
-    return composedClass;
 };
 
 export { retrieveNestedStyleClasses };
