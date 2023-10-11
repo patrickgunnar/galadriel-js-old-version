@@ -3,11 +3,7 @@ import { computeConfigCSS } from "./computeConfigCSS";
 import { getStaticStyles } from "./getStaticStyles";
 import { getDynamicStyles } from "./getDynamicStyles";
 
-const retrieveStyleClasses = (
-    key: string,
-    node: Node,
-    coreNode: Record<string, string[]>
-) => {
+const retrieveStyleClasses = (key: string, node: Node, coreNode: Record<string, string[]>) => {
     const testRegex = /^\$\w+(-\w+)*$/;
     const value = (node as any).value;
 
