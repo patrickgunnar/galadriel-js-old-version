@@ -38,6 +38,5 @@ export default function (): PluginObj {
 }
 
 export const getStyleClasses = () => {
-    console.log(coreAST)
     return styleClasses.join(" ");
 };
