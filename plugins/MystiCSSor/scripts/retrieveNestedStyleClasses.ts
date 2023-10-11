@@ -4,11 +4,7 @@ import { getStaticStyles } from "./getStaticStyles";
 import { composeCSSClassName } from "./composeCSSClassName";
 import { computeConfigCSS } from "./computeConfigCSS";
 
-const retrieveNestedStyleClasses = (
-    pseudo: string,
-    node: Node,
-    coreAST: Record<string, Record<string, string[]>>
-) => {
+const retrieveNestedStyleClasses = (pseudo: string, node: Node, coreAST: Record<string, Record<string, string[]>>) => {
     const testRegex = /^\$\w+(-\w+)*$/;
     const nestedClasses: string[] = [];
 
@@ -18,24 +14,16 @@ const retrieveNestedStyleClasses = (
             const value = (property as any).value.value;
 
             if (key && typeof key === "string") {
-                if (
-                    value &&
-                    typeof value === "string" &&
-                    testRegex.test(value)
-                ) {
+                if (value && typeof value === "string" && testRegex.test(value)) {
                     const staticStyle = getStaticStyles(key, value, true);
 
                     if (staticStyle) {
-                        const [[objKey, objValue]] =
-                            Object.entries(staticStyle);
+                        const [[objKey, objValue]] = Object.entries(staticStyle);
 
                         nestedClasses.push(`${objKey}:${objValue}`);
                     } else {
                         const customClassName = value.replace("$", "");
-                        const customStyle = computeConfigCSS(
-                            customClassName,
-                            true
-                        );
+                        const customStyle = computeConfigCSS(customClassName, true);
 
                         if (customStyle && typeof customStyle === "object") {
                             const { customKey, customValue } = customStyle;
