@@ -4,15 +4,17 @@ import { hashHex } from "./hashHex";
 
 const composeCSSClassName = (pseudo: string, nestedClasses: string[], node: Node) => {
     if (nestedClasses.length > 0) {
-        const hashedHex = hashHex(nestedClasses.join(" "));
-        const rules = nestedClasses.join(";");
         const pseudoClass = coreDynamicProperties[pseudo];
-        const strLiteral = stringLiteral(`galadriel_${hashedHex}`);
-        const objProperty = objectProperty(identifier("className"), strLiteral);
-
+        
         if (pseudoClass && typeof pseudoClass === "string") {
+            const rules = nestedClasses.join(";");
+            const hashString = pseudoClass.includes("&") ? rules : `${pseudoClass}_${rules}`;
+            const hashedHex = hashHex(hashString);
+            const strLiteral = stringLiteral(`galadriel_${hashedHex}`);
+            const objProperty = objectProperty(identifier("className"), strLiteral);
+
             // replace the node value to the class name
-            (node as any).properties = [objProperty]
+            (node as any).properties = [objProperty];
 
             if (pseudoClass.includes("&")) {    
                 return {
@@ -26,7 +28,7 @@ const composeCSSClassName = (pseudo: string, nestedClasses: string[], node: Node
                 };
             }
         }
-    }
+        }
 
     return "";
 };
