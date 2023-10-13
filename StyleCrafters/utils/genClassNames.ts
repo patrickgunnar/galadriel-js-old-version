@@ -1,12 +1,11 @@
+/**
+ * Generate class names from a record of classes.
+ *
+ * @param {Record<string, any>} classes - The record of classes.
+ * @returns {string} The generated class names.
+ */
 const genClassNames = (classes: Record<string, any>): string => {
-    const classNames = Object.values(classes).map((cls: string) => {
-        if (typeof cls === "string") return cls;
-        else if (typeof cls === "object") {
-            return Object.values(cls)[0];
-        }
-    });
-
-    return classNames.join(" ");
+    return Object.values(classes).map((cls: string) => ({ cls })).join(" ");
 };
 
 export { genClassNames };
