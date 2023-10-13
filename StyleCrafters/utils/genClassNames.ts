@@ -5,7 +5,7 @@
  * @returns {string} The generated class names.
  */
 const genClassNames = (classes: Record<string, any>): string => {
-    return Object.values(classes).map((cls: string) => ({ cls })).join(" ");
+    return Object.values(classes).map((cls: string) => cls).join(" ");
 };
 
 export { genClassNames };
