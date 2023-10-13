@@ -1,4 +1,3 @@
-//@ts-ignore
 import { CraftClassesType } from "../types/typeManifest";
 import { genClassNames } from "./utils/genClassNames";
 
@@ -6,12 +5,19 @@ interface CallbackType {
     (): CraftClassesType;
 }
 
-interface CraftStylesType {
-    (callback: CallbackType): string;
-}
+/**
+ * Callback function type returning CraftClassesType.
+ * @typedef {function(): CraftClassesType} CallbackType
+ */
 
-const craftingStyles: CraftStylesType = (callback): string => {
+/**
+ * Process a callback to generate class names using genClassNames.
+ *
+ * @param {CallbackType} callback - The callback function.
+ * @returns {string} The generated class names.
+ */
+function craftingStyles(callback: CallbackType): string {
     return genClassNames(callback());
-};
+}
 
 export { craftingStyles };
