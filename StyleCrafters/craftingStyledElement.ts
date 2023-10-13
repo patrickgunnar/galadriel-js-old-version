@@ -25,4 +25,4 @@ const craftingStyledElement: CraftStylesType = (
     return createdElement;
 };
 
-export { craftingStyledElement };
+//export { craftingStyledElement };
