@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.craftingStyledElement = void 0;
 const genClassNames_1 = require("./utils/genClassNames");
 const craftingStyledElement = (element, callback) => {
     const createdElement = document.createElement(element);
@@ -10,4 +9,4 @@ const craftingStyledElement = (element, callback) => {
     }
     return createdElement;
 };
-exports.craftingStyledElement = craftingStyledElement;
+//export { craftingStyledElement };
