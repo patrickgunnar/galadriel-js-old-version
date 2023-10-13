@@ -2,8 +2,5 @@ import { CraftClassesType } from "../types/typeManifest";
 interface CallbackType {
     (): CraftClassesType;
 }
-interface CraftStylesType {
-    (callback: CallbackType): string;
-}
-declare const craftingStyles: CraftStylesType;
+declare function craftingStyles(callback: CallbackType): string;
 export { craftingStyles };

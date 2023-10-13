@@ -1,0 +1,180 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.genCSSClassName = exports.genDynamicAndConfigClasses = exports.genStaticAndConfigClasses = void 0;
+const coreStaticStyles_1 = require("../../../PatterniaHub/coreStaticStyles");
+const coreDynamicProperties_1 = require("../../../PatterniaHub/coreDynamicProperties");
+const parseConfig_1 = require("./parseConfig");
+const hashHex_1 = require("./hashHex");
+/**
+ * Generate static and configuration-based CSS classes for a key-value pair.
+ *
+ * @param {string} key - The key associated with the style.
+ * @param {string} value - The value representing the style.
+ * @param {boolean} [isNested=false] - Indicates if the style is for a nested element.
+ * @returns {(Object | string | null)} An object with the generated class name and associated CSS rule, a string if nested, or null if unable to generate.
+ * @returns {string} .name - The generated class name.
+ * @returns {string} .classRule - The associated CSS rule for the generated class.
+ * @returns {string} The property value (if nested).
+ * @returns {null} If unable to generate.
+ */
+function genStaticAndConfigClasses(key, value, isNested = false) {
+    /**
+     * Returns a record of classes.
+     *
+     * @param {Record<string, Record<string, any>>} cls - The record of classes.
+     * @returns {Record<string, Record<string, any>>} The record of classes.
+     */
+    function getClasses(cls) {
+        return cls;
+    }
+    try {
+        const handleStatic = coreStaticStyles_1.coreStaticStyles[key];
+        if (handleStatic && typeof handleStatic === "function") {
+            const keyProperties = handleStatic({
+                extractGaladrielClasses: getClasses,
+            });
+            const selector = `.${value}`;
+            const keyProperty = keyProperties[selector];
+            if (isNested && keyProperty) {
+                return keyProperty;
+            }
+            else if (keyProperty) {
+                try {
+                    const pseudoContent = [];
+                    const styleContent = Object.entries(keyProperty)
+                        .map(([property, asset]) => {
+                        if (property.includes("&")) {
+                            pseudoContent.push(`${property.replace("&", selector.replace("$", ""))} ${asset}`);
+                            return;
+                        }
+                        return `${property}: ${asset};`;
+                    })
+                        .join(" ");
+                    return {
+                        name: value.replace("$", ""),
+                        classRule: `${selector.replace("$", "")} { ${styleContent} } ${pseudoContent.join(" ")}`,
+                    };
+                }
+                catch (error) {
+                    console.error("An error occurred:", error);
+                }
+            }
+        }
+        else {
+            try {
+                const { craftStyles } = (0, parseConfig_1.parseConfig)();
+                const configValue = value.replace("$", "");
+                const configClassName = key.includes(":")
+                    ? configValue.split(":")[0]
+                    : configValue;
+                const configStyles = [];
+                for (const [configKey, configValue] of Object.entries(craftStyles)) {
+                    const property = coreDynamicProperties_1.coreDynamicProperties[configKey];
+                    if (property) {
+                        const valueEntries = Object.entries(configValue);
+                        for (const [entryKey, entryValue] of valueEntries) {
+                            if (configClassName === entryKey ||
+                                configClassName === entryKey.split(":")[0]) {
+                                if (isNested) {
+                                    return `${property}:${entryValue}`;
+                                }
+                                else {
+                                    if (entryKey.includes(":")) {
+                                        configStyles.push(`.${entryKey} { ${property}: ${entryValue}; }`);
+                                    }
+                                    else {
+                                        configStyles.push(`.${entryKey}& { ${property}: ${entryValue}; }`);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return {
+                    name: configClassName,
+                    classRule: configStyles.join(" "),
+                };
+            }
+            catch (error) {
+                console.error("An error occurred:", error);
+            }
+        }
+    }
+    catch (error) {
+        console.error("An error occurred:", error);
+    }
+    return null;
+}
+exports.genStaticAndConfigClasses = genStaticAndConfigClasses;
+/**
+ * Generate dynamic CSS classes for a key-value pair.
+ *
+ * @param {string} key - The key associated with the style.
+ * @param {string} value - The value representing the style.
+ * @param {boolean} [isNested=false] - Indicates if the style is for a nested element.
+ * @returns {(Object | string | null)} An object with the generated class name and associated CSS rule, a string if nested, or null if unable to generate.
+ * @returns {string} .name - The generated class name (if not nested).
+ * @returns {string} .classRule - The associated CSS rule for the generated class (if not nested).
+ * @returns {string} The property value (if nested).
+ * @returns {null} If unable to generate.
+ */
+function genDynamicAndConfigClasses(key, value, isNested = false) {
+    try {
+        const property = coreDynamicProperties_1.coreDynamicProperties[key];
+        if (property) {
+            if (isNested) {
+                return property;
+            }
+            else {
+                const hashedHex = (0, hashHex_1.hashHex)(`${property}:${value}`);
+                return {
+                    name: `galadriel_${hashedHex}`,
+                    classRule: `.galadriel_${hashedHex} { ${property}: ${value}; }`,
+                };
+            }
+        }
+    }
+    catch (error) {
+        console.error("An error occurred:", error);
+    }
+    return null;
+}
+exports.genDynamicAndConfigClasses = genDynamicAndConfigClasses;
+/**
+ * Generate a CSS class name and associated rule.
+ *
+ * @param {string} rules - The CSS rules associated with the class.
+ * @param {string} key - The key - pseudo class or element associated with the style.
+ * @returns {(Object | null)} An object with the generated class name, associated CSS rule, and related properties, or null if unable to generate.
+ * @returns {string} .name - The generated class name.
+ * @returns {string} .classRule - The associated CSS rule for the generated class.
+ * @returns {null} If unable to generate.
+ */
+function genCSSClassName(rules, key) {
+    try {
+        const property = coreDynamicProperties_1.coreDynamicProperties[key];
+        if (property) {
+            const hashString = property.includes("&")
+                ? rules
+                : `${property}_${rules}`;
+            const hashedHex = (0, hashHex_1.hashHex)(hashString);
+            if (property.includes("&")) {
+                return {
+                    name: `galadriel_${hashedHex}`,
+                    classRule: `.galadriel_${property.replace("&", hashedHex)} { ${rules} }`,
+                };
+            }
+            else {
+                return {
+                    name: `galadriel_${hashedHex}`,
+                    classRule: `.galadriel_${hashedHex} { ${rules} }`,
+                };
+            }
+        }
+    }
+    catch (error) {
+        console.error("An error occurred:", error);
+    }
+    return null;
+}
+exports.genCSSClassName = genCSSClassName;

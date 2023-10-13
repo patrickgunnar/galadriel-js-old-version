@@ -3,29 +3,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const extractClasses_1 = require("./scripts/extractClasses");
-const parseConfig_1 = require("./scripts/parseConfig");
 const path_1 = __importDefault(require("path"));
+const parseConfig_1 = require("./scripts/parseConfig");
 const coreAST_1 = require("./AST/coreAST");
-function default_1() {
+const extractObjectsFromNode_1 = require("./scripts/extractObjectsFromNode");
+/**
+ * Exported default function to process a Babel plugin.
+ *
+ * @param {Object} param - The parameters for the function.
+ * @param {any} param.types - The types object for node analysis.
+ * @returns {PluginObj} The Babel plugin object.
+ */
+function default_1({ types }) {
     const { include = [], exclude = [] } = (0, parseConfig_1.parseConfig)();
     const toInclude = include.map((__path) => path_1.default.resolve(__path));
     const toExclude = exclude.map((__path) => path_1.default.resolve(__path));
     return {
         visitor: {
-            ObjectExpression(path, state) {
+            CallExpression(path, state) {
                 const filePath = state.filename;
                 const shouldExclude = toExclude.some((__path) => filePath === null || filePath === void 0 ? void 0 : filePath.includes(__path));
                 const shouldInclude = toInclude.some((__path) => filePath === null || filePath === void 0 ? void 0 : filePath.includes(__path));
                 if (!shouldExclude || shouldInclude) {
-                    try {
-                        const node = path.node;
-                        if (node) {
-                            (0, extractClasses_1.extractClasses)(node, coreAST_1.coreAST);
+                    const callee = path.get("callee");
+                    if (callee.isIdentifier({ name: "craftingStyles" })) {
+                        const callbackArgument = path.node.arguments[0];
+                        if (callbackArgument && (callbackArgument.type === 'ArrowFunctionExpression' || callbackArgument.type === 'FunctionExpression')) {
+                            (0, extractObjectsFromNode_1.extractObjectsFromNode)(types, callbackArgument.body, coreAST_1.coreAST);
                         }
-                    }
-                    catch (error) {
-                        console.error("An error occurred:", error);
                     }
                 }
             },
