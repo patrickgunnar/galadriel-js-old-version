@@ -1,30 +1,37 @@
-import { PluginObj, NodePath, Node } from "@babel/core";
-import { extractClasses } from "./scripts/extractClasses";
-import { parseConfig } from "./scripts/parseConfig";
 import path from "path";
+import { PluginObj } from "@babel/core";
+import { parseConfig } from "./scripts/parseConfig";
 import { coreAST } from "./AST/coreAST";
+import { extractObjectsFromNode } from "./scripts/extractObjectsFromNode";
 
-export default function (): PluginObj {
+/**
+ * Exported default function to process a Babel plugin.
+ *
+ * @param {Object} param - The parameters for the function.
+ * @param {any} param.types - The types object for node analysis.
+ * @returns {PluginObj} The Babel plugin object.
+ */
+export default function ({ types }: { types: any }): PluginObj {
     const { include = [], exclude = [] } = parseConfig();
     const toInclude = include.map((__path: string) => path.resolve(__path));
     const toExclude = exclude.map((__path: string) => path.resolve(__path));
 
     return {
         visitor: {
-            ObjectExpression(path: NodePath, state) {
+            CallExpression(path, state) {
                 const filePath = state.filename;
                 const shouldExclude = toExclude.some((__path: string) => filePath?.includes(__path));
                 const shouldInclude = toInclude.some((__path: string) => filePath?.includes(__path));
 
                 if (!shouldExclude || shouldInclude) {
-                    try {
-                        const node = path.node as Node;
+                    const callee = path.get("callee");
 
-                        if (node) {
-                            extractClasses(node, coreAST);
+                    if (callee.isIdentifier({ name: "craftingStyles" })) {
+                        const callbackArgument = path.node.arguments[0];
+
+                        if (callbackArgument && (callbackArgument.type === 'ArrowFunctionExpression' || callbackArgument.type === 'FunctionExpression')) {
+                            extractObjectsFromNode(types, callbackArgument.body, coreAST)
                         }
-                    } catch (error: any) {
-                        console.error("An error occurred:", error);
                     }
                 }
             },
