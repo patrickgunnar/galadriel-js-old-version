@@ -20,7 +20,7 @@ function retrieveStylesInsideNestedObjects(key, nestedKey, nestedValue) {
             if (property && typeof property === "object") {
                 const [[propertyKey, propertyValue]] = Object.entries(property);
                 if (propertyKey && propertyValue) {
-                    return `${propertyKey}:${propertyValue};`;
+                    return `${propertyKey}:${propertyValue}`;
                 }
             }
             else if (typeof property === "string") {
