@@ -2,9 +2,9 @@
 
 Welcome to Galadriel.js, an enchanting JavaScript library designed to empower developers in creating captivating and dynamically responsive user interfaces. Rooted in modularity and simplicity, Galadriel.js illuminates the design process, allowing you to craft web applications that captivate users with elegance and optimized performance.
 
-## Current Version: 1.0.0-beta.10.1
+## Current Version: 1.0.0-beta.11
 
-Galadriel.js is currently in version 1.0.0-beta.1. This beta release brings an exciting array of features and enhancements to empower your web development journey. As we move towards the stable release, we invite you to explore the magic of Galadriel.js and provide valuable feedback to help us refine and elevate this enchanting library.
+This beta release brings an exciting array of features and enhancements to empower your web development journey. As we move towards the stable release, we invite you to explore the magic of Galadriel.js and provide valuable feedback to help us refine and elevate this enchanting library.
 
 ## Table of Contents
 
