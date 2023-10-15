@@ -5,8 +5,10 @@ import { coreAST } from "./AST/coreAST";
 import { extractObjectsFromNode } from "./scripts/extractObjectsFromNode";
 import { hashHex } from "./scripts/hashHex";
 import { cloneDeep } from "lodash";
+import generate from "@babel/generator";
 
-const modifiedCallExpressionNodes: Record<string, any> = {}
+const transformedCallExpressionNodes: Record<string, any> = {};
+const transformedCSSRules: Record<string, Record<string, string>> = {};
 
 /**
  * Exported default function to process a Babel plugin.
@@ -34,15 +36,16 @@ export default function ({ types }: { types: any }): PluginObj {
                         const callbackArgument = path.node.arguments[0];
 
                         if (callbackArgument && (callbackArgument.type === 'ArrowFunctionExpression' || callbackArgument.type === 'FunctionExpression')) {
-                            const hashedNode = hashHex(JSON.stringify(path.node), true);
-                            const modifiedNode = modifiedCallExpressionNodes[hashedNode];
+                            const callbackBody = generate(callbackArgument.body).code.replace(/\s+/g, "");
+                            const hashedNode = hashHex(JSON.stringify(callbackBody), true);
+                            const modifiedNode = transformedCallExpressionNodes[hashedNode];
 
                             if (!modifiedNode) {
-                                extractObjectsFromNode(types, callbackArgument.body, coreAST);
+                                extractObjectsFromNode(types, callbackArgument.body, coreAST, transformedCSSRules);
 
                                 const modifiedBodyClone = cloneDeep(callbackArgument.body);
 
-                                modifiedCallExpressionNodes[hashedNode] = modifiedBodyClone;
+                                transformedCallExpressionNodes[hashedNode] = modifiedBodyClone;
                             } else {
                                 callbackArgument.body = cloneDeep(modifiedNode);
                             }
