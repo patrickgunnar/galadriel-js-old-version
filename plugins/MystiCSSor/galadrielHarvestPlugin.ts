@@ -31,23 +31,19 @@ export default function ({ types }: { types: any }): PluginObj {
                     const callee = path.get("callee");
 
                     if (callee.isIdentifier({ name: "craftingStyles" })) {
-                        const hashedNode = hashHex(JSON.stringify(path.node), true);
-                        const modifiedNode = modifiedCallExpressionNodes[hashedNode];
+                        const callbackArgument = path.node.arguments[0];
 
-                        if (!modifiedNode) {
-                            const callbackArgument = path.node.arguments[0];
+                        if (callbackArgument && (callbackArgument.type === 'ArrowFunctionExpression' || callbackArgument.type === 'FunctionExpression')) {
+                            const hashedNode = hashHex(JSON.stringify(path.node), true);
+                            const modifiedNode = modifiedCallExpressionNodes[hashedNode];
 
-                            if (callbackArgument && (callbackArgument.type === 'ArrowFunctionExpression' || callbackArgument.type === 'FunctionExpression')) {
+                            if (!modifiedNode) {
                                 extractObjectsFromNode(types, callbackArgument.body, coreAST);
 
                                 const modifiedBodyClone = cloneDeep(callbackArgument.body);
 
                                 modifiedCallExpressionNodes[hashedNode] = modifiedBodyClone;
-                            }
-                        } else {
-                            const callbackArgument = path.node.arguments[0];
-
-                            if (callbackArgument && (callbackArgument.type === 'ArrowFunctionExpression' || callbackArgument.type === 'FunctionExpression')) {
+                            } else {
                                 callbackArgument.body = cloneDeep(modifiedNode);
                             }
                         }

@@ -30,19 +30,16 @@ function default_1({ types }) {
                 if (!shouldExclude || shouldInclude) {
                     const callee = path.get("callee");
                     if (callee.isIdentifier({ name: "craftingStyles" })) {
-                        const hashedNode = (0, hashHex_1.hashHex)(JSON.stringify(path.node), true);
-                        const modifiedNode = modifiedCallExpressionNodes[hashedNode];
-                        if (!modifiedNode) {
-                            const callbackArgument = path.node.arguments[0];
-                            if (callbackArgument && (callbackArgument.type === 'ArrowFunctionExpression' || callbackArgument.type === 'FunctionExpression')) {
+                        const callbackArgument = path.node.arguments[0];
+                        if (callbackArgument && (callbackArgument.type === 'ArrowFunctionExpression' || callbackArgument.type === 'FunctionExpression')) {
+                            const hashedNode = (0, hashHex_1.hashHex)(JSON.stringify(path.node), true);
+                            const modifiedNode = modifiedCallExpressionNodes[hashedNode];
+                            if (!modifiedNode) {
                                 (0, extractObjectsFromNode_1.extractObjectsFromNode)(types, callbackArgument.body, coreAST_1.coreAST);
                                 const modifiedBodyClone = (0, lodash_1.cloneDeep)(callbackArgument.body);
                                 modifiedCallExpressionNodes[hashedNode] = modifiedBodyClone;
                             }
-                        }
-                        else {
-                            const callbackArgument = path.node.arguments[0];
-                            if (callbackArgument && (callbackArgument.type === 'ArrowFunctionExpression' || callbackArgument.type === 'FunctionExpression')) {
+                            else {
                                 callbackArgument.body = (0, lodash_1.cloneDeep)(modifiedNode);
                             }
                         }
