@@ -28,7 +28,7 @@ function extractObjectsFromNode(
 
                     if (prop.value.type === "StringLiteral") {
                         const transformedValueKey = hashHex(
-                            prop.value.value,
+                            `${prop.key.name}:${prop.value.value}`,
                             true
                         );
 

@@ -25,7 +25,7 @@ function extractObjectsFromNode(types, node, coreAST, transformedCSSRules) {
                 if (types.isIdentifier(prop.key)) {
                     const transformedKey = transformedCSSRules[prop.key.name];
                     if (prop.value.type === "StringLiteral") {
-                        const transformedValueKey = (0, hashHex_1.hashHex)(prop.value.value, true);
+                        const transformedValueKey = (0, hashHex_1.hashHex)(`${prop.key.name}:${prop.value.value}`, true);
                         if (transformedKey) {
                             const existingValue = transformedKey[transformedValueKey];
                             if (existingValue) {
