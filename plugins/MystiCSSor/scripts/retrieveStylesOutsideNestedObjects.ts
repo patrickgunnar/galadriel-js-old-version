@@ -18,19 +18,24 @@ function retrieveStylesOutsideNestedObjects(
     value: string
 ): { name: string; classRule: string } | null {
     if (key && value) {
+        // Check if value follows a specific pattern (starts with "$" followed by alphanumeric characters and dashes)
         const testRegex = /^\$\w+(-\w+)*$/;
 
         try {
             if (testRegex.test(value)) {
+                // If the value follows the pattern, it's a static or config value
                 const result = genStaticAndConfigClasses(key, value);
 
                 if (typeof result === "object") {
+                    // If result is an object (static or config style), return it
                     return result;
                 }
             } else {
+                // If the value doesn't follow the pattern, it's a dynamic value
                 const result = genDynamicAndConfigClasses(key, value);
 
                 if (typeof result === "object") {
+                    // If result is an object (dynamic style), return it
                     return result;
                 }
             }
@@ -39,6 +44,7 @@ function retrieveStylesOutsideNestedObjects(
         }
     }
 
+    // Return null if unable to generate
     return null;
 }
 
