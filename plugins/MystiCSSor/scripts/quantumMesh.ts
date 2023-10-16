@@ -31,19 +31,24 @@ export function genStaticAndConfigClasses(
     }
 
     try {
+        // Handle static styles defined in coreStaticStyles
         const handleStatic = coreStaticStyles[key];
 
         if (handleStatic && typeof handleStatic === "function") {
+            // Handle static styles
+            // Extract key properties for the given selector
             const keyProperties = handleStatic({
                 extractGaladrielClasses: getClasses,
             });
             const selector = `.${value}`;
             const keyProperty = keyProperties[selector];
 
+            // Return property value if style is for a nested element
             if (isNested && keyProperty) {
                 return keyProperty;
             } else if (keyProperty) {
                 try {
+                    // Generate CSS rule for the style
                     const pseudoContent: string[] = [];
                     const styleContent = Object.entries(keyProperty)
                         .map(([property, asset]) => {
@@ -73,7 +78,7 @@ export function genStaticAndConfigClasses(
                     console.error("An error occurred:", error);
                 }
             }
-        } else {
+        } else {// Handle dynamic styles based on configuration
             try {
                 const { craftStyles } = parseConfig();
                 const configValue = value.replace("$", "");
@@ -85,6 +90,7 @@ export function genStaticAndConfigClasses(
                 for (const [configKey, configValue] of Object.entries(
                     craftStyles
                 )) {
+                    // Handle dynamic styles defined in coreDynamicProperties
                     const property = coreDynamicProperties[configKey];
 
                     if (property) {
@@ -127,6 +133,7 @@ export function genStaticAndConfigClasses(
         console.error("An error occurred:", error);
     }
 
+    // Return null if unable to generate
     return null;
 }
 
@@ -148,12 +155,14 @@ export function genDynamicAndConfigClasses(
     isNested = false
 ): { name: string; classRule: string } | string | null {
     try {
+        // Retrieve the property associated with the key
         const property = coreDynamicProperties[key];
 
         if (property) {
-            if (isNested) {
+            if (isNested) {// Return the property value if the style is for a nested element
                 return property;
             } else {
+                // Generate a hashed class name and CSS rule for the dynamic style
                 const hashedHex = hashHex(`${property}:${value}`);
 
                 return {
@@ -166,6 +175,7 @@ export function genDynamicAndConfigClasses(
         console.error("An error occurred:", error);
     }
 
+    // Return null if unable to generate
     return null;
 }
 
@@ -184,15 +194,19 @@ export function genCSSClassName(
     key: string
 ): { name: string; classRule: string } | null {
     try {
+        // Retrieve the property associated with the key
         const property = coreDynamicProperties[key];
 
         if (property) {
+            // Generate a hash based on the rules and property
             const hashString = property.includes("&")
                 ? rules
                 : `${property}_${rules}`;
             const hashedHex = hashHex(hashString);
 
+            // If property contains "&", replace it with the hashedHex in the generated class name
             if (property.includes("&")) {
+                // If property contains "&", replace it with the hashedHex in the generated class name
                 return {
                     name: `galadriel_${hashedHex}`,
                     classRule: `.galadriel_${property.replace(
@@ -201,6 +215,7 @@ export function genCSSClassName(
                     )} { ${rules} }`,
                 };
             } else {
+                // Generate class name and rule without replacing "&"
                 return {
                     name: `galadriel_${hashedHex}`,
                     classRule: `.galadriel_${hashedHex} { ${rules} }`,
@@ -211,5 +226,6 @@ export function genCSSClassName(
         console.error("An error occurred:", error);
     }
 
+    // Return null if unable to generate
     return null;
 }
