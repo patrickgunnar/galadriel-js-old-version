@@ -28,18 +28,23 @@ function genStaticAndConfigClasses(key, value, isNested = false) {
         return cls;
     }
     try {
+        // Handle static styles defined in coreStaticStyles
         const handleStatic = coreStaticStyles_1.coreStaticStyles[key];
         if (handleStatic && typeof handleStatic === "function") {
+            // Handle static styles
+            // Extract key properties for the given selector
             const keyProperties = handleStatic({
                 extractGaladrielClasses: getClasses,
             });
             const selector = `.${value}`;
             const keyProperty = keyProperties[selector];
+            // Return property value if style is for a nested element
             if (isNested && keyProperty) {
                 return keyProperty;
             }
             else if (keyProperty) {
                 try {
+                    // Generate CSS rule for the style
                     const pseudoContent = [];
                     const styleContent = Object.entries(keyProperty)
                         .map(([property, asset]) => {
@@ -60,7 +65,7 @@ function genStaticAndConfigClasses(key, value, isNested = false) {
                 }
             }
         }
-        else {
+        else { // Handle dynamic styles based on configuration
             try {
                 const { craftStyles } = (0, parseConfig_1.parseConfig)();
                 const configValue = value.replace("$", "");
@@ -69,6 +74,7 @@ function genStaticAndConfigClasses(key, value, isNested = false) {
                     : configValue;
                 const configStyles = [];
                 for (const [configKey, configValue] of Object.entries(craftStyles)) {
+                    // Handle dynamic styles defined in coreDynamicProperties
                     const property = coreDynamicProperties_1.coreDynamicProperties[configKey];
                     if (property) {
                         const valueEntries = Object.entries(configValue);
@@ -103,6 +109,7 @@ function genStaticAndConfigClasses(key, value, isNested = false) {
     catch (error) {
         console.error("An error occurred:", error);
     }
+    // Return null if unable to generate
     return null;
 }
 exports.genStaticAndConfigClasses = genStaticAndConfigClasses;
@@ -120,12 +127,14 @@ exports.genStaticAndConfigClasses = genStaticAndConfigClasses;
  */
 function genDynamicAndConfigClasses(key, value, isNested = false) {
     try {
+        // Retrieve the property associated with the key
         const property = coreDynamicProperties_1.coreDynamicProperties[key];
         if (property) {
-            if (isNested) {
+            if (isNested) { // Return the property value if the style is for a nested element
                 return property;
             }
             else {
+                // Generate a hashed class name and CSS rule for the dynamic style
                 const hashedHex = (0, hashHex_1.hashHex)(`${property}:${value}`);
                 return {
                     name: `galadriel_${hashedHex}`,
@@ -137,6 +146,7 @@ function genDynamicAndConfigClasses(key, value, isNested = false) {
     catch (error) {
         console.error("An error occurred:", error);
     }
+    // Return null if unable to generate
     return null;
 }
 exports.genDynamicAndConfigClasses = genDynamicAndConfigClasses;
@@ -152,19 +162,24 @@ exports.genDynamicAndConfigClasses = genDynamicAndConfigClasses;
  */
 function genCSSClassName(rules, key) {
     try {
+        // Retrieve the property associated with the key
         const property = coreDynamicProperties_1.coreDynamicProperties[key];
         if (property) {
+            // Generate a hash based on the rules and property
             const hashString = property.includes("&")
                 ? rules
                 : `${property}_${rules}`;
             const hashedHex = (0, hashHex_1.hashHex)(hashString);
+            // If property contains "&", replace it with the hashedHex in the generated class name
             if (property.includes("&")) {
+                // If property contains "&", replace it with the hashedHex in the generated class name
                 return {
                     name: `galadriel_${hashedHex}`,
                     classRule: `.galadriel_${property.replace("&", hashedHex)} { ${rules} }`,
                 };
             }
             else {
+                // Generate class name and rule without replacing "&"
                 return {
                     name: `galadriel_${hashedHex}`,
                     classRule: `.galadriel_${hashedHex} { ${rules} }`,
@@ -175,6 +190,7 @@ function genCSSClassName(rules, key) {
     catch (error) {
         console.error("An error occurred:", error);
     }
+    // Return null if unable to generate
     return null;
 }
 exports.genCSSClassName = genCSSClassName;
