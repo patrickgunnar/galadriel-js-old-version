@@ -8,7 +8,7 @@ import { retrieveStylesOutsideNestedObjects } from "./retrieveStylesOutsideNeste
  * Extract CSS styles from core bank and process associated styles from a given node.
  *
  * @param {any} types - The types object for node analysis.
- * @param {any} rootNode - The node to extract objects from.
+ * @param {any} node - The node to extract objects from.
  * @param {Record<string, Record<string, string[]>>} coreAST - The core AST to update with styles.
  * @param {Record<string, Record<string, string>>} transformedCSSRules - The control of used CSS rules
  */
