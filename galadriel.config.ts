@@ -10,6 +10,8 @@ const config = {
         "test",
         "types",
         "init-scripts",
+        "Watchmanor",
+        "build"
     ],
     // content to include
     include: ["./index.ts"],
