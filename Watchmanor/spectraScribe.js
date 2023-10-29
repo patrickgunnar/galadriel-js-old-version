@@ -19,4 +19,4 @@ function spectraScribe() {
     console.log("Galadriel.js initialization completed successfully");
 }
 
-spectraScribe();
+module.exports = { spectraScribe };
