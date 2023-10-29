@@ -10,7 +10,7 @@
     "scripts": {
         "test": "jest",
         "test:watch": "jest --watch",
-        "dev": "concurrently \"node ./Watchmanor/spectraScribe.js\"",
+        "dev": "npm run start",
         "start": "concurrently \"npx webpack serve --config webpack.config.js\" \"npx webpack --watch\"",
         "prebuild": "rm -rf build && tsc --outDir build && node build/plugins/TypeWeaver/typeForgePlugin.js",
         "build": "webpack --mode production"
@@ -59,6 +59,7 @@
         "style-loader": "^3.3.3",
         "ts-loader": "^9.4.4",
         "typescript": "^5.2.2",
+        "webpack": "^5.89.0",
         "webpack-cli": "^5.1.4",
         "webpack-dev-server": "^4.15.1",
         "yarn": "^1.22.19"
