@@ -75,3 +75,5 @@ build/main.css
 build/main.css.map
 babel.config.js
 galadriel.config.ts
+postcss.config.js
+webpack.config.js
