@@ -2,6 +2,7 @@
 
 const yargs = require("yargs");
 const { galadrielInit } = require("./init");
+const { spectraScribe } = require("../Watchmanor/spectraScribe");
 
 yargs
     .command({
@@ -18,7 +19,7 @@ yargs
             const { watch } = argv;
 
             if (watch) {
-                console.log("Watch stated!");
+                spectraScribe();
             }
         },
         builder: (yargs) => {
