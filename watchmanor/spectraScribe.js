@@ -8,9 +8,8 @@ const { transpileCode } = require("./scripts/transpileCode");
 
 function spectraScribe() {
     const logger = new Logger();
-    const rootDir = ".";
     const toExclude = parseExclude();
-    const watcher = chokidar.watch(rootDir, {
+    const watcher = chokidar.watch(".", {
         persistent: true,
         ignoreInitial: true,
         ignored: toExclude,
