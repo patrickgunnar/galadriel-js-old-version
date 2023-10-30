@@ -1,7 +1,10 @@
+const fs = require("fs");
+const path = require("path");
 const chokidar = require("chokidar");
 const { parseExclude } = require("./scripts/parseExclude");
 const { Logger } = require("../scripts/logger");
 const { mergeBabelConfigs } = require("./scripts/mergeBabelConfigs");
+const { transpileCode } = require("./scripts/transpileCode");
 
 function spectraScribe() {
     const logger = new Logger();
@@ -13,12 +16,17 @@ function spectraScribe() {
         ignored: toExclude,
     });
 
-    watcher.on("change", (path) => {
-        if (path[0] !== ".") {
-            logger.now(`${logger.makeBold(path)} just saved`, true);
+    watcher.on("change", (__path) => {
+        if (__path[0] !== ".") {
+            logger.now(`${logger.makeBold(__path)} just saved`, true);
 
             const babelConfig = mergeBabelConfigs();
-            console.log(babelConfig)
+            const codeToTranspile = fs.readFileSync(
+                path.resolve(__path),
+                "utf-8"
+            );
+
+            transpileCode(codeToTranspile, babelConfig, __path);
         }
     });
 
