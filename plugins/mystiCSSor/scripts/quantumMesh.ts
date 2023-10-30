@@ -1,5 +1,5 @@
-import { coreStaticStyles } from "../../../PatterniaHub/coreStaticStyles";
-import { coreDynamicProperties } from "../../../PatterniaHub/coreDynamicProperties";
+import { coreStaticStyles } from "../../../kernel/coreStaticStyles";
+import { coreDynamicProperties } from "../../../kernel/coreDynamicProperties";
 import { parseConfig } from "./parseConfig";
 import { hashHex } from "./hashHex";
 
