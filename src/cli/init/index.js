@@ -2,15 +2,19 @@ const fs = require("fs");
 const path = require("path");
 const { Logger } = require("../../../scripts/logger");
 
-const babelConfig = `module.exports = {
+const babelConfig = `const path = require("path");
+
+module.exports = {
     presets: ["@babel/preset-env", "@babel/preset-typescript"],
-    plugins: ["galadrieljs/build/plugins/mystiCSSor/galadrielHarvestPlugin"],
+    plugins: [path.join("galadrieljs", "build", "src", "plugins", "mystiCSSor", "galadrielHarvestPlugin")],
 };
 `;
 
-const postCSSConfig = `module.exports = {
+const postCSSConfig = `const path = require("path");
+
+module.exports = {
     plugins: {
-        "galadrieljs/build/plugins/mystiCSSor/galadrielInjectionPlugin": {},
+        [path.join("galadrieljs", "build", "src", "plugins", "mystiCSSor", "galadrielInjectionPlugin")]: {},
         autoprefixer: {},
         "postcss-preset-env": {},
         cssnano: {},
