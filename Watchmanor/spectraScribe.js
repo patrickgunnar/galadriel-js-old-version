@@ -1,6 +1,6 @@
 const chokidar = require("chokidar");
 const { parseExclude } = require("./scripts/parseExclude");
-const { Logger } = require("./scripts/logger");
+const { Logger } = require("../scripts/logger");
 
 function spectraScribe() {
     const logger = new Logger();
