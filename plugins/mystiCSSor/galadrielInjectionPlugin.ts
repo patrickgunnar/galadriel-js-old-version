@@ -1,5 +1,5 @@
 import postcss, { Result, Root } from "postcss";
-import { uniteGaladrielAST } from "./AST/uniteGaladrielAST";
+import { uniteGaladrielAST } from "./ast/uniteGaladrielAST";
 
 /**
  * This module exports a PostCSS plugin function that processes the CSS AST and injects Galadriel CSS rules.

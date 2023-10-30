@@ -1,7 +1,7 @@
 import path from "path";
 import { PluginObj } from "@babel/core";
 import { parseConfig } from "./scripts/parseConfig";
-import { coreAST } from "./AST/coreAST";
+import { coreAST } from "./ast/coreAST";
 import { extractObjectsFromNode } from "./scripts/extractObjectsFromNode";
 import { hashHex } from "./scripts/hashHex";
 import { cloneDeep } from "lodash";
