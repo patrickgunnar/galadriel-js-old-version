@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { Logger } = require("../../scripts/logger");
+const { Logger } = require("../../../scripts/logger");
 
 const babelConfig = `module.exports = {
     presets: ["@babel/preset-env", "@babel/preset-typescript"],

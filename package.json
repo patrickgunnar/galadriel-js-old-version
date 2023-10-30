@@ -4,8 +4,8 @@
     "description": "A versatile JavaScript library empowering developers to create elegant, dynamically responsive user interfaces. Focused on modularity and simplicity, enabling the crafting of captivating web applications with optimized performance. Unleash your creativity and let Galadriel.js illuminate your design process.",
     "main": "./build/main.js",
     "bin": {
-        "galadriel": "./cli.js",
-        "galadrieljs": "./cli.js"
+        "galadriel": "./src/cli.js",
+        "galadrieljs": "./src/cli.js"
     },
     "scripts": {
         "test": "jest",
@@ -85,6 +85,7 @@
         "@babel/preset-env": "^7.22.20",
         "@babel/preset-typescript": "^7.23.0",
         "chokidar": "^3.5.3",
+        "deepmerge": "^4.3.1",
         "lodash": "^4.17.21",
         "yargs": "^17.7.2"
     }

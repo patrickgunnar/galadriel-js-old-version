@@ -2,7 +2,7 @@
 
 const yargs = require("yargs");
 const { galadrielInit } = require("./init");
-const { spectraScribe } = require("../watchmanor/spectraScribe");
+const { spectraScribe } = require("../../watchmanor/spectraScribe");
 
 yargs
     .command({

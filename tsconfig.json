@@ -19,9 +19,9 @@
     },
     "include": [
         "kernel/**/*",
-        "plugins/**/*",
+        "src/plugins/**/*",
         "crafters/**/*",
-        "types/**/*",
+        "src/types/**/*",
         "./**/*"
     ],
     "exclude": ["node_modules", "test", "build", "galadriel.config.ts", "index.ts"]
