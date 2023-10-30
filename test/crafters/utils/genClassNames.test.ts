@@ -1,4 +1,4 @@
-import { genClassNames } from "../../../StyleCrafters/utils/genClassNames";
+import { genClassNames } from "../../../crafters/utils/genClassNames";
 
 describe("Verify if genClassNames function is the class names", () => {
     test("Check if a string containing the class names are being returned", () => {

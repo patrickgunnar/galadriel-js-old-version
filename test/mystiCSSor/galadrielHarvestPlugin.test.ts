@@ -1,5 +1,5 @@
 import { transformFromAstSync, transformSync } from "@babel/core";
-import galadrielHarvestPlugin from "../../plugins/MystiCSSor/galadrielHarvestPlugin";
+import galadrielHarvestPlugin from "../../plugins/mystiCSSor/galadrielHarvestPlugin";
 
 const objectsInput = `const containerStyles = craftingStyles(() => {
     return {
