@@ -12,9 +12,15 @@ const userBabelConfig = fs.existsSync("./babel.config.js")
     ? JSON.parse(fs.readFileSync(path.resolve(".babelrc")))
     : null;
 
+function arrayMerge(target, source) {
+    return target.concat(source.filter((item) => !target.includes(item)));
+}
+
 function mergeBabelConfigs() {
     return userBabelConfig
-        ? deepmerge(internalBabelConfig, userBabelConfig)
+        ? deepmerge(internalBabelConfig, userBabelConfig, {
+              arrayMerge: arrayMerge,
+          })
         : internalBabelConfig;
 }
 
