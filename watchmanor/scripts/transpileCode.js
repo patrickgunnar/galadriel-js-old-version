@@ -1,14 +1,11 @@
 const babel = require("@babel/core");
 
-function transpileCode(codeString, babelConfig, fileName) {
+function transpileCode(codeString, fileName) {
     const transpiledCode = babel.transformSync(codeString, {
-        ...babelConfig,
         filename: fileName,
-        ast: true,
-        code: false,
     });
 
-    console.log(transpiledCode.ast);
+    console.log(transpiledCode.code);
 }
 
 module.exports = { transpileCode };
