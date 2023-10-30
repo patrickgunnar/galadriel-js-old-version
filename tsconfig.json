@@ -20,7 +20,7 @@
     "include": [
         "PatterniaHub/**/*",
         "plugins/**/*",
-        "StyleCrafters/**/*",
+        "crafters/**/*",
         "types/**/*",
         "./**/*"
     ],
