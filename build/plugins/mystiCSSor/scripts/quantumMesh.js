@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.genCSSClassName = exports.genDynamicAndConfigClasses = exports.genStaticAndConfigClasses = void 0;
-const coreStaticStyles_1 = require("../../../PatterniaHub/coreStaticStyles");
-const coreDynamicProperties_1 = require("../../../PatterniaHub/coreDynamicProperties");
+const coreStaticStyles_1 = require("../../../kernel/coreStaticStyles");
+const coreDynamicProperties_1 = require("../../../kernel/coreDynamicProperties");
 const parseConfig_1 = require("./parseConfig");
 const hashHex_1 = require("./hashHex");
 /**

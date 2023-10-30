@@ -1,2 +1,2 @@
-import { craftingStyles } from "./StyleCrafters/craftingStyles";
+import { craftingStyles } from "./crafters/craftingStyles";
 export { craftingStyles };

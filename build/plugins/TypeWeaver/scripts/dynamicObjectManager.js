@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dynamicObjectManager = void 0;
-const coreDynamicProperties_1 = require("../../../PatterniaHub/coreDynamicProperties");
-const coreStaticStyles_1 = require("../../../PatterniaHub/coreStaticStyles");
+const coreDynamicProperties_1 = require("../../../kernel/coreDynamicProperties");
+const coreStaticStyles_1 = require("../../../kernel/coreStaticStyles");
 const pseudoClasses = [
     "hover",
     "active",
