@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { Logger } = require("../../scripts/logger");
 
 const babelConfig = `module.exports = {
     presets: ["@babel/preset-env", "@babel/preset-typescript"],
@@ -33,6 +34,7 @@ function isTypescriptProject() {
 }
 
 function galadrielInit() {
+    const logger = new Logger();
     const rootPath = process.cwd();
     const babelConfigPath = path.join(rootPath, "babel.config.js");
     const postCSSConfigPath = path.join(rootPath, "postcss.config.js");
@@ -45,7 +47,7 @@ function galadrielInit() {
     fs.writeFileSync(postCSSConfigPath, postCSSConfig);
     fs.writeFileSync(galadrielConfigPath, galadrielConfig);
 
-    console.log("Configurations generated successfully!");
+    logger.now("Configurations generated successfully!");
 }
 
-module.exports = { galadrielInit }
+module.exports = { galadrielInit };
