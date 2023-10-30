@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-module.exports = require("./CLI/index");
+module.exports = require("./cli/index");
