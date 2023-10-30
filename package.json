@@ -12,7 +12,7 @@
         "test:watch": "jest --watch",
         "dev": "npm run start",
         "start": "concurrently \"npx webpack serve --config webpack.config.js\" \"npx webpack --watch\"",
-        "prebuild": "rm -rf build && tsc --outDir build && node build/plugins/TypeWeaver/typeForgePlugin.js",
+        "prebuild": "rm -rf build && tsc --outDir build && node build/src/plugins/TypeWeaver/typeForgePlugin.js",
         "build": "webpack --mode production"
     },
     "type": "commonjs",

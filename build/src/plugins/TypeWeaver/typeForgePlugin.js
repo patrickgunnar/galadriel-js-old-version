@@ -32,7 +32,7 @@ const typeForgePlugin = () => {
         const { types, config } = objectsData;
         if (types) {
             try {
-                fs.writeFileSync(path.join(__dirname, "..", "..", "..", "types", "typeManifest.ts"), `export type CraftClassesType = { ${types} }`);
+                fs.writeFileSync(path.join(__dirname, "..", "..", "types", "typeManifest.ts"), `export type CraftClassesType = { ${types} }`);
             }
             catch (error) {
                 console.error("An error occurred:", error);
@@ -40,7 +40,7 @@ const typeForgePlugin = () => {
         }
         if (config) {
             try {
-                fs.writeFileSync(path.join(__dirname, "..", "..", "..", "types", "config.ts"), `export type Config = { ${config} }`);
+                fs.writeFileSync(path.join(__dirname, "..", "..", "types", "config.ts"), `export type Config = { ${config} }`);
             }
             catch (error) {
                 console.error("An error occurred:", error);

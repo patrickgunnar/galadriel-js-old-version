@@ -11,7 +11,7 @@ const typeForgePlugin = () => {
         if(types) {
             try {
                 fs.writeFileSync(
-                    path.join(__dirname, "..", "..", "..", "types", "typeManifest.ts"),
+                    path.join(__dirname, "..", "..", "types", "typeManifest.ts"),
                     `export type CraftClassesType = { ${types} }`
                 );
             } catch (error: any) {
@@ -22,7 +22,7 @@ const typeForgePlugin = () => {
         if(config) {
             try {
                 fs.writeFileSync(
-                    path.join(__dirname, "..", "..", "..", "types", "config.ts"),
+                    path.join(__dirname, "..", "..", "types", "config.ts"),
                     `export type Config = { ${config} }`
                 );
             } catch (error: any) {
