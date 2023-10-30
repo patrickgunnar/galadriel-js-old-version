@@ -1,7 +1,9 @@
 const chokidar = require("chokidar");
 const { parseExclude } = require("./scripts/parseExclude");
+const { Logger } = require("./scripts/logger");
 
 function spectraScribe() {
+    const logger = new Logger();
     const rootDir = ".";
     const toExclude = parseExclude();
     const watcher = chokidar.watch(rootDir, {
@@ -12,11 +14,11 @@ function spectraScribe() {
 
     watcher.on("change", (path) => {
         if (path[0] !== ".") {
-            console.log(path);
+            logger.now(`${logger.makeBold(path)} just saved`, true);
         }
     });
 
-    console.log("Galadriel.js initialization completed successfully");
+    logger.now("Galadriel.js just started", true);
 }
 
 module.exports = { spectraScribe };
