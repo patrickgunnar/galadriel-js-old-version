@@ -4,13 +4,13 @@ const { Logger } = require("../../scripts/logger");
 
 const babelConfig = `module.exports = {
     presets: ["@babel/preset-env", "@babel/preset-typescript"],
-    plugins: ["galadrieljs/build/plugins/MystiCSSor/galadrielHarvestPlugin"],
+    plugins: ["galadrieljs/build/plugins/mystiCSSor/galadrielHarvestPlugin"],
 };
 `;
 
 const postCSSConfig = `module.exports = {
     plugins: {
-        "galadrieljs/build/plugins/MystiCSSor/galadrielInjectionPlugin": {},
+        "galadrieljs/build/plugins/mystiCSSor/galadrielInjectionPlugin": {},
         autoprefixer: {},
         "postcss-preset-env": {},
         cssnano: {},
