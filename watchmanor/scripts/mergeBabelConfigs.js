@@ -13,7 +13,16 @@ const userBabelConfig = fs.existsSync("./babel.config.js")
     : null;
 
 function arrayMerge(target, source) {
-    return target.concat(source.filter((item) => !target.includes(item)));
+    return target.concat(
+        source.filter((item) => {
+            if (typeof item === "string") {
+                return !target.includes(item);
+            } else if (Array.isArray(item)) {
+                console.log(item[0])
+                return !target.includes(item[0]);
+            }
+        })
+    );
 }
 
 function mergeBabelConfigs() {
