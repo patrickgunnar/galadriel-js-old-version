@@ -1,6 +1,6 @@
 const path = require("path");
 
-function parseExclude() {
+function parseConfig() {
     // Paths for the Galadriel configuration files
     const configPaths = ["galadriel.config.ts", "galadriel.config.js"];
 
@@ -15,13 +15,22 @@ function parseExclude() {
 
             if (config) {
                 // Get the exclude content
-                const { exclude } = config;
+                const { exclude, output } = config;
 
-                if (exclude) {
+                if (exclude && output) {
                     // Return the  filtered exclude paths
-                    return exclude.filter(
-                        (item) => typeof item === "string" && item.length > 0
-                    );
+                    return {
+                        output: output || null,
+                        ignore: Array.isArray(exclude)
+                            ? exclude.filter(
+                                  (item) =>
+                                      typeof item === "string" &&
+                                      item.length > 0
+                              )
+                            : typeof exclude === "string"
+                            ? [exclude]
+                            : null,
+                    };
                 }
             }
         }
@@ -32,4 +41,4 @@ function parseExclude() {
     return [];
 }
 
-module.exports = { parseExclude };
+module.exports = { parseConfig };
