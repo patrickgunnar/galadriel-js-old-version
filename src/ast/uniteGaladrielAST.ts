@@ -1,4 +1,4 @@
-import { coreDynamicProperties } from "../../../kernel/coreDynamicProperties";
+import { coreDynamicProperties } from "../kernel/coreDynamicProperties";
 import { coreAST } from "./coreAST";
 
 const uniteGaladrielAST = (): string => {
