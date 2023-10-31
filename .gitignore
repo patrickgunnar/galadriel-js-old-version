@@ -77,3 +77,4 @@ galadriel.config.ts
 postcss.config.js
 webpack.config.js
 babel.config.js
+global.css
