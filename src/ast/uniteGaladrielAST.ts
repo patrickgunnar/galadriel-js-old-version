@@ -12,10 +12,10 @@ const uniteGaladrielAST = (): string => {
                         const mediaValue = coreDynamicProperties[child].replace("$", "");
 
                         if (mediaValue) {
-                            classesString += ` @media screen and (${mediaValue}) { ${coreAST[node][child].join(" ")} }\n`;
+                            classesString += ` @media screen and (${mediaValue}) { ${coreAST[node][child].join(" ")} }\n\n`;
                         }
                     } else {
-                        classesString += ` ${coreAST[node][child].join(" ")}\n`;
+                        classesString += ` ${coreAST[node][child].join(" ")}\n\n`;
                     }
                 }
             }
