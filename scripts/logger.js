@@ -20,6 +20,12 @@ class Logger {
 
         console.log(`[${now}]: ${message}`);
     }
+
+    message(message, bold = false) {
+        const msg = bold ? this.makeBold(message) : message;
+
+        console.log(msg);
+    }
 }
 
 module.exports = { Logger };
