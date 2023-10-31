@@ -20,7 +20,7 @@ function parseConfig() {
                 if (exclude && output) {
                     // Return the  filtered exclude paths
                     return {
-                        output: output || null,
+                        output: typeof output === "string" ? output : null,
                         ignore: Array.isArray(exclude)
                             ? exclude.filter(
                                   (item) =>
