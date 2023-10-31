@@ -1,33 +1,46 @@
 const fs = require("fs");
 const path = require("path");
 const chokidar = require("chokidar");
-const { parseExclude } = require("./scripts/parseExclude");
+const { parseConfig } = require("./scripts/parseConfig");
 const { Logger } = require("../scripts/logger");
-const { transpileCode } = require("./scripts/transpileCode");
+const { generateCSSfile } = require("./scripts/generateCSSfile");
 
 function spectraScribe() {
     const logger = new Logger();
-    const toExclude = parseExclude();
-    const watcher = chokidar.watch(".", {
-        persistent: true,
-        ignoreInitial: true,
-        ignored: toExclude,
-    });
+    const { ignore, output } = parseConfig();
 
-    watcher.on("change", (__path) => {
-        if (__path[0] !== ".") {
-            logger.now(`${logger.makeBold(__path)} just saved`, true);
+    if (ignore && output) {
+        const watcher = chokidar.watch(".", {
+            persistent: true,
+            ignoreInitial: true,
+            ignored: [...ignore, output],
+        });
 
-            const codeToTranspile = fs.readFileSync(
-                path.resolve(__path),
-                "utf-8"
-            );
+        watcher.on("change", (__path) => {
+            if (__path[0] !== ".") {
+                const startTime = new Date();
+                logger.now(`${logger.makeBold(__path)} just saved`, true);
 
-            transpileCode(codeToTranspile, __path);
-        }
-    });
+                const codeToTranspile = fs.readFileSync(
+                    path.resolve(__path),
+                    "utf-8"
+                );
 
-    logger.now("Galadriel.js just started", true);
+                generateCSSfile(codeToTranspile, __path, output);
+
+                const endTime = new Date();
+
+                logger.now(
+                    `CSS generated successfully in ${endTime - startTime} ms`,
+                    true
+                );
+            }
+        });
+
+        logger.now("Galadriel.js just started", true);
+    } else {
+        logger.message("galadriel.config (.js or .ts) with fields output and exclude required", true);
+    }
 }
 
 module.exports = { spectraScribe };
