@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const parseConfig_1 = require("./scripts/parseConfig");
-const coreAST_1 = require("./ast/coreAST");
+const coreAST_1 = require("../../ast/coreAST");
 const extractObjectsFromNode_1 = require("./scripts/extractObjectsFromNode");
 const hashHex_1 = require("./scripts/hashHex");
 const lodash_1 = require("lodash");

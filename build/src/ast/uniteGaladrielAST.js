@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uniteGaladrielAST = void 0;
-const coreDynamicProperties_1 = require("../../../kernel/coreDynamicProperties");
+const coreDynamicProperties_1 = require("../kernel/coreDynamicProperties");
 const coreAST_1 = require("./coreAST");
 const uniteGaladrielAST = () => {
     let classesString = "";
