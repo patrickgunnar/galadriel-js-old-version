@@ -43,7 +43,7 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
                         return `${rule}: ${asset};`;
                     }).join(" ");
                     // generates the class name
-                    const className = `${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${JSON.parse(selector.replace("$", "").replace(".", ""))}`;
+                    const className = `${JSON.parse(selector.replace("$", "").replace(".", ""))}${pseudo ? `-${pseudo}` : media ? `-${media}` : ""}`;
                     return {
                         name: className,
                         styles: `.${className}${pseudo ? `:${pseudo}` : ""} { ${stylesRules} } ${pseudoRules.join(" ")}`
@@ -86,7 +86,7 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
                                 }
                                 else {
                                     // generates the class name
-                                    const className = `${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${entryKey}`;
+                                    const className = `${entryKey}${pseudo ? `-${pseudo}` : media ? `-${media}` : ""}`;
                                     configClassNames.push(className);
                                     configRules.push(`.${className}${pseudo ? `:${pseudo}` : ""} { ${dynamicProperty}: ${entryValue}; }`);
                                 }
@@ -124,7 +124,7 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
 function collectsDynamicRules(property, key, value, collectedObjectsProperties, pseudo = null, media = null) {
     try {
         // generates the class name with the property
-        const className = `galadriel__${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${(0, hashingHex_1.hashingHex)(property)}`;
+        const className = `galadriel__${(0, hashingHex_1.hashingHex)(property)}${pseudo ? `-${pseudo}` : media ? `-${media}` : ""}`;
         // if the current class name was already used
         if (collectedObjectsProperties.includes(className)) {
             return null;
@@ -259,7 +259,7 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties) {
                                 if (nestedValue.includes("$")) {
                                     try {
                                         // collects the styles
-                                        const collectedStyles = collectsStaticConfigRules(readyKey, readyValue, readySelector, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, coreAST.mediaQueryVariables[pseudo] ? `g${(0, hashingHex_1.hashingHex)(pseudo)}` : null);
+                                        const collectedStyles = collectsStaticConfigRules(readyKey, readyValue, readySelector, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, coreAST.mediaQueryVariables[pseudo] ? `g${(0, hashingHex_1.hashingHex)(pseudo, false, true)}` : null);
                                         if (collectedStyles) {
                                             const { styles, name } = collectedStyles;
                                             if (styles && name) {
@@ -282,7 +282,7 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties) {
                                 else { // if the current value is a dynamic property
                                     try {
                                         // collects the styles
-                                        const collectedStyles = collectsDynamicRules(readyProperty, readyKey, readyValue, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, coreAST.mediaQueryVariables[pseudo] ? (0, hashingHex_1.hashingHex)(pseudo) : null);
+                                        const collectedStyles = collectsDynamicRules(readyProperty, readyKey, readyValue, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, coreAST.mediaQueryVariables[pseudo] ? `g${(0, hashingHex_1.hashingHex)(pseudo, false, true)}` : null);
                                         if (collectedStyles) {
                                             const { styles, name } = collectedStyles;
                                             if (styles && name) {

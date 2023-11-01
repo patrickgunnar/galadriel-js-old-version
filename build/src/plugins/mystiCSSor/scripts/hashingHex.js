@@ -13,7 +13,7 @@ const crypto_1 = __importDefault(require("crypto"));
  * @param {boolean} is96bits - Flag to determine the length of the output hash (default: false).
  * @returns {string} The hashed string (hexadecimal representation).
  */
-const hashingHex = (str, is96bits = false) => {
+const hashingHex = (str, is96bits = false, is2Digits = false) => {
     try {
         // Creating a hash instance using the SHA-256 algorithm
         const hash = crypto_1.default.createHash("sha256");
@@ -22,11 +22,14 @@ const hashingHex = (str, is96bits = false) => {
         // Digesting the hash and obtaining the hexadecimal representation
         const digestedHash = updatedHash.digest("hex");
         // Returning a portion of the hash based on the is96bits flag
-        if (!is96bits) {
-            return digestedHash.substring(digestedHash.length - 8);
+        if (is96bits) {
+            return digestedHash.substring(digestedHash.length - 12);
+        }
+        else if (is2Digits) {
+            return digestedHash.substring(digestedHash.length - 2);
         }
         else {
-            return digestedHash.substring(digestedHash.length - 12);
+            return digestedHash.substring(digestedHash.length - 8);
         }
     }
     catch (error) {

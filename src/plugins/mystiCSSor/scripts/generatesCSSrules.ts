@@ -52,7 +52,7 @@ function collectsStaticConfigRules(
 
                     // generates the class name
                     const className = 
-                        `${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${JSON.parse(selector.replace("$", "").replace(".", ""))}`;
+                        `${JSON.parse(selector.replace("$", "").replace(".", ""))}${pseudo ? `-${pseudo}` : media ? `-${media}` : ""}`;
 
                     return {
                         name: className,
@@ -99,7 +99,7 @@ function collectsStaticConfigRules(
                                     configRules.push(`.${entryKey} { ${dynamicProperty}: ${entryValue}; }`);
                                 } else {
                                     // generates the class name
-                                    const className = `${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${entryKey}`;
+                                    const className = `${entryKey}${pseudo ? `-${pseudo}` : media ? `-${media}` : ""}`;
 
                                     configClassNames.push(className);
                                     configRules.push(
@@ -143,7 +143,7 @@ function collectsDynamicRules(
 ): { name: string; styles: string } | null {
     try {
         // generates the class name with the property
-        const className = `galadriel__${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${hashingHex(property)}`;
+        const className = `galadriel__${hashingHex(property)}${pseudo ? `-${pseudo}` : media ? `-${media}` : ""}`;
 
         // if the current class name was already used
         if (collectedObjectsProperties.includes(className)) {
@@ -301,7 +301,7 @@ function generatesCSSrules(
                                         const collectedStyles = collectsStaticConfigRules(
                                             readyKey, readyValue, readySelector, collectedObjectsProperties,
                                             coreAST.mediaQueryVariables[pseudo] ? null : pseudo, 
-                                            coreAST.mediaQueryVariables[pseudo] ? `g${hashingHex(pseudo)}` : null
+                                            coreAST.mediaQueryVariables[pseudo] ? `g${hashingHex(pseudo, false, true)}` : null
                                         );
             
                                         if (collectedStyles) {
@@ -330,7 +330,7 @@ function generatesCSSrules(
                                         const collectedStyles = collectsDynamicRules(
                                             readyProperty, readyKey, readyValue, collectedObjectsProperties, 
                                             coreAST.mediaQueryVariables[pseudo] ? null : pseudo, 
-                                            coreAST.mediaQueryVariables[pseudo] ? hashingHex(pseudo) : null
+                                            coreAST.mediaQueryVariables[pseudo] ? `g${hashingHex(pseudo, false, true)}` : null
                                         );
             
                                         if (collectedStyles) {
