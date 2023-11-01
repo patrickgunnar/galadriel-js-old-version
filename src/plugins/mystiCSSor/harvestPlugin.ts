@@ -27,45 +27,53 @@ export default function ({ t }: { t: any }): PluginObj {
     return {
         visitor: {
             CallExpression(path, state) {
-                // get the file path and check for inclusion or exclusion
-                const filePath = state.filename;
-                const shouldExclude = toExclude.some((__path: string) => filePath?.includes(__path));
-                const shouldInclude = toInclude.some((__path: string) => filePath?.includes(__path));
+                try {
+                    // get the file path and check for inclusion or exclusion
+                    const filePath = state.filename;
+                    const shouldExclude = toExclude.some((__path: string) => filePath?.includes(__path));
+                    const shouldInclude = toInclude.some((__path: string) => filePath?.includes(__path));
 
-                // if it to exclude the current path or not to include it
-                if (shouldExclude || !shouldInclude) return;
+                    // if it to exclude the current path or not to include it
+                    if (shouldExclude || !shouldInclude) return;
 
-                const callee = path.get("callee");
+                    const callee = path.get("callee");
 
-                // if the callee is not "craftingStyles"
-                if (!callee.isIdentifier({ name: "craftingStyles" })) return;
-                
-                const callback = path.node.arguments[0];
+                    // if the callee is not "craftingStyles"
+                    if (!callee.isIdentifier({ name: "craftingStyles" })) return;
+                    
+                    const callback = path.node.arguments[0];
 
-                // if not the callback handler
-                if (!callback) return;
+                    // if not the callback handler
+                    if (!callback) return;
 
-                const callbackType = callback.type;
+                    const callbackType = callback.type;
 
-                // if the callback type is a function or arrow function
-                if (callbackType === "FunctionExpression" || callbackType === "ArrowFunctionExpression") {
-                    // Process the callback function body
-                    const callbackBody = generate(callback.body, { comments: false }).code.replace(/\s+/g, "");
-                    const hashedNode = hashingHex(JSON.stringify(callbackBody), true);
+                    // if the callback type is a function or arrow function
+                    if (callbackType === "FunctionExpression" || callbackType === "ArrowFunctionExpression") {
+                        try {
+                            // Process the callback function body
+                            const callbackBody = generate(callback.body, { comments: false }).code.replace(/\s+/g, "");
+                            const hashedNode = hashingHex(JSON.stringify(callbackBody), true);
 
-                    // if current exists in the control array
-                    if (usedObjects.includes(hashedNode)) return;
+                            // if current exists in the control array
+                            if (usedObjects.includes(hashedNode)) return;
 
-                    // generates an array of strings with objects keys:values or keys:{keys:values}
-                    const objectArray = generateObjectsArray(callbackBody);
+                            // generates an array of strings with objects keys:values or keys:{keys:values}
+                            const objectArray = generateObjectsArray(callbackBody);
 
-                    // if not the array with the objects properties
-                    if (!objectArray) return;
+                            // if not the array with the objects properties
+                            if (!objectArray) return;
 
-                    // generates the CSS rules
-                    generatesCSSrules(objectArray, coreAST, collectedObjectsProperties);
-                    // save the used objects
-                    usedObjects.push(hashedNode);
+                            // generates the CSS rules
+                            generatesCSSrules(objectArray, coreAST, collectedObjectsProperties);
+                            // save the used objects
+                            usedObjects.push(hashedNode);
+                        } catch (error: any) {
+                            console.error("An error occurred:", error);
+                        }
+                    }
+                } catch (error: any) {
+                    console.error("An error occurred:", error);
                 }
             },
         },
