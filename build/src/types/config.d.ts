@@ -1,4 +1,5 @@
 export type Config = {
+    output: string;
     exclude?: string[];
     include?: string[];
     craftStyles?: {
