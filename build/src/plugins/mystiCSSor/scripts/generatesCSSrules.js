@@ -8,7 +8,7 @@ const parseGaladrielConfig_1 = require("./parseGaladrielConfig");
 function extractGaladrielClasses(cls) {
     return cls;
 }
-function collectsStaticConfigRules(key, value, selector, collectedObjectsProperties, pseudo = null) {
+function collectsStaticConfigRules(key, value, selector, collectedObjectsProperties, pseudo = null, media = null) {
     // Handle static styles defined in coreStaticStyles
     const handleStaticRules = coreStaticStyles_1.coreStaticStyles[JSON.parse(key)];
     // if there is a static handler
@@ -29,7 +29,7 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
                 return `${rule}: ${asset};`;
             }).join(" ");
             // generates the class name
-            const className = `${pseudo ? `${pseudo}-` : ""}${JSON.parse(selector.replace("$", "").replace(".", ""))}`;
+            const className = `${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${JSON.parse(selector.replace("$", "").replace(".", ""))}`;
             return {
                 name: className,
                 styles: `.${className}${pseudo ? `:${pseudo}` : ""} { ${stylesRules} } ${pseudoRules.join(" ")}`
@@ -67,7 +67,7 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
                         }
                         else {
                             // generates the class name
-                            const className = `${pseudo ? `${pseudo}-` : ""}${entryKey}`;
+                            const className = `${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${entryKey}`;
                             configClassNames.push(className);
                             configRules.push(`.${className}${pseudo ? `:${pseudo}` : ""} { ${dynamicProperty}: ${entryValue}; }`);
                         }
@@ -82,9 +82,9 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
     }
     return null;
 }
-function collectsDynamicRules(property, key, value, collectedObjectsProperties, pseudo = null) {
+function collectsDynamicRules(property, key, value, collectedObjectsProperties, pseudo = null, media = null) {
     // generates the class name with the property
-    const className = `galadriel__${pseudo ? `${pseudo}-` : ""}${(0, hashingHex_1.hashingHex)(property)}`;
+    const className = `galadriel__${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${(0, hashingHex_1.hashingHex)(property)}`;
     // if the current class name was already used
     if (collectedObjectsProperties.includes(className)) {
         return null;
@@ -174,7 +174,7 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties) {
                         // if the current value is a static or config property
                         if (nestedValue.includes("$")) {
                             // collects the styles
-                            const collectedStyles = collectsStaticConfigRules(readyKey, readyValue, readySelector, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo);
+                            const collectedStyles = collectsStaticConfigRules(readyKey, readyValue, readySelector, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, coreAST.mediaQueryVariables[pseudo] ? pseudo : null);
                             if (collectedStyles) {
                                 const { styles, name } = collectedStyles;
                                 if (styles && name) {
@@ -187,16 +187,12 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties) {
                                         collectedObjectsProperties.push(name);
                                     }
                                     appendToCoreAST(coreAST, nestedKey, styles, coreAST.mediaQueryVariables[pseudo] ? pseudo : null);
-                                    // IT THE PSEUDO IS A @MEDIA, CREATES ANOTHER CLASS AND IMPORT THE CURRENT CLASS IN THE NEW CLASS
-                                    // THE NEW CLASS MUST RECEIVE THE COMPOSES: THE NAME OF THE CURRENT CLASS
-                                    // THE CURRENT CLASS MUST BE ADDED TO "otherProperties"
-                                    // THE NEW CLASS MUST BE ADDED TO THE CURRENT @MEDIA
                                 }
                             }
                         }
                         else { // if the current value is a dynamic property
                             // collects the styles
-                            const collectedStyles = collectsDynamicRules(readyProperty, readyKey, readyValue, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo);
+                            const collectedStyles = collectsDynamicRules(readyProperty, readyKey, readyValue, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, coreAST.mediaQueryVariables[pseudo] ? pseudo : null);
                             if (collectedStyles) {
                                 const { styles, name } = collectedStyles;
                                 if (styles && name) {
