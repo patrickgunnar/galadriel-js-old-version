@@ -204,9 +204,7 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties) {
                                 const { styles, name } = collectedStyles;
                                 if (styles && name) {
                                     if (Array.isArray(name)) {
-                                        for (const __name of name) {
-                                            collectedObjectsProperties.push(__name);
-                                        }
+                                        collectedObjectsProperties.concat(name);
                                     }
                                     else {
                                         collectedObjectsProperties.push(name);

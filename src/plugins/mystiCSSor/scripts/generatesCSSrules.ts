@@ -239,9 +239,7 @@ function generatesCSSrules(
             
                                 if (styles && name) {
                                     if (Array.isArray(name)) {
-                                        for (const __name of name) {
-                                            collectedObjectsProperties.push(__name);
-                                        }
+                                        collectedObjectsProperties.concat(name);
                                     } else {
                                         collectedObjectsProperties.push(name);
                                     }
