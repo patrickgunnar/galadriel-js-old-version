@@ -183,8 +183,10 @@ function appendToCoreAST(coreAST, key, styles, media = null) {
  * @param {string[]} objectsArray - An array of object properties to generate CSS rules from.
  * @param {Record<string, Record<string, string[]>>} coreAST - The core Abstract Syntax Tree (AST).
  * @param {string[]} collectedObjectsProperties - An array of already collected properties.
+ * @param {boolean | undefined} module - set the current saving to module.
+ * @param {Record<string, Record<string, string[]>> | undefined} modularAST - The modular Abstract Syntax Tree (AST).
  */
-function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties) {
+function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties, module, modularAST) {
     try {
         for (const property of objectsArray) {
             // if the current property is key:value type
