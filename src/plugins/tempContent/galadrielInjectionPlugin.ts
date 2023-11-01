@@ -1,5 +1,6 @@
 import postcss, { Result, Root } from "postcss";
 import { uniteGaladrielAST } from "../../ast/uniteGaladrielAST";
+import { coreAST } from "../../ast/coreAST";
 
 /**
  * This module exports a PostCSS plugin function that processes the CSS AST and injects Galadriel CSS rules.
@@ -19,7 +20,7 @@ module.exports = function () {
         Once(root: Root, { result }: { result: Result }) {
             try {
                 // Unite the Galadriel AST into a string
-                const strFromAST = uniteGaladrielAST();
+                const strFromAST = uniteGaladrielAST(coreAST);
 
                 if (strFromAST) {
                     // Parse the string into PostCSS rules

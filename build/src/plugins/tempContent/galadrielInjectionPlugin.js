@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const postcss_1 = __importDefault(require("postcss"));
 const uniteGaladrielAST_1 = require("../../ast/uniteGaladrielAST");
+const coreAST_1 = require("../../ast/coreAST");
 /**
  * This module exports a PostCSS plugin function that processes the CSS AST and injects Galadriel CSS rules.
  * @module galadrielInjectionPlugin
@@ -22,7 +23,7 @@ module.exports = function () {
         Once(root, { result }) {
             try {
                 // Unite the Galadriel AST into a string
-                const strFromAST = (0, uniteGaladrielAST_1.uniteGaladrielAST)();
+                const strFromAST = (0, uniteGaladrielAST_1.uniteGaladrielAST)(coreAST_1.coreAST);
                 if (strFromAST) {
                     // Parse the string into PostCSS rules
                     const parsedRules = postcss_1.default.parse(strFromAST);

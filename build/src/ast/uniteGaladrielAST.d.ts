@@ -1,2 +1,2 @@
-declare const uniteGaladrielAST: () => string;
+declare const uniteGaladrielAST: (ast: Record<string, Record<string, string[]>>) => string;
 export { uniteGaladrielAST };
