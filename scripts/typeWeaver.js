@@ -58,7 +58,8 @@ function dynamicObjectManager() {
     try {
         // config array
         const config = [
-            "output: string;",
+            "module?: boolean;",
+            "output?: string;",
             "exclude?: string[];",
             "include?: string[];",
             "craftStyles?: {",
