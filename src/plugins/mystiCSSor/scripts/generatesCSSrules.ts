@@ -15,12 +15,14 @@ function extractGaladrielClasses(cls: Record<string, Record<string, any>>): any 
  * @param {string} selector - The CSS selector for the configuration.
  * @param {string[]} collectedObjectsProperties - An array of already collected properties.
  * @param {string | null} pseudo - Optional pseudo-class selector (e.g., ":hover").
+ * @param {string | null} pseudoHex - Optional pseudo-class selector hashed (e.g., "gf0").
  * @param {string | null} media - Optional media query selector (e.g., "@media screen").
  * @returns {Object | null} An object containing class name(s) and associated styles,
  *                          or null if no matching rules are found.
  */
 function collectsStaticConfigRules(
-    key: string, value: string, selector: string, collectedObjectsProperties: string[], pseudo: string | null = null, media: string | null = null
+    key: string, value: string, selector: string, collectedObjectsProperties: string[], 
+    pseudo: string | null = null, pseudoHex: string | null = null, media: string | null = null
 ): { name: string | string[]; styles: string } | null {
     try {
         // Handle static styles defined in coreStaticStyles
@@ -52,7 +54,7 @@ function collectsStaticConfigRules(
 
                     // generates the class name
                     const className = 
-                        `${JSON.parse(selector.replace("$", "").replace(".", ""))}${pseudo ? `-${pseudo}` : media ? `-${media}` : ""}`;
+                        `${JSON.parse(selector.replace("$", "").replace(".", ""))}${pseudo ? `-${pseudoHex}` : media ? `-${media}` : ""}`;
 
                     return {
                         name: className,
@@ -99,7 +101,7 @@ function collectsStaticConfigRules(
                                     configRules.push(`.${entryKey} { ${dynamicProperty}: ${entryValue}; }`);
                                 } else {
                                     // generates the class name
-                                    const className = `${entryKey}${pseudo ? `-${pseudo}` : media ? `-${media}` : ""}`;
+                                    const className = `${entryKey}${pseudo ? `-${pseudoHex}` : media ? `-${media}` : ""}`;
 
                                     configClassNames.push(className);
                                     configRules.push(
@@ -134,16 +136,18 @@ function collectsStaticConfigRules(
  * @param {string} value - The value associated with the dynamic configuration.
  * @param {string[]} collectedObjectsProperties - An array of already collected properties.
  * @param {string | null} pseudo - Optional pseudo-class selector (e.g., ":hover").
+ * @param {string | null} pseudoHex - Optional pseudo-class selector hashed (e.g., "gf0").
  * @param {string | null} media - Optional media query selector (e.g., "@media screen").
  * @returns {Object | null} An object containing a class name and associated styles,
  *                          or null if no matching rules are found.
  */
 function collectsDynamicRules(
-    property: string, key: string, value: string, collectedObjectsProperties: string[], pseudo: string | null = null, media: string | null = null
+    property: string, key: string, value: string, collectedObjectsProperties: string[], 
+    pseudo: string | null = null, pseudoHex: string | null = null, media: string | null = null
 ): { name: string; styles: string } | null {
     try {
         // generates the class name with the property
-        const className = `galadriel__${hashingHex(property)}${pseudo ? `-${pseudo}` : media ? `-${media}` : ""}`;
+        const className = `galadriel__${hashingHex(property)}${pseudo ? `-${pseudoHex}` : media ? `-${media}` : ""}`;
 
         // if the current class name was already used
         if (collectedObjectsProperties.includes(className)) {
@@ -293,6 +297,7 @@ function generatesCSSrules(
                                 const readyValue = JSON.stringify(nestedValue);
                                 const readySelector = JSON.stringify(`.${nestedValue}`);
                                 const readyProperty = JSON.stringify(`${nestedKey}:${nestedValue}`);
+                                const pseudoHex = `g${hashingHex(pseudo, false, true)}`
         
                                 // if the current value is a static or config property
                                 if (nestedValue.includes("$")) {
@@ -300,8 +305,9 @@ function generatesCSSrules(
                                         // collects the styles
                                         const collectedStyles = collectsStaticConfigRules(
                                             readyKey, readyValue, readySelector, collectedObjectsProperties,
-                                            coreAST.mediaQueryVariables[pseudo] ? null : pseudo, 
-                                            coreAST.mediaQueryVariables[pseudo] ? `g${hashingHex(pseudo, false, true)}` : null
+                                            coreAST.mediaQueryVariables[pseudo] ? null : pseudo,
+                                            pseudoHex,
+                                            coreAST.mediaQueryVariables[pseudo] ? pseudoHex : null
                                         );
             
                                         if (collectedStyles) {
@@ -329,8 +335,9 @@ function generatesCSSrules(
                                         // collects the styles
                                         const collectedStyles = collectsDynamicRules(
                                             readyProperty, readyKey, readyValue, collectedObjectsProperties, 
-                                            coreAST.mediaQueryVariables[pseudo] ? null : pseudo, 
-                                            coreAST.mediaQueryVariables[pseudo] ? `g${hashingHex(pseudo, false, true)}` : null
+                                            coreAST.mediaQueryVariables[pseudo] ? null : pseudo,
+                                            pseudoHex,
+                                            coreAST.mediaQueryVariables[pseudo] ? pseudoHex : null
                                         );
             
                                         if (collectedStyles) {

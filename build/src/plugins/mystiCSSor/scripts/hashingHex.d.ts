@@ -6,5 +6,5 @@
  * @param {boolean} is96bits - Flag to determine the length of the output hash (default: false).
  * @returns {string} The hashed string (hexadecimal representation).
  */
-declare const hashingHex: (str: string, is96bits?: boolean, is2Digits?: boolean) => string;
+declare const hashingHex: (str: string, is96bits?: boolean, is32bits?: boolean) => string;
 export { hashingHex };
