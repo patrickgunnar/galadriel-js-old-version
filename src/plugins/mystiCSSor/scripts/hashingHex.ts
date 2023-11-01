@@ -26,6 +26,8 @@ const hashingHex = (str: string, is96bits=false) => {
     } catch (error: any) {
         console.error("An error occurred:", error);
     }
+
+    return "";
 };
 
 export { hashingHex };
