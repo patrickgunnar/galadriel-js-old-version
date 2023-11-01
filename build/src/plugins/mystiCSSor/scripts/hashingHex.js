@@ -14,18 +14,24 @@ const crypto_1 = __importDefault(require("crypto"));
  * @returns {string} The hashed string (hexadecimal representation).
  */
 const hashingHex = (str, is96bits = false) => {
-    // Creating a hash instance using the SHA-256 algorithm
-    const hash = crypto_1.default.createHash("sha256");
-    // Updating the hash with the provided string
-    const updatedHash = hash.update(str);
-    // Digesting the hash and obtaining the hexadecimal representation
-    const digestedHash = updatedHash.digest("hex");
-    // Returning a portion of the hash based on the is96bits flag
-    if (!is96bits) {
-        return digestedHash.substring(digestedHash.length - 8);
+    try {
+        // Creating a hash instance using the SHA-256 algorithm
+        const hash = crypto_1.default.createHash("sha256");
+        // Updating the hash with the provided string
+        const updatedHash = hash.update(str);
+        // Digesting the hash and obtaining the hexadecimal representation
+        const digestedHash = updatedHash.digest("hex");
+        // Returning a portion of the hash based on the is96bits flag
+        if (!is96bits) {
+            return digestedHash.substring(digestedHash.length - 8);
+        }
+        else {
+            return digestedHash.substring(digestedHash.length - 12);
+        }
     }
-    else {
-        return digestedHash.substring(digestedHash.length - 12);
+    catch (error) {
+        console.error("An error occurred:", error);
     }
+    return "";
 };
 exports.hashingHex = hashingHex;
