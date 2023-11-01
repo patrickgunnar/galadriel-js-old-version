@@ -12,11 +12,11 @@ const uniteGaladrielAST = () => {
                     if (node === "mediaQueryVariables") {
                         const mediaValue = coreDynamicProperties_1.coreDynamicProperties[child].replace("$", "");
                         if (mediaValue) {
-                            classesString += ` @media screen and (${mediaValue}) { ${coreAST_1.coreAST[node][child].join(" ")} }\n\n`;
+                            classesString += `@media screen and (${mediaValue}) {\n\t${coreAST_1.coreAST[node][child].join("\n\t")}\n}\n`;
                         }
                     }
                     else {
-                        classesString += ` ${coreAST_1.coreAST[node][child].join(" ")}\n\n`;
+                        classesString += `${coreAST_1.coreAST[node][child].join("\n")}\n`;
                     }
                 }
             }

@@ -1,5 +1,6 @@
 export type Config = {
-    output: string;
+    module?: boolean;
+    output?: string;
     exclude?: string[];
     include?: string[];
     craftStyles?: {
