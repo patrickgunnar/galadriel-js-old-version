@@ -10,6 +10,7 @@ const hashingHex_1 = require("./scripts/hashingHex");
 const generateObjectsArray_1 = require("./scripts/generateObjectsArray");
 const coreAST_1 = require("../../ast/coreAST");
 const generatesCSSrules_1 = require("./scripts/generatesCSSrules");
+const modularAST_1 = require("../../ast/modularAST");
 // used objects and CSS rules controls
 const usedObjects = [];
 const collectedObjectsProperties = [];
@@ -60,7 +61,7 @@ function default_1({ t }) {
                             if (!objectArray)
                                 return;
                             // generates the CSS rules
-                            (0, generatesCSSrules_1.generatesCSSrules)(objectArray, coreAST_1.coreAST, collectedObjectsProperties, module);
+                            (0, generatesCSSrules_1.generatesCSSrules)(objectArray, coreAST_1.coreAST, collectedObjectsProperties, module, module ? modularAST_1.modularAST : undefined);
                             // save the used objects
                             usedObjects.push(hashedNode);
                         }

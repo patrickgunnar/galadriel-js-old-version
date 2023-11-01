@@ -6,6 +6,7 @@ import { hashingHex } from "./scripts/hashingHex";
 import { generateObjectsArray } from "./scripts/generateObjectsArray";
 import { coreAST } from "../../ast/coreAST";
 import { generatesCSSrules } from "./scripts/generatesCSSrules";
+import { modularAST } from "../../ast/modularAST";
 
 // used objects and CSS rules controls
 const usedObjects: string[] = [];
@@ -65,7 +66,9 @@ export default function ({ t }: { t: any }): PluginObj {
                             if (!objectArray) return;
 
                             // generates the CSS rules
-                            generatesCSSrules(objectArray, coreAST, collectedObjectsProperties, module);
+                            generatesCSSrules(
+                                objectArray, coreAST, collectedObjectsProperties, module, module ? modularAST : undefined
+                            );
                             // save the used objects
                             usedObjects.push(hashedNode);
                         } catch (error: any) {
