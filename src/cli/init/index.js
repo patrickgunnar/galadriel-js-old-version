@@ -11,6 +11,8 @@ module.exports = {
 `;
 
 const galadrielConfig = `const config = {
+    // set modular saving, defaults to false
+    module: false,
     // output css file
     output: "",
     // content to exclude
