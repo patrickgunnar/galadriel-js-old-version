@@ -259,7 +259,7 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties) {
                                 if (nestedValue.includes("$")) {
                                     try {
                                         // collects the styles
-                                        const collectedStyles = collectsStaticConfigRules(readyKey, readyValue, readySelector, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, coreAST.mediaQueryVariables[pseudo] ? (0, hashingHex_1.hashingHex)(pseudo) : null);
+                                        const collectedStyles = collectsStaticConfigRules(readyKey, readyValue, readySelector, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, coreAST.mediaQueryVariables[pseudo] ? `g${(0, hashingHex_1.hashingHex)(pseudo)}` : null);
                                         if (collectedStyles) {
                                             const { styles, name } = collectedStyles;
                                             if (styles && name) {

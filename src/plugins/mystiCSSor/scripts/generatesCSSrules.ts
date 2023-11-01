@@ -301,7 +301,7 @@ function generatesCSSrules(
                                         const collectedStyles = collectsStaticConfigRules(
                                             readyKey, readyValue, readySelector, collectedObjectsProperties,
                                             coreAST.mediaQueryVariables[pseudo] ? null : pseudo, 
-                                            coreAST.mediaQueryVariables[pseudo] ? hashingHex(pseudo) : null
+                                            coreAST.mediaQueryVariables[pseudo] ? `g${hashingHex(pseudo)}` : null
                                         );
             
                                         if (collectedStyles) {
