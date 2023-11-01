@@ -20,7 +20,7 @@ const collectedObjectsProperties: string[] = [];
  */
 export default function ({ t }: { t: any }): PluginObj {
     // extract include and exclude paths from the config
-    const { include = [], exclude = [] } = parseGaladrielConfig();
+    const { include = [], exclude = [], module = undefined } = parseGaladrielConfig();
     const toInclude = include.map((__path: string) => path.resolve(__path));
     const toExclude = exclude.map((__path: string) => path.resolve(__path));
 
@@ -65,7 +65,7 @@ export default function ({ t }: { t: any }): PluginObj {
                             if (!objectArray) return;
 
                             // generates the CSS rules
-                            generatesCSSrules(objectArray, coreAST, collectedObjectsProperties);
+                            generatesCSSrules(objectArray, coreAST, collectedObjectsProperties, module);
                             // save the used objects
                             usedObjects.push(hashedNode);
                         } catch (error: any) {

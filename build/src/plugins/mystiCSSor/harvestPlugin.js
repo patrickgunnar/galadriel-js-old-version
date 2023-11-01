@@ -22,7 +22,7 @@ const collectedObjectsProperties = [];
  */
 function default_1({ t }) {
     // extract include and exclude paths from the config
-    const { include = [], exclude = [] } = (0, parseGaladrielConfig_1.parseGaladrielConfig)();
+    const { include = [], exclude = [], module = undefined } = (0, parseGaladrielConfig_1.parseGaladrielConfig)();
     const toInclude = include.map((__path) => path_1.default.resolve(__path));
     const toExclude = exclude.map((__path) => path_1.default.resolve(__path));
     return {
@@ -60,7 +60,7 @@ function default_1({ t }) {
                             if (!objectArray)
                                 return;
                             // generates the CSS rules
-                            (0, generatesCSSrules_1.generatesCSSrules)(objectArray, coreAST_1.coreAST, collectedObjectsProperties);
+                            (0, generatesCSSrules_1.generatesCSSrules)(objectArray, coreAST_1.coreAST, collectedObjectsProperties, module);
                             // save the used objects
                             usedObjects.push(hashedNode);
                         }
