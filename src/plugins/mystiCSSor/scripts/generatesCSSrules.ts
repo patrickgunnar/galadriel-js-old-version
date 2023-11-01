@@ -51,7 +51,8 @@ function collectsStaticConfigRules(
                         }).join(" ");
 
                     // generates the class name
-                    const className = `${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${JSON.parse(selector.replace("$", "").replace(".", ""))}`;
+                    const className = 
+                        `${pseudo ? `${pseudo}-` : media ? `${media}-` : ""}${JSON.parse(selector.replace("$", "").replace(".", ""))}`;
 
                     return {
                         name: className,
@@ -300,7 +301,7 @@ function generatesCSSrules(
                                         const collectedStyles = collectsStaticConfigRules(
                                             readyKey, readyValue, readySelector, collectedObjectsProperties,
                                             coreAST.mediaQueryVariables[pseudo] ? null : pseudo, 
-                                            coreAST.mediaQueryVariables[pseudo] ? pseudo : null
+                                            coreAST.mediaQueryVariables[pseudo] ? hashingHex(pseudo) : null
                                         );
             
                                         if (collectedStyles) {
@@ -329,7 +330,7 @@ function generatesCSSrules(
                                         const collectedStyles = collectsDynamicRules(
                                             readyProperty, readyKey, readyValue, collectedObjectsProperties, 
                                             coreAST.mediaQueryVariables[pseudo] ? null : pseudo, 
-                                            coreAST.mediaQueryVariables[pseudo] ? pseudo : null
+                                            coreAST.mediaQueryVariables[pseudo] ? hashingHex(pseudo) : null
                                         );
             
                                         if (collectedStyles) {
