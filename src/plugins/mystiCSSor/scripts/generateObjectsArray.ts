@@ -6,7 +6,7 @@
  */
 function generateObjectsArray(callbackBody: string) {
     // if not callback body or callback body is not a string
-    if (!callbackBody && typeof callbackBody !== "string") return [];
+    if (!callbackBody || typeof callbackBody !== "string") return [];
     
     try {
         // control of nested objects, nested content and array of the callback body
