@@ -4,15 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
-const lodash_1 = require("lodash");
 const generator_1 = __importDefault(require("@babel/generator"));
 const parseGaladrielConfig_1 = require("./scripts/parseGaladrielConfig");
 const hashingHex_1 = require("./scripts/hashingHex");
 const generateObjectsArray_1 = require("./scripts/generateObjectsArray");
 const coreAST_1 = require("../../ast/coreAST");
 const generatesCSSrules_1 = require("./scripts/generatesCSSrules");
-// store collected nodes and CSS rules - control variables
-const collectedCallExpressionNodes = {};
+// used objects and CSS rules controls
+const usedObjects = [];
 const collectedObjectsProperties = [];
 /**
  * Exported default function to process a Babel plugin - Harvest the CSS rules.
@@ -50,19 +49,18 @@ function default_1({ t }) {
                     // Process the callback function body
                     const callbackBody = (0, generator_1.default)(callback.body, { comments: false }).code.replace(/\s+/g, "");
                     const hashedNode = (0, hashingHex_1.hashingHex)(JSON.stringify(callbackBody), true);
-                    const collectedNode = collectedCallExpressionNodes[hashedNode];
-                    if (!collectedNode) {
-                        // generates an array of strings with objects keys:values or keys:{keys:values}
-                        const objectArray = (0, generateObjectsArray_1.generateObjectsArray)(callbackBody);
-                        // generates the CSS rules
-                        (0, generatesCSSrules_1.generatesCSSrules)(objectArray, coreAST_1.coreAST, collectedObjectsProperties);
-                        // save the collected node
-                        collectedCallExpressionNodes[hashedNode] = (0, lodash_1.cloneDeep)(callback.body);
-                    }
-                    else {
-                        // Use the collected node if it exists
-                        callback.body = (0, lodash_1.cloneDeep)(collectedNode);
-                    }
+                    // if current exists in the control array
+                    if (usedObjects.includes(hashedNode))
+                        return;
+                    // generates an array of strings with objects keys:values or keys:{keys:values}
+                    const objectArray = (0, generateObjectsArray_1.generateObjectsArray)(callbackBody);
+                    // if not the array with the objects properties
+                    if (!objectArray)
+                        return;
+                    // generates the CSS rules
+                    (0, generatesCSSrules_1.generatesCSSrules)(objectArray, coreAST_1.coreAST, collectedObjectsProperties);
+                    // save the used objects
+                    usedObjects.push(hashedNode);
                 }
             },
         },

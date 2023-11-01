@@ -1,5 +1,4 @@
 import path from "path";
-import { cloneDeep } from "lodash";
 import { PluginObj } from "@babel/core";
 import generate from "@babel/generator";
 import { parseGaladrielConfig } from "./scripts/parseGaladrielConfig";
@@ -8,8 +7,8 @@ import { generateObjectsArray } from "./scripts/generateObjectsArray";
 import { coreAST } from "../../ast/coreAST";
 import { generatesCSSrules } from "./scripts/generatesCSSrules";
 
-// store collected nodes and CSS rules - control variables
-const collectedCallExpressionNodes: Record<string, any> = {};
+// used objects and CSS rules controls
+const usedObjects: string[] = [];
 const collectedObjectsProperties: string[] = [];
 
 /**
@@ -53,20 +52,20 @@ export default function ({ t }: { t: any }): PluginObj {
                     // Process the callback function body
                     const callbackBody = generate(callback.body, { comments: false }).code.replace(/\s+/g, "");
                     const hashedNode = hashingHex(JSON.stringify(callbackBody), true);
-                    const collectedNode = collectedCallExpressionNodes[hashedNode];
 
-                    if (!collectedNode) {
-                        // generates an array of strings with objects keys:values or keys:{keys:values}
-                        const objectArray = generateObjectsArray(callbackBody);
-                        // generates the CSS rules
-                        generatesCSSrules(objectArray, coreAST, collectedObjectsProperties);
+                    // if current exists in the control array
+                    if (usedObjects.includes(hashedNode)) return;
 
-                        // save the collected node
-                        collectedCallExpressionNodes[hashedNode] = cloneDeep(callback.body);
-                    } else {
-                        // Use the collected node if it exists
-                        callback.body = cloneDeep(collectedNode);
-                    }
+                    // generates an array of strings with objects keys:values or keys:{keys:values}
+                    const objectArray = generateObjectsArray(callbackBody);
+
+                    // if not the array with the objects properties
+                    if (!objectArray) return;
+
+                    // generates the CSS rules
+                    generatesCSSrules(objectArray, coreAST, collectedObjectsProperties);
+                    // save the used objects
+                    usedObjects.push(hashedNode);
                 }
             },
         },
