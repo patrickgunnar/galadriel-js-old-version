@@ -5,22 +5,6 @@ const coreDynamicProperties_1 = require("../../../kernel/coreDynamicProperties")
 const coreStaticStyles_1 = require("../../../kernel/coreStaticStyles");
 const hashingHex_1 = require("./hashingHex");
 const parseGaladrielConfig_1 = require("./parseGaladrielConfig");
-/****************************************
- * ======== TO BE IMPLEMENT =============
- *
- * CREATES A UNIQUE NAME FOR THE CLASSES WITH PSEUD ELEMENTS
- * LIKE: PSEUD ELEMENT{PROPERTY: VALUE}
- * ADD THE CURRENT CLASS INTO ITS PROPERTY OR "otherProperties"
- * CREATES A NEW CLASS WITH THE UNIQUE NAME
- * USE THE CURRENT CREATED CLASS TO IMPORT INSIDE THE NEW CLASS
- * ADD THE CURRENT CLASS INTO "otherProperties"
- *
- * CREATES NEW CLASS IF THE CLASS IF TO BE IN A @MEDIA
- * USE THE CURRENT CREATED CLASS TO IMPORT INSIDE THE NEW CLASS
- * ADD THE CURRENT CLASS INTO "otherProperties"
- * ADD THE NEW CLASS INTO THE CURRENT @MEDIA
- * **************************************
-*/
 function extractGaladrielClasses(cls) {
     return cls;
 }
@@ -44,9 +28,11 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
                 }
                 return `${rule}: ${asset};`;
             }).join(" ");
+            // generates the class name
+            const className = `${pseudo ? `${pseudo}-` : ""}${JSON.parse(selector.replace("$", "").replace(".", ""))}`;
             return {
-                name: `${JSON.parse(selector.replace("$", "").replace(".", ""))}${pseudo ? `:${pseudo}` : ""}`,
-                styles: `${JSON.parse(selector.replace("$", ""))}${pseudo ? `:${pseudo}` : ""} { ${stylesRules} } ${pseudoRules.join(" ")}`
+                name: className,
+                styles: `.${className}${pseudo ? `:${pseudo}` : ""} { ${stylesRules} } ${pseudoRules.join(" ")}`
             };
         }
     }
@@ -80,8 +66,10 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
                             configRules.push(`.${entryKey} { ${dynamicProperty}: ${entryValue}; }`);
                         }
                         else {
-                            configClassNames.push(`${entryKey}${pseudo ? `:${pseudo}` : ""}`);
-                            configRules.push(`.${entryKey}${pseudo ? `:${pseudo}` : ""} { ${dynamicProperty}: ${entryValue}; }`);
+                            // generates the class name
+                            const className = `${pseudo ? `${pseudo}-` : ""}${entryKey}`;
+                            configClassNames.push(className);
+                            configRules.push(`.${className}${pseudo ? `:${pseudo}` : ""} { ${dynamicProperty}: ${entryValue}; }`);
                         }
                     }
                 }
@@ -96,7 +84,7 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
 }
 function collectsDynamicRules(property, key, value, collectedObjectsProperties, pseudo = null) {
     // generates the class name with the property
-    const className = pseudo ? `galadriel__${(0, hashingHex_1.hashingHex)(property)}:${pseudo}` : `galadriel__${(0, hashingHex_1.hashingHex)(property)}`;
+    const className = `galadriel__${pseudo ? `${pseudo}-` : ""}${(0, hashingHex_1.hashingHex)(property)}`;
     // if the current class name was already used
     if (collectedObjectsProperties.includes(className)) {
         return null;
@@ -106,7 +94,7 @@ function collectsDynamicRules(property, key, value, collectedObjectsProperties, 
     if (dynamicProperty) {
         return {
             name: className,
-            styles: `.${className} { ${dynamicProperty}: ${JSON.parse(value)} }`
+            styles: `.${className}${pseudo ? `:${pseudo}` : ""} { ${dynamicProperty}: ${JSON.parse(value)} }`
         };
     }
     return null;
