@@ -15,11 +15,12 @@ function parseConfig() {
 
             if (config) {
                 // Get the exclude content
-                const { exclude, output } = config;
+                const { exclude, output, module } = config;
 
-                if (exclude && output) {
+                if (exclude && output && module) {
                     // Return the  filtered exclude paths
                     return {
+                        module: module ? true : false,
                         output: typeof output === "string" ? output : null,
                         ignore: Array.isArray(exclude)
                             ? exclude.filter(
