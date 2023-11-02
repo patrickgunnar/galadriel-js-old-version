@@ -6,6 +6,7 @@
  * @param {string[]} collectedObjectsProperties - An array of already collected properties.
  * @param {boolean | undefined} module - set the current saving to module.
  * @param {Record<string, Record<string, string[]>> | undefined} modularAST - The modular Abstract Syntax Tree (AST).
+ * @param {string | undefined} filePath = Optional file path.
  */
-declare function generatesCSSrules(objectsArray: string[], coreAST: Record<string, Record<string, string[]>>, collectedObjectsProperties: string[], module: boolean | undefined, modularAST: Record<string, Record<string, string[]>> | undefined): void;
+declare function generatesCSSrules(objectsArray: string[], coreAST: Record<string, Record<string, string[]>>, collectedObjectsProperties: string[], module: boolean | undefined, modularAST: Record<string, Record<string, string[]>> | undefined, filePath: string | undefined): void;
 export { generatesCSSrules };

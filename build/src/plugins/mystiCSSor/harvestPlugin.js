@@ -61,7 +61,7 @@ function default_1({ types }) {
                             if (!objectArray)
                                 return;
                             // generates the CSS rules
-                            (0, generatesCSSrules_1.generatesCSSrules)(objectArray, coreAST_1.coreAST, collectedObjectsProperties, module, module ? modularAST_1.modularAST : undefined);
+                            (0, generatesCSSrules_1.generatesCSSrules)(objectArray, coreAST_1.coreAST, collectedObjectsProperties, module, module ? modularAST_1.modularAST : undefined, filePath || undefined);
                             // save the used objects
                             usedObjects.push(hashedNode);
                         }
