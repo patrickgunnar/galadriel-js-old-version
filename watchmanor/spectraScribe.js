@@ -7,7 +7,7 @@ const { generateCSSfile } = require("./scripts/generateCSSfile");
 
 function spectraScribe() {
     const logger = new Logger();
-    const { ignore, output, module = false } = parseConfig();
+    const { ignore, output, module } = parseConfig();
 
     if (ignore && output) {
         const watcher = chokidar.watch(".", {
