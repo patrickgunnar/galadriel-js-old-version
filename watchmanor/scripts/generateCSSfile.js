@@ -4,6 +4,7 @@ const fs = require("fs");
 const { uniteGaladrielAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "uniteGaladrielAST.js"));
 const { coreAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "coreAST.js"));
 const { modularAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "modularAST.js"));
+const { clearModularControl } = require(path.join(__dirname, "..", "..", "build", "src", "clearModularControl.js"));
 
 /**
  * Clears the arrays within a nested object representing an Abstract Syntax Tree (AST).
@@ -30,6 +31,7 @@ function generateCSSfile(codeString, filePath, output, module) {
     if (module) {
         // clear the modular ast
         clearAstElements(modularAST);
+        clearModularControl();
     }
 
     const transpiledCode = babel.transformSync(codeString, {
