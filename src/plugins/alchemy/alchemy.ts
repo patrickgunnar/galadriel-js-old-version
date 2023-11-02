@@ -14,10 +14,10 @@ const transformedProperties: string[] = [];
  * Exported default function to process a Babel plugin.
  *
  * @param {Object} param - The parameters for the function.
- * @param {any} param.t - The types object for node analysis.
+ * @param {any} param.types - The types object for node analysis.
  * @returns {PluginObj} The Babel plugin object.
  */
-export default function ({ t }: { t: any }): PluginObj {
+export default function ({ types }: { types: any }): PluginObj {
     // extract include and exclude paths from the config
     const { include = [], exclude = [] } = parseGaladrielConfig();
     const toInclude = include.map((__path: string) => path.resolve(__path));
@@ -61,7 +61,7 @@ export default function ({ t }: { t: any }): PluginObj {
                             if (!collectedNode) {
                                 try {
                                     // transform the current node
-                                    transformAstNode(t, callback.body, transformedProperties);
+                                    transformAstNode(types, callback.body, transformedProperties);
                                     // save the transformed node
                                     transformedNodes[hashedNode] = cloneDeep(callback.body);
                                     // save the used objects
@@ -76,7 +76,7 @@ export default function ({ t }: { t: any }): PluginObj {
                         } else {
                             try {
                                 // transform the current node
-                                transformAstNode(t, callback.body, transformedProperties);
+                                transformAstNode(types, callback.body, transformedProperties);
                                 // save the transformed node
                                 transformedNodes[hashedNode] = cloneDeep(callback.body);
                                 // save the used objects
