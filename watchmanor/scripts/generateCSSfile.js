@@ -1,7 +1,6 @@
 const babel = require("@babel/core");
 const path = require("path");
 const fs = require("fs");
-const babelConfig = require(path.join(__dirname, "..", "..", "src", "babel.internal.config.js"));
 const { uniteGaladrielAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "uniteGaladrielAST.js"));
 const { coreAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "coreAST.js"));
 const { modularAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "modularAST.js"));
@@ -34,8 +33,8 @@ function generateCSSfile(codeString, filePath, output, module) {
     }
 
     const transpiledCode = babel.transformSync(codeString, {
-        ...babelConfig,
         filename: filePath,
+        configFile: path.join(__dirname, "..", "..", "src", "babel.internal.config.js")
     });
 
     if (transpiledCode) {
