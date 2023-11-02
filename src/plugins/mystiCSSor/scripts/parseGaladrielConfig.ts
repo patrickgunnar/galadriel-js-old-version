@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs";
 
 /**
  * Parses the Galadriel configuration file (galadriel.config.ts or galadriel.config.js).
@@ -13,16 +14,17 @@ const parseGaladrielConfig = () => {
         for (const __path of configPaths) {
             // Resolve the full path of the configuration file
             const fullPath = path.resolve(__path);
-            // Delete the cached module to ensure fresh require
-            delete require.cache[require.resolve(fullPath)];
+            
+            if (fs.existsSync(fullPath)) {
+                // Delete the cached module to ensure fresh require
+                delete require.cache[require.resolve(fullPath)];
 
-            // Return the required configuration file if found
-            return require(fullPath);
+                // Return the required configuration file if found
+                return require(fullPath);
+            }
         }
     } catch (error: any) {
         console.error("An error occurred:", error);
-
-        return [];
     }
 
     console.log(
