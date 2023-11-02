@@ -1,11 +1,14 @@
 import { hashingHex } from "./hashingHex";
 
-function transformNode(key: string, value: string, propertyKey: string | null = null): { transformedName: string | null; } {
+function transformNode(
+    key: string, value: string, module: boolean, filePath: string | undefined, propertyKey: string | null = null
+): { transformedName: string | null; } {
     // if its is a dynamic class
     if (!value.includes("$")) {
         // generates the class name
         const hashedProperty = hashingHex(JSON.stringify(`${key}:${value}`).replace(/\s+/g, ""));
-        const className = `galadriel__${hashedProperty}${propertyKey ? `-g${hashingHex(propertyKey, false, true)}` : ""}`;
+        const className = 
+            `galadriel__${hashedProperty}${propertyKey ? `-g${hashingHex(propertyKey, false, true)}` : ""}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}`;
 
         return {
             transformedName: className,
@@ -13,7 +16,8 @@ function transformNode(key: string, value: string, propertyKey: string | null = 
     } else if (value.includes("$")) {// if the value is a static or configured class
         // if its is a dynamic class
         const selector = value.includes(":") ? value.split(":")[0].replace("$", "") : value.replace("$", "");
-        const className = `${selector}${propertyKey ? `-g${hashingHex(propertyKey, false, true)}` : ""}`;
+        const className = 
+            `${selector}${propertyKey ? `-g${hashingHex(propertyKey, false, true)}` : ""}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}`;
 
         return {
             transformedName: className,
@@ -25,7 +29,7 @@ function transformNode(key: string, value: string, propertyKey: string | null = 
     }
 }
 
-function generatesTransformation(t: any, node: any) {
+function generatesTransformation(t: any, node: any, module: boolean, filePath: string | undefined) {
     // if the current node is not an object expression
     if (!t.isObjectExpression(node)) return;
 
@@ -37,7 +41,7 @@ function generatesTransformation(t: any, node: any) {
         // if the property's value type is a string literal
         if (property.value.type === "StringLiteral") {
             // transform the property's value
-            const { transformedName } = transformNode(property.key.name, property.value.value);
+            const { transformedName } = transformNode(property.key.name, property.value.value, module, filePath);
 
             // if the transformed name
             if (transformedName) {
@@ -51,7 +55,7 @@ function generatesTransformation(t: any, node: any) {
                 if (nestedProperty.value.type === "StringLiteral") {
                     // transform the property's value
                     const { transformedName } = transformNode(
-                        nestedProperty.key.name, nestedProperty.value.value, property.key.name
+                        nestedProperty.key.name, nestedProperty.value.value, module, filePath, property.key.name
                     );
 
                     // if the transformed name
@@ -64,7 +68,7 @@ function generatesTransformation(t: any, node: any) {
     }
 }
 
-function transformAstNode(t: any, rootNode: any) {
+function transformAstNode(t: any, rootNode: any, module: boolean, filePath: string | undefined) {
     // loop stack
     const stack = [rootNode];
 
@@ -74,7 +78,7 @@ function transformAstNode(t: any, rootNode: any) {
         const node = stack.pop();
 
         // generates the transformations
-        generatesTransformation(t, node);
+        generatesTransformation(t, node, module, filePath);
 
         // recursively process nested properties
         for (const nestedProperty in node) {
