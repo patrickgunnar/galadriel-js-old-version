@@ -18,7 +18,7 @@ const transformedNodes: Record<string, any> = {};
  */
 export default function ({ types }: { types: any }): PluginObj {
     // extract include and exclude paths from the config
-    const { include = [], exclude = [] } = parseGaladrielConfig();
+    const { include = [], exclude = [], module = false } = parseGaladrielConfig();
     const toInclude = include.map((__path: string) => path.resolve(__path));
     const toExclude = exclude.map((__path: string) => path.resolve(__path));
 
@@ -60,7 +60,7 @@ export default function ({ types }: { types: any }): PluginObj {
                             if (!collectedNode) {
                                 try {
                                     // transform the current node
-                                    transformAstNode(types, callback.body);
+                                    transformAstNode(types, callback.body, module, filePath);
                                     // save the transformed node
                                     transformedNodes[hashedNode] = cloneDeep(callback.body);
                                     // save the used objects
@@ -75,7 +75,7 @@ export default function ({ types }: { types: any }): PluginObj {
                         } else {
                             try {
                                 // transform the current node
-                                transformAstNode(types, callback.body);
+                                transformAstNode(types, callback.body, module, filePath);
                                 // save the transformed node
                                 transformedNodes[hashedNode] = cloneDeep(callback.body);
                                 // save the used objects
