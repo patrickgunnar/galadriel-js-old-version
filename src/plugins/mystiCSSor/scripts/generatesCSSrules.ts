@@ -212,7 +212,6 @@ function collectsDynamicRules(
     try {
         // generates the class name with the property
         const className = `galadriel__${hashingHex(property)}${pseudo ? `-${pseudoHex}` : media ? `-${media}` : ""}`;
-        console.log(property)
 
         // if the current class name was already used
         if (collectedObjectsProperties.includes(className)) {
