@@ -8,7 +8,6 @@ import { transformAstNode } from "./scripts/transformAstNode";
 // used objects and CSS rules controls
 const usedObjects: string[] = [];
 const transformedNodes: Record<string, any> = {};
-const transformedProperties: string[] = [];
 
 /**
  * Exported default function to process a Babel plugin.
@@ -61,7 +60,7 @@ export default function ({ types }: { types: any }): PluginObj {
                             if (!collectedNode) {
                                 try {
                                     // transform the current node
-                                    transformAstNode(types, callback.body, transformedProperties);
+                                    transformAstNode(types, callback.body);
                                     // save the transformed node
                                     transformedNodes[hashedNode] = cloneDeep(callback.body);
                                     // save the used objects
@@ -76,7 +75,7 @@ export default function ({ types }: { types: any }): PluginObj {
                         } else {
                             try {
                                 // transform the current node
-                                transformAstNode(types, callback.body, transformedProperties);
+                                transformAstNode(types, callback.body);
                                 // save the transformed node
                                 transformedNodes[hashedNode] = cloneDeep(callback.body);
                                 // save the used objects
