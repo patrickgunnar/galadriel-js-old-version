@@ -56,8 +56,8 @@ export default function ({ types }: { types: any }): PluginObj {
                             const callbackBody = generate(callback.body, { comments: false }).code.replace(/\s+/g, "");
                             const hashedNode = hashingHex(JSON.stringify(callbackBody), true);
 
-                            // if current exists in the control array
-                            if (usedObjects.includes(hashedNode)) return;
+                            // if current exists in the control array and not modular
+                            if (usedObjects.includes(hashedNode) && !module) return;
 
                             // generates an array of strings with objects keys:values or keys:{keys:values}
                             const objectArray = generateObjectsArray(callbackBody);
