@@ -5,6 +5,7 @@ const { uniteGaladrielAST } = require(path.join(__dirname, "..", "..", "build", 
 const { coreAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "coreAST.js"));
 const { modularAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "modularAST.js"));
 const { clearModularControl } = require(path.join(__dirname, "..", "..", "build", "src", "clearModularControl.js"));
+const { shouldGenerateCSSFile } = require(path.join(__dirname, "..", "..", "build", "src", "shouldGenerateCSSFile.js"));
 
 /**
  * Clears the arrays within a nested object representing an Abstract Syntax Tree (AST).
@@ -39,7 +40,9 @@ function generateCSSfile(codeString, filePath, output, module) {
         configFile: path.join(__dirname, "..", "..", "src", "babel.internal.config.js")
     });
 
-    if (transpiledCode) {
+    const shouldGenerate = shouldGenerateCSSFile();
+
+    if (transpiledCode && shouldGenerate) {
         const contentCSS = uniteGaladrielAST(module ? modularAST : coreAST);
         const __output = module ? `${filePath.split(".")[0]}.css`: output;
 
