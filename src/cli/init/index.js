@@ -5,8 +5,7 @@ const { Logger } = require("../../../scripts/logger");
 const babelConfig = `const path = require("path");
 
 module.exports = {
-    presets: ["@babel/preset-env", "@babel/preset-typescript"],
-    plugins: [path.join("galadrieljs", "build", "src", "plugins", "mystiCSSor", "galadrielHarvestPlugin")],
+    plugins: [path.join("galadrieljs", "build", "src", "plugins", "alchemy", "alchemy.js")],
 };
 `;
 
