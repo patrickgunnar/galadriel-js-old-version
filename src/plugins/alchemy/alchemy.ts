@@ -8,6 +8,7 @@ import { generatesTransformation } from "./scripts/generatesTransformation";
 // used objects and CSS rules controls
 const usedObjects: string[] = [];
 const transformedNodes: Record<string, any> = {};
+const transformedProperties: string[] = [];
 
 /**
  * Exported default function to process a Babel plugin.
@@ -60,7 +61,7 @@ export default function ({ t }: { t: any }): PluginObj {
                             if (!collectedNode) {
                                 try {
                                     // transform the current node
-                                    const transformedNode = generatesTransformation(t, callback.body);
+                                    const transformedNode = generatesTransformation(t, callback.body, transformedProperties);
 
                                     // if transformed node doesn't exist
                                     if (!transformedNode) return;
@@ -79,7 +80,7 @@ export default function ({ t }: { t: any }): PluginObj {
                         } else {
                             try {
                                 // transform the current node
-                                const transformedNode = generatesTransformation(t, callback.body);
+                                const transformedNode = generatesTransformation(t, callback.body, transformedProperties);
 
                                 // if transformed node doesn't exist
                                 if (!transformedNode) return;
