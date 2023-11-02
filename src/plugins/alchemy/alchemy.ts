@@ -3,7 +3,7 @@ import { PluginObj } from "@babel/core";
 import { cloneDeep } from "lodash";
 import { parseGaladrielConfig } from "./scripts/parseGaladrielConfig";
 import { hashingHex } from "./scripts/hashingHex";
-import { generatesTransformation } from "./scripts/generatesTransformation";
+import { transformAstNode } from "./scripts/transformAstNode";
 
 // used objects and CSS rules controls
 const usedObjects: string[] = [];
@@ -61,7 +61,7 @@ export default function ({ t }: { t: any }): PluginObj {
                             if (!collectedNode) {
                                 try {
                                     // transform the current node
-                                    generatesTransformation(t, callback.body, transformedProperties);
+                                    transformAstNode(t, callback.body, transformedProperties);
                                     // save the transformed node
                                     transformedNodes[hashedNode] = cloneDeep(callback.body);
                                     // save the used objects
@@ -76,7 +76,7 @@ export default function ({ t }: { t: any }): PluginObj {
                         } else {
                             try {
                                 // transform the current node
-                                generatesTransformation(t, callback.body, transformedProperties);
+                                transformAstNode(t, callback.body, transformedProperties);
                                 // save the transformed node
                                 transformedNodes[hashedNode] = cloneDeep(callback.body);
                                 // save the used objects
