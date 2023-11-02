@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 
 function parseConfig() {
     // Paths for the Galadriel configuration files
@@ -8,30 +9,33 @@ function parseConfig() {
         for (const __path of configPaths) {
             // Resolve the full path of the configuration file
             const fullPath = path.resolve(__path);
-            // Delete the cached module to ensure fresh require
-            delete require.cache[require.resolve(fullPath)];
-            // Get the required configuration file if found
-            const config = require(fullPath);
 
-            if (config) {
-                // Get the exclude content
-                const { exclude, output, module } = config;
+            if (fs.existsSync(fullPath)) {
+                // Delete the cached module to ensure fresh require
+                delete require.cache[require.resolve(fullPath)];
+                // Get the required configuration file if found
+                const config = require(fullPath);
 
-                if (exclude && output && module) {
-                    // Return the  filtered exclude paths
-                    return {
-                        module: module ? true : false,
-                        output: typeof output === "string" ? output : null,
-                        ignore: Array.isArray(exclude)
-                            ? exclude.filter(
-                                  (item) =>
-                                      typeof item === "string" &&
-                                      item.length > 0
-                              )
-                            : typeof exclude === "string"
-                            ? [exclude]
-                            : null,
-                    };
+                if (config) {
+                    // Get the exclude content
+                    const { exclude, output, module } = config;
+
+                    if (exclude && output) {
+                        // Return the  filtered exclude paths
+                        return {
+                            module: module ? true : false,
+                            output: typeof output === "string" ? output : null,
+                            ignore: Array.isArray(exclude)
+                                ? exclude.filter(
+                                    (item) =>
+                                        typeof item === "string" &&
+                                        item.length > 0
+                                )
+                                : typeof exclude === "string"
+                                ? [exclude]
+                                : null,
+                        };
+                    }
                 }
             }
         }
