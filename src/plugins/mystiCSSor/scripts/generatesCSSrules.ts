@@ -3,6 +3,40 @@ import { coreStaticStyles } from "../../../kernel/coreStaticStyles";
 import { hashingHex } from "./hashingHex";
 import { parseGaladrielConfig } from "./parseGaladrielConfig";
 
+// temporary control for classes
+const modularControl: string[] = [];
+
+/**
+ * Clears the `modularControl` array by setting its length to 0.
+ *
+ * @function
+ * @name clearModularControl
+ * @returns {void}
+ */
+export function clearModularControl() {
+    // clear the modular control
+    modularControl.length = 0;
+}
+
+/**
+ * Determines if a CSS file should be generated based on the state of the modular control.
+ * If the modular control is greater than 0, it sets the control to generate, clears the modular control,
+ * and returns true; otherwise, it returns false.
+ *
+ * @function
+ * @name shouldGenerateCSSFile
+ * @returns {boolean} - Returns true if a CSS file should be generated, false otherwise.
+ */
+export function shouldGenerateCSSFile(): boolean {
+    // if the modular control is greater than 0, set to true to generate
+    const shouldGenerate = modularControl.length > 0 ? true : false;
+
+    // clear the modular control
+    clearModularControl();
+
+    return shouldGenerate;
+}
+
 /**
  * Extracts Galadriel classes from the provided record.
  *
@@ -133,12 +167,14 @@ function collectsStaticConfigRules(
                 const configSelector = key.includes(":") 
                     ? JSON.parse(configAsset).split(":")[0] 
                     : JSON.parse(configAsset);
+                const configTest = 
+                    `${configSelector}${pseudo ? `-${pseudoHex}` : media ? `-${media}` : ""}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}`;
                 
                 // if the current config selector was already used
-                if (collectedObjectsProperties.includes(configSelector)) {
-                    if (module && modularAST && coreAST) {
+                if (collectedObjectsProperties.includes(configTest)) {
+                    if (module && modularAST && coreAST && !modularControl.includes(configTest)) {
                         // collects the class from the coreAST then adds it to the modularAST
-                        addsToModularAstFromCoreAst(coreAST, modularAST, configSelector);
+                        addsToModularAstFromCoreAst(coreAST, modularAST, configTest);
                     }
 
                     return null;
@@ -164,10 +200,10 @@ function collectsStaticConfigRules(
                                     // generates the class name
                                     const selectorName = entryKey.split(":");
                                     const className = 
-                                        `${selectorName[0]}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}:${selectorName[1]}`
+                                        `${selectorName[0]}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}`
 
                                     configClassNames.push(className);
-                                    configRules.push(`.${className} { ${dynamicProperty}: ${entryValue}; }`);
+                                    configRules.push(`.${className}:${selectorName[1]} { ${dynamicProperty}: ${entryValue}; }`);
                                 } else {
                                     // generates the class name
                                     const className = 
@@ -228,7 +264,7 @@ function collectsDynamicRules(
 
         // if the current class name was already used
         if (collectedObjectsProperties.includes(className)) {
-            if (module && modularAST && coreAST) {
+            if (module && modularAST && coreAST && !modularControl.includes(className)) {
                 // collects the class from the coreAST then adds it to the modularAST
                 addsToModularAstFromCoreAst(coreAST, modularAST, className);
             }
@@ -315,12 +351,14 @@ function generatesCSSrules(
                     // extracts the key and value
                     const [key, value] = property.split(":");
                     const selector = `.${JSON.parse(value)}`;
-        
+                    const testProperty = 
+                        `${JSON.parse(value).replace("$", "")}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}`;
+
                     // if the current selector was already used
-                    if (collectedObjectsProperties.includes(JSON.parse(value).replace("$", ""))) {
-                        if (module && modularAST) {
+                    if (collectedObjectsProperties.includes(testProperty)) {
+                        if (module && modularAST && !modularControl.includes(testProperty)) {
                             // collects the class from the coreAST then adds it to the modularAST
-                            addsToModularAstFromCoreAst(coreAST, modularAST, JSON.parse(value).replace("$", ""));
+                            addsToModularAstFromCoreAst(coreAST, modularAST, testProperty);
                         }
 
                         continue;
@@ -340,9 +378,13 @@ function generatesCSSrules(
             
                                 if (styles && name) {
                                     if (Array.isArray(name)) {
-                                        collectedObjectsProperties.concat(name);
+                                        collectedObjectsProperties.push(...name);
+
+                                        if (module) modularControl.push(...name);
                                     } else {
                                         collectedObjectsProperties.push(name);
+                                        
+                                        if (module) modularControl.push(name);
                                     }
                                     
                                     appendToAST(coreAST, key, styles);
@@ -374,6 +416,7 @@ function generatesCSSrules(
 
                                     // if module is true
                                     if (module && modularAST) {
+                                        modularControl.push(name);
                                         appendToAST(modularAST, key, styles);
                                     }
                                 }
@@ -408,6 +451,18 @@ function generatesCSSrules(
                                 const readySelector = JSON.stringify(`.${nestedValue}`);
                                 const readyProperty = JSON.stringify(`${nestedKey}:${nestedValue}`).replace(/\s+/g, "");
                                 const pseudoHex = `g${hashingHex(pseudo, false, true)}`
+                                const readyTest = 
+                                    `${nestedValue.replace("$", "")}${pseudo ? `-${pseudoHex}` : ""}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}`;
+                                    
+                                // if the current selector was already used
+                                if (collectedObjectsProperties.includes(readyTest)) {
+                                    if (module && modularAST && !modularControl.includes(readyTest)) {
+                                        // collects the class from the coreAST then adds it to the modularAST
+                                        addsToModularAstFromCoreAst(coreAST, modularAST, readyTest);
+                                    }
+
+                                    continue;
+                                }
         
                                 // if the current value is a static or config property
                                 if (nestedValue.includes("$")) {
@@ -427,9 +482,13 @@ function generatesCSSrules(
                                                 if (Array.isArray(name)) {
                                                     for (const __name of name) {
                                                         collectedObjectsProperties.push(__name);
+
+                                                        if (module) modularControl.push(__name);
                                                     }
                                                 } else {
                                                     collectedObjectsProperties.push(name);
+
+                                                    if (module) modularControl.push(name);
                                                 }
             
                                                 appendToAST(
@@ -468,6 +527,7 @@ function generatesCSSrules(
 
                                                 // if module is true
                                                 if (module && modularAST) {
+                                                    modularControl.push(name);
                                                     appendToAST(
                                                         modularAST, nestedKey, styles, coreAST.mediaQueryVariables[pseudo] ? pseudo : null
                                                     );
