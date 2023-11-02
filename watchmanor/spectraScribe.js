@@ -5,6 +5,8 @@ const { parseConfig } = require("./scripts/parseConfig");
 const { Logger } = require("../scripts/logger");
 const { generateCSSfile } = require("./scripts/generateCSSfile");
 
+const extensions = ["js", "jsx", "ts", "tsx"];
+
 function spectraScribe() {
     const logger = new Logger();
     const { ignore, output, module } = parseConfig();
@@ -17,7 +19,7 @@ function spectraScribe() {
         });
 
         watcher.on("change", (__path) => {
-            if (__path[0] !== ".") {
+            if (__path[0] !== "." && extensions.includes(__path.split(".")[1])) {
                 const startTime = new Date();
                 logger.now(`${logger.makeBold(__path)} just saved`, true);
 
@@ -26,14 +28,16 @@ function spectraScribe() {
                     "utf-8"
                 );
 
-                generateCSSfile(codeToTranspile, __path, output, module);
+                if (codeToTranspile.includes("craftingStyles")) {
+                    generateCSSfile(codeToTranspile, __path, output, module);
 
-                const endTime = new Date();
+                    const endTime = new Date();
 
-                logger.now(
-                    `CSS generated successfully in ${endTime - startTime} ms`,
-                    true
-                );
+                    logger.now(
+                        `CSS generated successfully in ${endTime - startTime} ms`,
+                        true
+                    );
+                }
             }
         });
 
