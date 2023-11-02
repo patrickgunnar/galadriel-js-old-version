@@ -178,6 +178,7 @@ function collectsDynamicRules(property, key, value, collectedObjectsProperties, 
     try {
         // generates the class name with the property
         const className = `galadriel__${(0, hashingHex_1.hashingHex)(property)}${pseudo ? `-${pseudoHex}` : media ? `-${media}` : ""}`;
+        console.log(property);
         // if the current class name was already used
         if (collectedObjectsProperties.includes(className)) {
             if (module && modularAST && coreAST) {
@@ -287,7 +288,7 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties, mo
                     else { // if the current value is a dynamic property
                         try {
                             // collects the styles
-                            const collectedStyles = collectsDynamicRules(property, JSON.stringify(key), value, collectedObjectsProperties, module, null, null, null, module ? coreAST : null, module ? modularAST : null);
+                            const collectedStyles = collectsDynamicRules(JSON.stringify(`${key}:${JSON.parse(value)}`).replace(/\s+/g, ""), JSON.stringify(key), value, collectedObjectsProperties, module, null, null, null, module ? coreAST : null, module ? modularAST : null);
                             if (collectedStyles) {
                                 const { styles, name } = collectedStyles;
                                 if (styles && name) {
@@ -325,7 +326,7 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties, mo
                                 const readyKey = JSON.stringify(nestedKey);
                                 const readyValue = JSON.stringify(nestedValue);
                                 const readySelector = JSON.stringify(`.${nestedValue}`);
-                                const readyProperty = JSON.stringify(`${nestedKey}:${nestedValue}`);
+                                const readyProperty = JSON.stringify(`${nestedKey}:${nestedValue}`).replace(/\s+/g, "");
                                 const pseudoHex = `g${(0, hashingHex_1.hashingHex)(pseudo, false, true)}`;
                                 // if the current value is a static or config property
                                 if (nestedValue.includes("$")) {

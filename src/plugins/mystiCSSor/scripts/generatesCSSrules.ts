@@ -212,6 +212,7 @@ function collectsDynamicRules(
     try {
         // generates the class name with the property
         const className = `galadriel__${hashingHex(property)}${pseudo ? `-${pseudoHex}` : media ? `-${media}` : ""}`;
+        console.log(property)
 
         // if the current class name was already used
         if (collectedObjectsProperties.includes(className)) {
@@ -345,8 +346,9 @@ function generatesCSSrules(
                         try {
                             // collects the styles
                             const collectedStyles = collectsDynamicRules(
-                                property, JSON.stringify(key), value, collectedObjectsProperties, module,
-                                null, null, null, module ? coreAST : null, module ? modularAST : null
+                                JSON.stringify(`${key}:${JSON.parse(value)}`).replace(/\s+/g, ""), 
+                                JSON.stringify(key), value, collectedObjectsProperties, module, null, null, null, 
+                                module ? coreAST : null, module ? modularAST : null
                             );
             
                             if (collectedStyles) {
@@ -390,7 +392,7 @@ function generatesCSSrules(
                                 const readyKey = JSON.stringify(nestedKey);
                                 const readyValue = JSON.stringify(nestedValue);
                                 const readySelector = JSON.stringify(`.${nestedValue}`);
-                                const readyProperty = JSON.stringify(`${nestedKey}:${nestedValue}`);
+                                const readyProperty = JSON.stringify(`${nestedKey}:${nestedValue}`).replace(/\s+/g, "");
                                 const pseudoHex = `g${hashingHex(pseudo, false, true)}`
         
                                 // if the current value is a static or config property
