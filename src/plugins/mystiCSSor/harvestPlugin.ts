@@ -67,7 +67,7 @@ export default function ({ types }: { types: any }): PluginObj {
 
                             // generates the CSS rules
                             generatesCSSrules(
-                                objectArray, coreAST, collectedObjectsProperties, module, module ? modularAST : undefined
+                                objectArray, coreAST, collectedObjectsProperties, module, module ? modularAST : undefined, filePath || undefined
                             );
                             // save the used objects
                             usedObjects.push(hashedNode);
