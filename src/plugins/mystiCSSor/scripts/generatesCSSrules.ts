@@ -98,7 +98,9 @@ function collectsStaticConfigRules(
                             // if rule includes an ampersand, it is a pseudo class
                             if (rule.includes("&")) {
                                 pseudoRules.push(
-                                    `${rule.replace("&", JSON.parse(selector.replace("$", "")))} ${asset}`
+                                    `${rule.replace(
+                                        "&", `${JSON.parse(selector.replace("$", ""))}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}`
+                                    )} ${asset}`
                                 );
 
                                 return;
@@ -159,10 +161,13 @@ function collectsStaticConfigRules(
                             if (configSelector === entryKey || configSelector === entryKey.split(":")[0]) {
                                 // if config entry key includes a pseudo class
                                 if (entryKey.includes(":")) {
-                                    configClassNames.push(`${entryKey}${module ? `-HASHED_PATH` : ""}`);
-                                    configRules.push(
-                                        `.${`${entryKey}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}`} { ${dynamicProperty}: ${entryValue}; }`
-                                    );
+                                    // generates the class name
+                                    const selectorName = entryKey.split(":");
+                                    const className = 
+                                        `${selectorName[0]}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}:${selectorName[1]}`
+
+                                    configClassNames.push(className);
+                                    configRules.push(`.${className} { ${dynamicProperty}: ${entryValue}; }`);
                                 } else {
                                     // generates the class name
                                     const className = 
