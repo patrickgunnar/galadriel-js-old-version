@@ -5,8 +5,49 @@ const coreDynamicProperties_1 = require("../../../kernel/coreDynamicProperties")
 const coreStaticStyles_1 = require("../../../kernel/coreStaticStyles");
 const hashingHex_1 = require("./hashingHex");
 const parseGaladrielConfig_1 = require("./parseGaladrielConfig");
+/**
+ * Extracts Galadriel classes from the provided record.
+ *
+ * @param {Record<string, Record<string, any>>} cls - The record containing Galadriel classes.
+ * @returns {any} - The extracted Galadriel classes.
+ */
 function extractGaladrielClasses(cls) {
     return cls;
+}
+/**
+ * Adds styles to the modular AST from the core AST if they are not already present.
+ *
+ * @param {Record<string, Record<string, string[]>>} coreAST - The global core AST.
+ * @param {Record<string, Record<string, string[]>>} modularAST - The modular AST to update.
+ * @param {string} className - The CSS class name to add to the modular AST.
+ */
+function addsToModularAstFromCoreAst(coreAST, modularAST, className) {
+    // loop through the global ast
+    for (const item in coreAST) {
+        // loop through the global ast's properties
+        for (const element in coreAST[item]) {
+            // loop through the element's array
+            for (const styles of coreAST[item][element]) {
+                // if element of the property contains the styles
+                if (styles.includes(className)) {
+                    let setStyles = true;
+                    // loop through the property's styles from the modular ast
+                    for (const modularStyles of modularAST[item][element]) {
+                        // if modular styles does not contain the styles
+                        if (modularStyles.includes(className)) {
+                            setStyles = false;
+                            break;
+                        }
+                    }
+                    // if setStyles is true
+                    if (setStyles) {
+                        modularAST[item][element].push(styles);
+                    }
+                    return;
+                }
+            }
+        }
+    }
 }
 /**
  * Collects static configuration rules for generating CSS class names and styles.
@@ -15,13 +56,16 @@ function extractGaladrielClasses(cls) {
  * @param {string} value - The value associated with the static configuration.
  * @param {string} selector - The CSS selector for the configuration.
  * @param {string[]} collectedObjectsProperties - An array of already collected properties.
+ * @param {boolean | undefined} module - Optional module.
  * @param {string | null} pseudo - Optional pseudo-class selector (e.g., ":hover").
  * @param {string | null} pseudoHex - Optional pseudo-class selector hashed (e.g., "gf0").
  * @param {string | null} media - Optional media query selector (e.g., "@media screen").
+ * @param {Record<string, Record<string, string[]>> | null} coreAST - The core Abstract Syntax Tree (AST).
+ * @param {Record<string, Record<string, string[]>> | null} modularAST - The modular Abstract Syntax Tree (AST).
  * @returns {Object | null} An object containing class name(s) and associated styles,
  *                          or null if no matching rules are found.
  */
-function collectsStaticConfigRules(key, value, selector, collectedObjectsProperties, pseudo = null, pseudoHex = null, media = null) {
+function collectsStaticConfigRules(key, value, selector, collectedObjectsProperties, module, pseudo = null, pseudoHex = null, media = null, coreAST = null, modularAST = null) {
     try {
         // Handle static styles defined in coreStaticStyles
         const handleStaticRules = coreStaticStyles_1.coreStaticStyles[JSON.parse(key)];
@@ -67,6 +111,10 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
                     : JSON.parse(configAsset);
                 // if the current config selector was already used
                 if (collectedObjectsProperties.includes(configSelector)) {
+                    if (module && modularAST && coreAST) {
+                        // collects the class from the coreAST then adds it to the modularAST
+                        addsToModularAstFromCoreAst(coreAST, modularAST, configSelector);
+                    }
                     return null;
                 }
                 // loop through the style entries in config file
@@ -117,18 +165,25 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
  * @param {string} key - The key representing the dynamic configuration.
  * @param {string} value - The value associated with the dynamic configuration.
  * @param {string[]} collectedObjectsProperties - An array of already collected properties.
+ * @param {boolean | undefined} module - Optional module.
  * @param {string | null} pseudo - Optional pseudo-class selector (e.g., ":hover").
  * @param {string | null} pseudoHex - Optional pseudo-class selector hashed (e.g., "gf0").
  * @param {string | null} media - Optional media query selector (e.g., "@media screen").
+ * @param {Record<string, Record<string, string[]>> | null} coreAST - The core Abstract Syntax Tree (AST).
+ * @param {Record<string, Record<string, string[]>> | null} modularAST - The modular Abstract Syntax Tree (AST).
  * @returns {Object | null} An object containing a class name and associated styles,
  *                          or null if no matching rules are found.
  */
-function collectsDynamicRules(property, key, value, collectedObjectsProperties, pseudo = null, pseudoHex = null, media = null) {
+function collectsDynamicRules(property, key, value, collectedObjectsProperties, module, pseudo = null, pseudoHex = null, media = null, coreAST = null, modularAST = null) {
     try {
         // generates the class name with the property
         const className = `galadriel__${(0, hashingHex_1.hashingHex)(property)}${pseudo ? `-${pseudoHex}` : media ? `-${media}` : ""}`;
         // if the current class name was already used
         if (collectedObjectsProperties.includes(className)) {
+            if (module && modularAST && coreAST) {
+                // collects the class from the coreAST then adds it to the modularAST
+                addsToModularAstFromCoreAst(coreAST, modularAST, className);
+            }
             return null;
         }
         // collects the dynamic property
@@ -148,18 +203,18 @@ function collectsDynamicRules(property, key, value, collectedObjectsProperties, 
 /**
  * Appends styles to the core Abstract Syntax Tree (AST) for a given key and media query.
  *
- * @param {Record<string, Record<string, string[]>>} coreAST - The core AST containing style information.
+ * @param {Record<string, Record<string, string[]>>} ast - The core AST containing style information.
  * @param {string} key - The key representing the property or selector in the core AST.
  * @param {string} styles - The styles to append to the core AST.
  * @param {string | null} media - Optional media query selector (e.g., "@media screen").
  */
-function appendToCoreAST(coreAST, key, styles, media = null) {
+function appendToAST(ast, key, styles, media = null) {
     try {
         let notFound = false;
         // loop through the core ast
-        for (const coreKey in coreAST) {
+        for (const coreKey in ast) {
             // get the object's property or undefined
-            const coreNode = coreAST[coreKey][media ? media : key];
+            const coreNode = ast[coreKey][media ? media : key];
             // if exists the property and it is an array
             if (coreNode && Array.isArray(coreNode)) {
                 coreNode.push(styles);
@@ -170,7 +225,7 @@ function appendToCoreAST(coreAST, key, styles, media = null) {
         // if does not exists the property
         // creates one in the "otherProperties" property
         if (!notFound) {
-            coreAST["otherProperties"][media ? media : key] = [styles];
+            ast["otherProperties"][media ? media : key] = [styles];
         }
     }
     catch (error) {
@@ -197,13 +252,17 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties, mo
                     const selector = `.${JSON.parse(value)}`;
                     // if the current selector was already used
                     if (collectedObjectsProperties.includes(JSON.parse(value).replace("$", ""))) {
+                        if (module && modularAST) {
+                            // collects the class from the coreAST then adds it to the modularAST
+                            addsToModularAstFromCoreAst(coreAST, modularAST, JSON.parse(value).replace("$", ""));
+                        }
                         continue;
                     }
                     // if the current value is a static or config property
                     if (value.includes("$")) {
                         try {
                             // collects the styles
-                            const collectedStyles = collectsStaticConfigRules(JSON.stringify(key), value, JSON.stringify(selector), collectedObjectsProperties);
+                            const collectedStyles = collectsStaticConfigRules(JSON.stringify(key), value, JSON.stringify(selector), collectedObjectsProperties, module, null, null, null, module ? coreAST : null, module ? modularAST : null);
                             if (collectedStyles) {
                                 const { styles, name } = collectedStyles;
                                 if (styles && name) {
@@ -213,7 +272,11 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties, mo
                                     else {
                                         collectedObjectsProperties.push(name);
                                     }
-                                    appendToCoreAST(coreAST, key, styles);
+                                    appendToAST(coreAST, key, styles);
+                                    // if module is true
+                                    if (module && modularAST) {
+                                        appendToAST(modularAST, key, styles);
+                                    }
                                 }
                             }
                         }
@@ -224,12 +287,16 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties, mo
                     else { // if the current value is a dynamic property
                         try {
                             // collects the styles
-                            const collectedStyles = collectsDynamicRules(property, JSON.stringify(key), value, collectedObjectsProperties);
+                            const collectedStyles = collectsDynamicRules(property, JSON.stringify(key), value, collectedObjectsProperties, module, null, null, null, module ? coreAST : null, module ? modularAST : null);
                             if (collectedStyles) {
                                 const { styles, name } = collectedStyles;
                                 if (styles && name) {
                                     collectedObjectsProperties.push(name);
-                                    appendToCoreAST(coreAST, key, styles);
+                                    appendToAST(coreAST, key, styles);
+                                    // if module is true
+                                    if (module && modularAST) {
+                                        appendToAST(modularAST, key, styles);
+                                    }
                                 }
                             }
                         }
@@ -264,7 +331,7 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties, mo
                                 if (nestedValue.includes("$")) {
                                     try {
                                         // collects the styles
-                                        const collectedStyles = collectsStaticConfigRules(readyKey, readyValue, readySelector, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, pseudoHex, coreAST.mediaQueryVariables[pseudo] ? pseudoHex : null);
+                                        const collectedStyles = collectsStaticConfigRules(readyKey, readyValue, readySelector, collectedObjectsProperties, module, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, pseudoHex, coreAST.mediaQueryVariables[pseudo] ? pseudoHex : null, module ? coreAST : null, module ? modularAST : null);
                                         if (collectedStyles) {
                                             const { styles, name } = collectedStyles;
                                             if (styles && name) {
@@ -276,7 +343,11 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties, mo
                                                 else {
                                                     collectedObjectsProperties.push(name);
                                                 }
-                                                appendToCoreAST(coreAST, nestedKey, styles, coreAST.mediaQueryVariables[pseudo] ? pseudo : null);
+                                                appendToAST(coreAST, nestedKey, styles, coreAST.mediaQueryVariables[pseudo] ? pseudo : null);
+                                                // if module is true
+                                                if (module && modularAST) {
+                                                    appendToAST(modularAST, nestedKey, styles, modularAST.mediaQueryVariables[pseudo] ? pseudo : null);
+                                                }
                                             }
                                         }
                                     }
@@ -287,12 +358,16 @@ function generatesCSSrules(objectsArray, coreAST, collectedObjectsProperties, mo
                                 else { // if the current value is a dynamic property
                                     try {
                                         // collects the styles
-                                        const collectedStyles = collectsDynamicRules(readyProperty, readyKey, readyValue, collectedObjectsProperties, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, pseudoHex, coreAST.mediaQueryVariables[pseudo] ? pseudoHex : null);
+                                        const collectedStyles = collectsDynamicRules(readyProperty, readyKey, readyValue, collectedObjectsProperties, module, coreAST.mediaQueryVariables[pseudo] ? null : pseudo, pseudoHex, coreAST.mediaQueryVariables[pseudo] ? pseudoHex : null, module ? coreAST : null, module ? modularAST : null);
                                         if (collectedStyles) {
                                             const { styles, name } = collectedStyles;
                                             if (styles && name) {
                                                 collectedObjectsProperties.push(name);
-                                                appendToCoreAST(coreAST, nestedKey, styles, coreAST.mediaQueryVariables[pseudo] ? pseudo : null);
+                                                appendToAST(coreAST, nestedKey, styles, coreAST.mediaQueryVariables[pseudo] ? pseudo : null);
+                                                // if module is true
+                                                if (module && modularAST) {
+                                                    appendToAST(modularAST, nestedKey, styles, coreAST.mediaQueryVariables[pseudo] ? pseudo : null);
+                                                }
                                             }
                                         }
                                         ;
