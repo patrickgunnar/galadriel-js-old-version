@@ -61,13 +61,9 @@ export default function ({ t }: { t: any }): PluginObj {
                             if (!collectedNode) {
                                 try {
                                     // transform the current node
-                                    const transformedNode = generatesTransformation(t, callback.body, transformedProperties);
-
-                                    // if transformed node doesn't exist
-                                    if (!transformedNode) return;
-
+                                    generatesTransformation(t, callback.body, transformedProperties);
                                     // save the transformed node
-                                    transformedNodes[hashedNode] = cloneDeep(transformedNode);
+                                    transformedNodes[hashedNode] = cloneDeep(callback.body);
                                     // save the used objects
                                     usedObjects.push(hashedNode);
                                 } catch (error: any) {
@@ -80,13 +76,9 @@ export default function ({ t }: { t: any }): PluginObj {
                         } else {
                             try {
                                 // transform the current node
-                                const transformedNode = generatesTransformation(t, callback.body, transformedProperties);
-
-                                // if transformed node doesn't exist
-                                if (!transformedNode) return;
-
+                                generatesTransformation(t, callback.body, transformedProperties);
                                 // save the transformed node
-                                transformedNodes[hashedNode] = cloneDeep(transformedNode);
+                                transformedNodes[hashedNode] = cloneDeep(callback.body);
                                 // save the used objects
                                 usedObjects.push(hashedNode);
                             } catch (error: any) {
