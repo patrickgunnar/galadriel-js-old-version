@@ -20,7 +20,7 @@ const transformedNodes = {};
  */
 function default_1({ types }) {
     // extract include and exclude paths from the config
-    const { include = [], exclude = [] } = (0, parseGaladrielConfig_1.parseGaladrielConfig)();
+    const { include = [], exclude = [], module = false } = (0, parseGaladrielConfig_1.parseGaladrielConfig)();
     const toInclude = include.map((__path) => path_1.default.resolve(__path));
     const toExclude = exclude.map((__path) => path_1.default.resolve(__path));
     return {
@@ -55,7 +55,7 @@ function default_1({ types }) {
                             if (!collectedNode) {
                                 try {
                                     // transform the current node
-                                    (0, transformAstNode_1.transformAstNode)(types, callback.body);
+                                    (0, transformAstNode_1.transformAstNode)(types, callback.body, module, filePath);
                                     // save the transformed node
                                     transformedNodes[hashedNode] = (0, lodash_1.cloneDeep)(callback.body);
                                     // save the used objects
@@ -73,7 +73,7 @@ function default_1({ types }) {
                         else {
                             try {
                                 // transform the current node
-                                (0, transformAstNode_1.transformAstNode)(types, callback.body);
+                                (0, transformAstNode_1.transformAstNode)(types, callback.body, module, filePath);
                                 // save the transformed node
                                 transformedNodes[hashedNode] = (0, lodash_1.cloneDeep)(callback.body);
                                 // save the used objects
