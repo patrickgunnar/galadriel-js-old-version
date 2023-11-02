@@ -52,8 +52,8 @@ function default_1({ types }) {
                             // Process the callback function body
                             const callbackBody = (0, generator_1.default)(callback.body, { comments: false }).code.replace(/\s+/g, "");
                             const hashedNode = (0, hashingHex_1.hashingHex)(JSON.stringify(callbackBody), true);
-                            // if current exists in the control array
-                            if (usedObjects.includes(hashedNode))
+                            // if current exists in the control array and not modular
+                            if (usedObjects.includes(hashedNode) && !module)
                                 return;
                             // generates an array of strings with objects keys:values or keys:{keys:values}
                             const objectArray = (0, generateObjectsArray_1.generateObjectsArray)(callbackBody);
