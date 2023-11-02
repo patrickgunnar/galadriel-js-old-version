@@ -8,6 +8,16 @@ exports.genClassNames = void 0;
  * @returns {string} The generated class names.
  */
 const genClassNames = (classes) => {
-    return Object.values(classes).map((cls) => cls).join(" ");
+    return Object.entries(classes).map(([_, cls]) => {
+        if (typeof cls === "object") {
+            return Object.values(cls).join(" ");
+        }
+        else if (typeof cls === "string") {
+            return cls;
+        }
+        else {
+            return JSON.stringify(cls);
+        }
+    }).join(" ");
 };
 exports.genClassNames = genClassNames;
