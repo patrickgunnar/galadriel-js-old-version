@@ -16,10 +16,10 @@ const collectedObjectsProperties: string[] = [];
  * Exported default function to process a Babel plugin - Harvest the CSS rules.
  *
  * @param {Object} param - The parameters for the function.
- * @param {any} param.t - The types object for node analysis.
+ * @param {any} param.types - The types object for node analysis.
  * @returns {PluginObj} The Babel plugin object.
  */
-export default function ({ t }: { t: any }): PluginObj {
+export default function ({ types }: { types: any }): PluginObj {
     // extract include and exclude paths from the config
     const { include = [], exclude = [], module = undefined } = parseGaladrielConfig();
     const toInclude = include.map((__path: string) => path.resolve(__path));
