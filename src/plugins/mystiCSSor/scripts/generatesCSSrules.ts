@@ -3,8 +3,12 @@ import { coreStaticStyles } from "../../../kernel/coreStaticStyles";
 import { hashingHex } from "./hashingHex";
 import { parseGaladrielConfig } from "./parseGaladrielConfig";
 
+// flag for modular mode
+let isModular = false;
 // temporary control for classes
 const modularControl: string[] = [];
+// should generate global CSS file control
+let shouldGenerateGlobalCSSFile = false;
 
 /**
  * Clears the `modularControl` array by setting its length to 0.
@@ -19,8 +23,9 @@ export function clearModularControl() {
 }
 
 /**
- * Determines if a CSS file should be generated based on the state of the modular control.
- * If the modular control is greater than 0, it sets the control to generate, clears the modular control,
+ * Determines if a CSS file should be generated based on the state of the modular control or global CSS file state.
+ * If the modular control is greater than 0 or shouldGenerateGlobalCSSFile is true, it sets the control to generate, 
+ * clears the modular control or the shouldGenerateGlobalCSSFile variable,
  * and returns true; otherwise, it returns false.
  *
  * @function
@@ -29,10 +34,11 @@ export function clearModularControl() {
  */
 export function shouldGenerateCSSFile(): boolean {
     // if the modular control is greater than 0, set to true to generate
-    const shouldGenerate = modularControl.length > 0 ? true : false;
+    const shouldGenerate = isModular ? (modularControl.length > 0 ? true : false) : (shouldGenerateGlobalCSSFile ? true : false);
 
     // clear the modular control
-    clearModularControl();
+    if (isModular) clearModularControl();
+    else shouldGenerateGlobalCSSFile = false;
 
     return shouldGenerate;
 }
@@ -180,6 +186,9 @@ function collectsStaticConfigRules(
                     return null;
                 }
 
+                // set the flag to generate global CSS file
+                if (!module) shouldGenerateGlobalCSSFile = true;
+
                 // loop through the style entries in config file
                 for (const [configKey, configValue] of Object.entries(craftStyles)) {
                     // collects the dynamic selector
@@ -272,6 +281,9 @@ function collectsDynamicRules(
             return null;
         }
 
+        // set the flag to generate global CSS file
+        if (!module) shouldGenerateGlobalCSSFile = true;
+
         // collects the dynamic property
         const dynamicProperty = coreDynamicProperties[JSON.parse(key)];
 
@@ -343,6 +355,9 @@ function generatesCSSrules(
     modularAST: Record<string, Record<string, string[]>> | undefined,
     filePath: string | undefined
 ) {
+    // set modular control
+    isModular = module ? true : false;
+
     try {
         for (const property of objectsArray) {
             // if the current property is key:value type
@@ -363,6 +378,9 @@ function generatesCSSrules(
 
                         continue;
                     }
+
+                    // set the flag to generate global CSS file
+                    if (!module) shouldGenerateGlobalCSSFile = true;
         
                     // if the current value is a static or config property
                     if (value.includes("$")) {
@@ -463,6 +481,9 @@ function generatesCSSrules(
 
                                     continue;
                                 }
+
+                                // set the flag to generate global CSS file
+                                if (!module) shouldGenerateGlobalCSSFile = true;
         
                                 // if the current value is a static or config property
                                 if (nestedValue.includes("$")) {
