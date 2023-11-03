@@ -48,7 +48,7 @@ function default_1({ types }) {
                     if (callbackType === "FunctionExpression" || callbackType === "ArrowFunctionExpression") {
                         try {
                             // Process the callback function body
-                            const callbackBody = (0, generator_1.default)(callback.body, { comments: false }).code.replace(/\s+/g, "");
+                            const callbackBody = (0, generator_1.default)(callback.body, { comments: false }).code.replace(/ +(?=([^"]*"[^"]*")*[^"]*$)(?=([^']*'[^']*')*[^']*$)|\n/g, "");
                             const hashedNode = (0, hashingHex_1.hashingHex)(JSON.stringify(callbackBody), true);
                             // if current exists in the control array and not modular
                             if (usedObjects.includes(hashedNode) && !module)

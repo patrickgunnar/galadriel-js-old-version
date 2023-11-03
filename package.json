@@ -1,6 +1,6 @@
 {
     "name": "galadrieljs",
-    "version": "1.0.0-beta.12.4",
+    "version": "1.0.0-beta.12.5",
     "description": "A versatile JavaScript library empowering developers to create elegant, dynamically responsive user interfaces. Focused on modularity and simplicity, enabling the crafting of captivating web applications with optimized performance. Unleash your creativity and let Galadriel.js illuminate your design process.",
     "main": "./build/main.js",
     "bin": {
