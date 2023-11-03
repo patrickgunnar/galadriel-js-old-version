@@ -80,6 +80,7 @@ function addsToModularAstFromCoreAst(coreAST, modularAST, className) {
                     }
                     // if setStyles is true
                     if (setStyles) {
+                        modularControl.push(className);
                         modularAST[item][element].push(styles);
                     }
                     return;
