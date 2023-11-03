@@ -5,45 +5,73 @@ const { parseConfig } = require("./scripts/parseConfig");
 const { Logger } = require("../scripts/logger");
 const { generateCSSfile } = require("./scripts/generateCSSfile");
 
-const extensions = ["js", "jsx", "ts", "tsx"];
+// extensions to be watched
+const extensions = ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"];
 
+/**
+ * Begin monitoring and processing code changes with Galadriel.
+ *
+ * This function initializes Galadriel's code monitoring and processing system. 
+ * It watches for changes in specified files, processes them, 
+ * and generates CSS files if the code includes the "craftingStyles" handler.
+ */
 function spectraScribe() {
-    const logger = new Logger();
-    const { ignore, output, module } = parseConfig();
+    try {
+        const logger = new Logger();
+        // collects the configuration from galadriel.config
+        const { ignore, output, module } = parseConfig();
 
-    if (ignore && output) {
-        const watcher = chokidar.watch(".", {
+        // if ignore and output do not exist
+        if (!ignore || !output) {
+            return logger.message(
+                "galadriel.config (.js or .ts) with fields output and exclude required", true
+            );
+        }
+
+        // instantiate the watcher
+        const watcher = chokidar.watch(extensions, {
             persistent: true,
             ignoreInitial: true,
-            ignored: [...ignore, output],
+            ignored: [...ignore, output, /(^|[/\\])\../],
         });
 
+        // watch all changes on the application
         watcher.on("change", (__path) => {
-            if (__path[0] !== "." && extensions.includes(__path.split(".")[1])) {
-                const startTime = new Date();
-                logger.now(`${logger.makeBold(__path)} just saved`, true);
+            // if current path does not include a starting dot
+            if (__path[0] !== ".") {
+                try {
+                    // get the starting time
+                    const startTime = new Date();
 
-                const codeToTranspile = fs.readFileSync(
-                    path.resolve(__path),
-                    "utf-8"
-                );
+                    // console log the processing path 
+                    logger.now(`processing the path: ${logger.makeBold(__path)}`);
 
-                if (codeToTranspile.includes("craftingStyles")) {
-                    generateCSSfile(codeToTranspile, __path, output, module);
-
-                    const endTime = new Date();
-
-                    logger.now(
-                        `CSS generated successfully in ${endTime - startTime} ms`,
-                        true
+                    // read the code to be processed
+                    const codeToTranspile = fs.readFileSync(
+                        path.resolve(__path), "utf-8"
                     );
+
+                    // if the code includes the craftingStyles handler
+                    if (codeToTranspile.includes("craftingStyles")) {
+                        // generates the CSS rules and file
+                        generateCSSfile(codeToTranspile, __path, output, module, startTime);
+                    } else {
+                        // log the unnecessary processing operation
+                        // there's no craftingStyles handler call
+                        logger.now(
+                            `no craftingStyles has been instantiated - ${logger.makeBold("not processed path")}`
+                        );
+                    }
+                } catch (error) {
+                    console.error("An error occurred:", error);
                 }
             }
         });
 
-        logger.now("Galadriel.js just started", true);
-    } else {
-        logger.message("galadriel.config (.js or .ts) with fields output and exclude required", true);
+        // starting log
+        logger.now(logger.makeBold("Galadriel.js just started"));
+    } catch (error) {
+        console.error("An error occurred:", error);
     }
 }
 
