@@ -51,7 +51,9 @@ export default function ({ types }: { types: any }): PluginObj {
                     if (callbackType === "FunctionExpression" || callbackType === "ArrowFunctionExpression") {
                         try {
                             // Process the callback function body
-                            const callbackBody = generate(callback.body, { comments: false }).code.replace(/\s+/g, "");
+                            const callbackBody = generate(
+                                callback.body, { comments: false }
+                            ).code.replace(/ +(?=([^"]*"[^"]*")*[^"]*$)(?=([^']*'[^']*')*[^']*$)|\n/g, "");
                             const hashedNode = hashingHex(JSON.stringify(callbackBody), true);
 
                             // if current exists in the control array and not modular
