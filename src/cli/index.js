@@ -3,6 +3,7 @@
 const yargs = require("yargs");
 const { galadrielInit } = require("./init");
 const { spectraScribe } = require("../../watchmanor/spectraScribe");
+const { assembleApplicationStyles } = require("./build");
 
 yargs
     .command({
@@ -16,7 +17,7 @@ yargs
         command: "build",
         describe: "Galadriel.js build process",
         handler: (_) => {
-            console.log("Next feature to be implemented!")
+            assembleApplicationStyles();
         },
     })
     .command({
