@@ -1,6 +1,14 @@
 const path = require("path");
 const fs = require("fs");
 
+/**
+ * Parse Galadriel configuration files.
+ *
+ * This function attempts to locate and parse Galadriel configuration files, such as "galadriel.config.ts" and "galadriel.config.js," in the project directory.
+ * It retrieves relevant configuration options and returns them as an object.
+ *
+ * @returns {object} An object containing configuration options, including module, output, and ignore.
+ */
 function parseConfig() {
     // Paths for the Galadriel configuration files
     const configPaths = ["galadriel.config.ts", "galadriel.config.js"];
