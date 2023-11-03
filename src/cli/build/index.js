@@ -30,6 +30,11 @@ function clearAstElements(ast) {
     }
 }
 
+/**
+ * Assembles application styles by processing JavaScript and TypeScript files to generate CSS rules and files.
+ * @async
+ * @returns {Promise<void>} A promise that resolves when the process is complete.
+ */
 async function assembleApplicationStyles() {
     try {
         const logger = new Logger();
