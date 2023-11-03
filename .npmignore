@@ -3,7 +3,7 @@ test/
 build/test/
 jest.config.js
 babel.config.js
-gateway.config.js
+galadriel.config.ts
 global.css
 index.css
 index.ts
