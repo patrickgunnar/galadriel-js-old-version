@@ -15,19 +15,15 @@ yargs
     .command({
         command: "build",
         describe: "Galadriel.js build process",
-        handler: (argv) => {
-            const { watch } = argv;
-
-            if (watch) {
-                spectraScribe();
-            }
+        handler: (_) => {
+            console.log("Next feature to be implemented!")
         },
-        builder: (yargs) => {
-            return yargs.option("watch", {
-                describe: "Watch Galadriel.js build process",
-                type: "boolean",
-                default: false,
-            });
+    })
+    .command({
+        command: "dev",
+        describe: "Galadriel.js development process",
+        handler: (_) => {
+            spectraScribe();
         },
     });
 
