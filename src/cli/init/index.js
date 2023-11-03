@@ -16,8 +16,6 @@ const galadrielConfig = `const config = {
     output: "",
     // content to exclude
     exclude: ["node_modules"],
-    // content to include
-    include: [],
     // new css rules
     craftStyles: {},
 };

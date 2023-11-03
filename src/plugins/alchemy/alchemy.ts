@@ -18,21 +18,19 @@ const transformedNodes: Record<string, any> = {};
  */
 export default function ({ types }: { types: any }): PluginObj {
     // extract include and exclude paths from the config
-    const { include = [], exclude = [], module = false } = parseGaladrielConfig();
-    const toInclude = include.map((__path: string) => path.resolve(__path));
+    const { exclude = [], module = false } = parseGaladrielConfig();
     const toExclude = exclude.map((__path: string) => path.resolve(__path));
 
     return {
         visitor: {
-            CallExpression(path, state) {
+            CallExpression(path: any, state: any) {
                 try {
                     // get the file path and check for inclusion or exclusion
                     const filePath = state.filename;
                     const shouldExclude = toExclude.some((__path: string) => filePath?.includes(__path));
-                    const shouldInclude = toInclude.some((__path: string) => filePath?.includes(__path));
 
                     // if it to exclude the current path or not to include it
-                    if (shouldExclude || !shouldInclude) return;
+                    if (shouldExclude) return;
 
                     const callee = path.get("callee");
 

@@ -23,8 +23,7 @@ const collectedObjectsProperties = [];
  */
 function default_1({ types }) {
     // extract include and exclude paths from the config
-    const { include = [], exclude = [], module = undefined } = (0, parseGaladrielConfig_1.parseGaladrielConfig)();
-    const toInclude = include.map((__path) => path_1.default.resolve(__path));
+    const { exclude = [], module = undefined } = (0, parseGaladrielConfig_1.parseGaladrielConfig)();
     const toExclude = exclude.map((__path) => path_1.default.resolve(__path));
     return {
         visitor: {
@@ -33,9 +32,8 @@ function default_1({ types }) {
                     // get the file path and check for inclusion or exclusion
                     const filePath = state.filename;
                     const shouldExclude = toExclude.some((__path) => filePath === null || filePath === void 0 ? void 0 : filePath.includes(__path));
-                    const shouldInclude = toInclude.some((__path) => filePath === null || filePath === void 0 ? void 0 : filePath.includes(__path));
-                    // if it to exclude the current path or not to include it
-                    if (shouldExclude || !shouldInclude)
+                    // if it to exclude the current path
+                    if (shouldExclude)
                         return;
                     const callee = path.get("callee");
                     // if the callee is not "craftingStyles"

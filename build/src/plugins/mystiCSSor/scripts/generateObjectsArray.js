@@ -15,7 +15,7 @@ function generateObjectsArray(callbackBody) {
         // control of nested objects, nested content and array of the callback body
         let isNested = false;
         const nestedContent = [];
-        const bodyArray = callbackBody.split(",");
+        const bodyArray = callbackBody.split(/,(?=(?:(?:[^"]*"){2})*(?![^"]*"))/);
         // loop through the array body
         return bodyArray.reduce((acc, str) => {
             // if str includes an opened curly bracket

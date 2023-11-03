@@ -15,7 +15,7 @@
         "isolatedModules": true,
         "declaration": true,
         "declarationDir": "./build",
-        "types": ["node", "jest"]
+        "types": ["node"]
     },
     "include": [
         "kernel/**/*",

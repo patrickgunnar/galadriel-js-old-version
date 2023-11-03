@@ -12,7 +12,7 @@ function generateObjectsArray(callbackBody: string) {
         // control of nested objects, nested content and array of the callback body
         let isNested = false;
         const nestedContent: string[] = [];
-        const bodyArray = callbackBody.split(",");
+        const bodyArray = callbackBody.split(/,(?=(?:(?:[^"]*"){2})*(?![^"]*"))/);
 
         // loop through the array body
         return bodyArray.reduce((acc: string[], str: string) => {
