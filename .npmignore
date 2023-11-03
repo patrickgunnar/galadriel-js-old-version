@@ -2,3 +2,10 @@
 test/
 build/test/
 jest.config.js
+babel.config.js
+gateway.config.js
+global.css
+index.css
+index.ts
+index.html
+webpack.config.js
