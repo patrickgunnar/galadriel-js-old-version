@@ -9,3 +9,8 @@ index.css
 index.ts
 index.html
 webpack.config.js
+build/index.html
+build/index.js
+build/index.js.map
+build/main.css
+build/main.css.map
