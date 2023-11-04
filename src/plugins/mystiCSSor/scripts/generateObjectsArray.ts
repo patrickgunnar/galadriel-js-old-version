@@ -34,7 +34,11 @@ function generateObjectsArray(callbackBody: string) {
                                 if (el.includes(":")) {
                                     // if is a nested object operation
                                     if (isNested) {
-                                        nestedContent.push(`${el},`);
+                                        if (item.endsWith("}}")) {
+                                            acc.push(`${nestedContent.join("")}${el}}`);
+                                        } else {
+                                            nestedContent.push(`${el},`);
+                                        }
                                     } else {
                                         acc.push(el);
                                     }
