@@ -2,11 +2,11 @@ const babel = require("@babel/core");
 const path = require("path");
 const fs = require("fs");
 const { Logger } = require("../../scripts/logger");
-const { uniteGaladrielAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "uniteGaladrielAST.js"));
-const { coreAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "coreAST.js"));
-const { modularAST } = require(path.join(__dirname, "..", "..", "build", "src", "ast", "modularAST.js"));
-const { clearModularControl } = require(path.join(__dirname, "..", "..", "build", "src", "clearModularControl.js"));
-const { shouldGenerateCSSFile } = require(path.join(__dirname, "..", "..", "build", "src", "shouldGenerateCSSFile.js"));
+const { uniteGaladrielAST } = require(path.join(__dirname, "..", "..", "..", "..", "build", "src", "ast", "uniteGaladrielAST.js"));
+const { coreAST } = require(path.join(__dirname, "..", "..", "..", "..", "build", "src", "ast", "coreAST.js"));
+const { modularAST } = require(path.join(__dirname, "..", "..", "..", "..", "build", "src", "ast", "modularAST.js"));
+const { clearModularControl } = require(path.join(__dirname, "..", "..", "..", "..", "build", "src", "clearModularControl.js"));
+const { shouldGenerateCSSFile } = require(path.join(__dirname, "..", "..", "..", "..", "build", "src", "shouldGenerateCSSFile.js"));
 
 /**
  * Clears the arrays within a nested object representing an Abstract Syntax Tree (AST).
