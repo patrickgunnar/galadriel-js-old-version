@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const babel = require("@babel/core");
 const { glob } = require("glob");
-const { parseConfig } = require("./scripts/parseConfig.js");
+const { parseConfig } = require("../scripts/parseConfig.js");
 const { Logger } = require("../../../scripts/logger.js");
 const { clearModularControl } = require(path.join(__dirname, "..", "..", "..", "build", "src", "clearModularControl.js"));
 const { shouldGenerateCSSFile } = require(path.join(__dirname, "..", "..", "..", "build", "src", "shouldGenerateCSSFile.js"));
@@ -43,7 +43,7 @@ async function assembleApplicationStyles() {
         const { module, output, ignore } = parseConfig();
 
         // if exists output and ignore content
-        if (output && ignore) {
+        if (output && ignore || module && ignore) {
             // get all the js, jsx, ts, tsx files
             const files = await glob("**/*.{js,jsx,ts,tsx}", {
                 ignore: ["node_modules/**", "**/*.{config.js,config.ts}", "**/*.{.}", ...ignore.map(item => {
@@ -171,12 +171,17 @@ async function assembleApplicationStyles() {
 
             // ending log
             logger.now(logger.makeBold("Galadriel.js build ended successfully"));
+        } else {
+            logger.message(
+                "Your Galadriel.js configuration file (either .js or .ts) should incorporate either the 'exclude' and 'output' fields, or the 'exclude' and 'module - (enabled)' fields", true
+            );
         }
     } catch (error) {
         console.error("An error occurred:", error);
 
-        return;
     }
+
+    return;
 }
 
 module.exports = { assembleApplicationStyles };

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const chokidar = require("chokidar");
-const { parseConfig } = require("./scripts/parseConfig");
+const { parseConfig } = require("../scripts/parseConfig");
 const { Logger } = require("../../../scripts/logger");
 const { generateCSSfile } = require("./scripts/generateCSSfile");
 
@@ -22,9 +22,9 @@ function spectraScribe() {
         const { ignore, output, module } = parseConfig();
 
         // if ignore and output do not exist
-        if (!ignore || !output) {
+        if (!ignore || (!output && !module)) {
             return logger.message(
-                "galadriel.config (.js or .ts) with fields output and exclude required", true
+                "Your Galadriel.js configuration file (either .js or .ts) should incorporate either the 'exclude' and 'output' fields, or the 'exclude' and 'module - (enabled)' fields", true
             );
         }
 

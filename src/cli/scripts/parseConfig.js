@@ -28,7 +28,7 @@ function parseConfig() {
                     // Get the exclude content
                     const { exclude, output, module } = config;
 
-                    if (exclude && output) {
+                    if (exclude && output || exclude && module) {
                         // Return the  filtered exclude paths
                         return {
                             module: module ? true : false,
