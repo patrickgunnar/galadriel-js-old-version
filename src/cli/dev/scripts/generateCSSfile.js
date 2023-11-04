@@ -1,7 +1,7 @@
 const babel = require("@babel/core");
 const path = require("path");
 const fs = require("fs");
-const { Logger } = require("../../scripts/logger");
+const { Logger } = require("../../../../scripts/logger");
 const { uniteGaladrielAST } = require(path.join(__dirname, "..", "..", "..", "..", "build", "src", "ast", "uniteGaladrielAST.js"));
 const { coreAST } = require(path.join(__dirname, "..", "..", "..", "..", "build", "src", "ast", "coreAST.js"));
 const { modularAST } = require(path.join(__dirname, "..", "..", "..", "..", "build", "src", "ast", "modularAST.js"));
@@ -50,7 +50,7 @@ function generateCSSfile(codeString, filePath, output, module, startTime) {
         // process the code - generates the CSS rules
         const transpiledCode = babel.transformSync(codeString, {
             filename: filePath,
-            configFile: path.join(__dirname, "..", "..", "src", "babel.internal.config.js")
+            configFile: path.join(__dirname, "..", "..", "..", "babel.internal.config.js")
         });
 
         // check if there are any changes to the styles content

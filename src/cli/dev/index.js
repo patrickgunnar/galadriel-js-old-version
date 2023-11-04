@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const chokidar = require("chokidar");
 const { parseConfig } = require("./scripts/parseConfig");
-const { Logger } = require("../scripts/logger");
+const { Logger } = require("../../../scripts/logger");
 const { generateCSSfile } = require("./scripts/generateCSSfile");
 
 // extensions to be watched
