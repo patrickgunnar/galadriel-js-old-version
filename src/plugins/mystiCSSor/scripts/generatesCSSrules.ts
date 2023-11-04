@@ -156,9 +156,13 @@ function collectsStaticConfigRules(
                             selector.replace("$", "").replace(".", "")
                         )}${pseudo ? `-${pseudoHex}` : media ? `-${media}` : ""}${module && filePath ? `-${hashingHex(filePath, false, true)}` : ""}`;
 
+                    // generates the main class
+                    const mainClass = stylesRules.replace(/\s/g, "").length > 0 ? 
+                        `.${className}${pseudo ? `:${pseudo}` : ""} { ${stylesRules} }${pseudoRules.length > 0 ? "\n" : ""}` : "";
+
                     return {
                         name: className,
-                        styles: `.${className}${pseudo ? `:${pseudo}` : ""} { ${stylesRules} } ${pseudoRules.join(" ")}`
+                        styles: `${mainClass}${pseudoRules.length > 0 ? `${pseudoRules.join("\n")}` : ""}`
                     };
                 }
             } catch (error: any) {

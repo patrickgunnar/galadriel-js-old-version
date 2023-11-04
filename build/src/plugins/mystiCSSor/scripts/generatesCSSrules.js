@@ -130,9 +130,12 @@ function collectsStaticConfigRules(key, value, selector, collectedObjectsPropert
                     }).join(" ");
                     // generates the class name
                     const className = `${JSON.parse(selector.replace("$", "").replace(".", ""))}${pseudo ? `-${pseudoHex}` : media ? `-${media}` : ""}${module && filePath ? `-${(0, hashingHex_1.hashingHex)(filePath, false, true)}` : ""}`;
+                    // generates the main class
+                    const mainClass = stylesRules.replace(/\s/g, "").length > 0 ?
+                        `.${className}${pseudo ? `:${pseudo}` : ""} { ${stylesRules} }${pseudoRules.length > 0 ? "\n" : ""}` : "";
                     return {
                         name: className,
-                        styles: `.${className}${pseudo ? `:${pseudo}` : ""} { ${stylesRules} } ${pseudoRules.join(" ")}`
+                        styles: `${mainClass}${pseudoRules.length > 0 ? `${pseudoRules.join("\n")}` : ""}`
                     };
                 }
             }
