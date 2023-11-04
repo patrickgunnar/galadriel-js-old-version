@@ -117,8 +117,14 @@ async function assembleApplicationStyles() {
                                                 // split the current processed code
                                                 const splittedLines = codeToTranspile.split("\n");
                                                 // looks for the last index of the import's group in the splitted lines
-                                                const lastImportIdx = splittedLines.findIndex(
-                                                    line => !line.trim().startsWith("import") && !line.trim().startsWith("//")
+                                                const lastImportIdx = splittedLines.reduce(
+                                                    (acc, line, index) => {
+                                                        if (line.trim().startsWith("import")) {
+                                                            acc = index;
+                                                        }
+
+                                                        return acc;
+                                                    }, 0
                                                 );
 
                                                 // if the last import is 0 or greater than 0, add 1 to the lastImportIdx, else set 0
