@@ -2,8 +2,8 @@
 
 const yargs = require("yargs");
 const { galadrielInit } = require("./init");
-const { spectraScribe } = require("../../watchmanor/spectraScribe");
 const { assembleApplicationStyles } = require("./build");
+const { spectraScribe } = require("./dev");
 
 yargs
     .command({
