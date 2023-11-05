@@ -1,0 +1,11 @@
+{
+    "jsc": {
+        "experimental": {
+            "plugins": []
+        },
+        "parser": {
+            "syntax": "typescript",
+            "comments": false
+        }
+    }
+}
